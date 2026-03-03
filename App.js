@@ -9,6 +9,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -143,7 +144,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Calendar" component={ProfileScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
       <Tab.Screen name="Folder" component={ProfileScreen} />
-      <Tab.Screen name="Settings" component={ProfileScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 };

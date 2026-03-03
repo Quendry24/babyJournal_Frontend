@@ -1,6 +1,6 @@
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, ScrollView } from "react-native";
 
-export default function ItemDetailcard() {
+export default function ItemDetailCard() {
   const cards = [
     {
       sousTitre: "Sous-titre",
@@ -42,8 +42,8 @@ export default function ItemDetailcard() {
   ));
 
   return (
-    <View className=" bg-white flex-1 rounded-2xl relative border p-4 shadow">
-      <View className=" flex-1 p-4 border relative border-jaune rounded-lg">
+    <View className="flex-1 p-4 bg-white rounded-3xl shadow-sm elevation-3">
+      <View className=" flex-1 p-4 border relative border-jaune  rounded-xl">
         <Text className="text-2xl color-jaune absolute top-0  -translate-y-1/2 translate-x-4 bg-white">
           Titre ici
         </Text>
@@ -52,7 +52,7 @@ export default function ItemDetailcard() {
           height={60}
           className="border self-end rounded-xl -mb-4"
         ></Image>
-        <View className="">{allcards}</View>
+        <ScrollView className="">{allcards}</ScrollView>
         <Text className="text-3xl font-bold absolute right-4 bottom-4 ">
           {cards.length}
         </Text>
