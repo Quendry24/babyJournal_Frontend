@@ -1,10 +1,10 @@
 import { Text, View, Image, TouchableOpacity, Pressable } from "react-native";
 import { Baby } from "lucide-react-native";
 
-export default function ChildCard({ photo, name, birthDate }) {
+export default function ChildCard({ photo, name, birthDate, jours }) {
   return (
-    <View className="items-center bg-white py-6 rounded-3xl shadow-sm elevation-3">
-      <Pressable className="flex-row items-center justify-center">
+    <Pressable className="items-center bg-white py-6 rounded-3xl shadow-sm elevation-3">
+      <View className="flex-row items-center justify-center">
         {photo ? (
           <Image source={{ uri: photo }} className="w-16 h-16 rounded-full" />
         ) : (
@@ -14,11 +14,11 @@ export default function ChildCard({ photo, name, birthDate }) {
         )}
 
         <View className="flex-1 ml-8">
-          <Text className=" text-3xl font-bold">Léa </Text>
-          <Text className="text-xl font-medium">29/11/2025 </Text>
+          <Text className=" text-3xl font-bold">{name} </Text>
+          <Text className="text-xl font-medium">{birthDate} </Text>
         </View>
-      </Pressable>
-      <Text className="italic mt-4">Lundi-mardi-jeudi-vendredi</Text>
-    </View>
+      </View>
+      <Text className="italic mt-4">{jours}</Text>
+    </Pressable>
   );
 }

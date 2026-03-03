@@ -10,7 +10,7 @@ export default function WelcomeScreen({ navigation }) {
 
   return (
     <Pressable
-      className="flex-1 p-4 pt-16 bg-back "
+      className="flex-1 p-4 pt-16 bg-back"
       onPress={() => navigation.navigate("TabNavigator")}
     >
       <Text className="text-green-500 text-3xl pb-4">WelcomeScreen</Text>
@@ -24,6 +24,16 @@ export default function WelcomeScreen({ navigation }) {
         />
       </View>
       <ItemDetailcard />
+
+      {/* Bouton pour aller vers l'écran enfant */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AcceuilEnfant")}
+        className="mt-6 bg-amber-700 rounded-xl py-4 items-center"
+      >
+        <Text className="text-white font-bold text-base">
+          Voir fiche enfant
+        </Text>
+      </TouchableOpacity>
     </Pressable>
   );
 }
