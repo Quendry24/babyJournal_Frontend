@@ -9,7 +9,6 @@ import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { BlurView } from "expo-blur";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
