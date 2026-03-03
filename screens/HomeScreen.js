@@ -1,5 +1,8 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView,TextInput,SafeAreaView } from "react-native";
 import ChildCard from "../components/ChildCard";
+import Button from "../components/Button";
+import ButtonAdd from "../components/ButtonAdd";
+import ButtonRetour from "../components/ButtonRetour";
 
 export default function HomeScreen() {
   return (
@@ -8,6 +11,39 @@ export default function HomeScreen() {
         NativeWind fonctionne ! 🎉
       </Text>
       <ChildCard />
+
+      <View className="flex-1 p-4 pt-16">
+
+      <Text className="text-green-500 text-3xl pb-4">
+        WelcomeScreen
+      </Text>
+
+      <View className="border">
+        <TextInput title="Email" />
+      </View>
+<View>
+      <Button
+        title="Inscription"
+        variant="jaune"
+        textSize="md"
+        onPress={() => navigation.navigate("Home")}
+      />
+</View>
+
+      <View>
+        <ButtonAdd
+          variant="jaune"
+        />
+      </View>
+       <ButtonRetour
+        title="Retour"
+        variant="ter"
+        textSize="sm"
+  
+      />
+
+
+    </View>
     </View>
   );
 }
