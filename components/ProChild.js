@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import ButtonRetour from "./ButtonRetour";
 import Button from "./Button";
 import { Send } from "lucide-react-native";
@@ -6,6 +12,10 @@ import { useState } from "react";
 import ProChildInfos from "./ProChildInfos";
 import ProChildRepas from "./ProChildRepas";
 import ProChildSieste from "./ProChildSieste";
+import ProChildChanges from "./ProChildChanges";
+import ProChildSante from "./ProChildSante";
+import ProChildActivites from "./ProChildActivites";
+import ProChildNotes from "./ProChildNotes";
 export default function ProChild({ childName, setChildName }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -41,10 +51,15 @@ export default function ProChild({ childName, setChildName }) {
           </View>
         ))}
       </View>
+
       <View className="flex-grow mb-36">
         {selectedItem === null && <ProChildInfos />}
         {selectedItem === "Repas" && <ProChildRepas />}
         {selectedItem === "Sieste" && <ProChildSieste />}
+        {selectedItem === "Changes" && <ProChildChanges />}
+        {selectedItem === "Santé" && <ProChildSante />}
+        {selectedItem === "Activités" && <ProChildActivites />}
+        {selectedItem === "Notes Nounou" && <ProChildNotes />}
       </View>
     </View>
   );

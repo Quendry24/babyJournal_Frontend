@@ -39,6 +39,7 @@ export default function Input({
           secureTextEntry={hide}
           multiline={nbLignes > 1}
           textAlignVertical={nbLignes > 1 ? "top" : "center"}
+          style={{ width: "100%" }}
         ></TextInput>
         {isPassword && (
           <Pressable onPress={() => setHide(!hide)}>
