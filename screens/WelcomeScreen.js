@@ -10,7 +10,7 @@ export default function WelcomeScreen({ navigation }) {
 
   return (
     <Pressable
-      className="flex-1 p-4 pt-16 bg-back "
+      className="flex-1 p-4 pt-16 bg-back"
       onPress={() => navigation.navigate("TabNavigator")}
     >
       <Text className="text-green-500 text-3xl pb-4">WelcomeScreen</Text>
