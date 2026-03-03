@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import AcceuilEnfant from "./screens/AcceuilEnfant";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { BlurView } from "expo-blur";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -155,6 +156,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="AcceuilEnfant" component={AcceuilEnfant} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
