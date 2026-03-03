@@ -9,13 +9,13 @@ export default function ChildCard({ photo, name, birthDate }) {
           <Image source={{ uri: photo }} className="w-16 h-16 rounded-full" />
         ) : (
           <View className="items-center  border-4  border-jaune rounded-full justify-center ml-12">
-            <Baby color="gray" size={75} b />
+            <Baby color="gray" size={75} />
           </View>
         )}
 
         <View className="flex-1 ml-8">
-          <Text className=" text-3xl font-bold">Léa {name}</Text>
-          <Text className="text-xl font-medium">29/11/2025 {birthDate}</Text>
+          <Text className=" text-3xl font-bold">Léa </Text>
+          <Text className="text-xl font-medium">29/11/2025 </Text>
         </View>
       </Pressable>
       <Text className="italic mt-4">Lundi-mardi-jeudi-vendredi</Text>
