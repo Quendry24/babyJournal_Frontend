@@ -4,16 +4,27 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 // mettre isPassword true pour masquer et afficher l'icone de l'oeil
 
-export default function Input({ title, value, onChangeText, isPassword }) {
+export default function Input({
+  title,
+  value,
+  onChangeText,
+  isPassword,
+  fond,
+  nbLignes = 1,
+}) {
   const [focused, setFocused] = useState(false);
   const [hide, setHide] = useState(isPassword);
+  let background = "";
+  fond === "sans" ? (background = "bg-white") : (background = "bg-back");
+
   return (
-    <View className="bg-back">
+    <View className={`${background} ${nbLignes > 1 ? "flex-1" : ""}`}>
       <View
-        className={`bg-back border ${focused ? "border-jaune border-2" : "border-gray-600"}  relative m-4 p-4 rounded-xl flex-row justify-between`}
+        className={`${background} border ${focused ? "border-jaune border-2" : "border-gray-600"}  relative my-4 p-4 rounded-xl flex-row justify-between`}
+        style={nbLignes > 1 ? { minHeight: nbLignes * 24 } : {}}
       >
         <Text
-          className={`translate-x-4 absolute top-0  -translate-y-1/2 bg-back
+          className={`translate-x-4 absolute top-0  -translate-y-1/2 ${background}
             ${focused ? "text-jaune font-bold" : "text-black"}
           `}
         >
@@ -26,6 +37,8 @@ export default function Input({ title, value, onChangeText, isPassword }) {
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={hide}
+          multiline={nbLignes > 1}
+          textAlignVertical={nbLignes > 1 ? "top" : "center"}
         ></TextInput>
         {isPassword && (
           <Pressable onPress={() => setHide(!hide)}>
