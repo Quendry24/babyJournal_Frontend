@@ -4,6 +4,11 @@ import ParentsHome from "../components/ParentsHome";
 import ChildJournee from "../components/ChildJournee";
 
 import { useState } from "react";
+import { Text, View, ScrollView, TextInput, SafeAreaView } from "react-native";
+
+import Button from "../components/Button";
+import ButtonAdd from "../components/ButtonAdd";
+import ButtonRetour from "../components/ButtonRetour";
 
 export default function HomeScreen() {
   const [selectedChild, setSelectedChild] = useState(null);
