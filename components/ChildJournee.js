@@ -6,11 +6,50 @@ import {
   Shapes,
   HeartPlus,
   Shirt,
+  ArrowLeft,
+  Send,
 } from "lucide-react-native";
 
-export default function ChildJournee({ photo, name, birthDate }) {
+export default function ChildJournee({ photo, name, birthDate, OnBack }) {
+  const activityTypes = [
+    { id: 1, label: "Sieste", icon: Bed, count: 4 },
+    { id: 2, label: "Repas", icon: Utensils, count: 1 },
+    { id: 3, label: "Activités", icon: Shapes, count: 2 },
+    { id: 4, label: "Changes", icon: Shirt, count: 3 },
+    { id: 5, label: "Santé", icon: HeartPlus, count: 0 },
+  ];
+
+  const activities = activityTypes.map((data) => {
+    let IconComponent = data.icon;
+    return (
+      <Pressable
+        key={data.id}
+        className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3"
+      >
+        <View className="w-12 items-start">
+          <IconComponent size={40} />
+        </View>
+
+        <View className="flex-1 items-center">
+          <Text className="text-2xl">{data.label} </Text>
+        </View>
+
+        <View className="w-12 items-end">
+          <Text className="text-2xl">{data.count}</Text>
+        </View>
+      </Pressable>
+    );
+  });
   return (
     <View className="flex-1 pt-4">
+      <View className="flex-row pt-16 justify-between ml-4 mr-4">
+        <Pressable>
+          <ArrowLeft onPress={OnBack} />
+        </Pressable>
+        <Pressable>
+          <Send />
+        </Pressable>
+      </View>
       <View className="flex-row items-center justify-center">
         {photo ? (
           <Image source={{ uri: photo }} className="w-16 h-16 rounded-full" />
@@ -26,76 +65,12 @@ export default function ChildJournee({ photo, name, birthDate }) {
       <View>
         <ScrollView
           className="pt-4"
-          contentContainerStyle={{ gap: 16, paddingBottom: 280 }}
+          contentContainerStyle={{ gap: 16, paddingBottom: 380 }}
         >
           <Pressable className="bg-white items-center py-4 rounded-3xl shadow-sm elevation-3">
             <Text className="text-2xl">Notes de nounou </Text>
           </Pressable>
-          <Pressable className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3">
-            <View className="w-12 items-start">
-              <Bed size={40} />
-            </View>
-
-            <View className="flex-1 items-center">
-              <Text className="text-2xl">Sieste </Text>
-            </View>
-
-            <View className="w-12 items-end">
-              <Text className="text-2xl">4</Text>
-            </View>
-          </Pressable>
-          <Pressable className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3">
-            <View className="w-12 items-start">
-              <Utensils size={40} />
-            </View>
-
-            <View className="flex-1 items-center">
-              <Text className="text-2xl">Repas </Text>
-            </View>
-
-            <View className="w-12 items-end">
-              <Text className="text-2xl">1</Text>
-            </View>
-          </Pressable>
-          <Pressable className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3">
-            <View className="w-12 items-start">
-              <Shapes size={40} />
-            </View>
-
-            <View className="flex-1 items-center">
-              <Text className="text-2xl">Activités </Text>
-            </View>
-
-            <View className="w-12 items-end">
-              <Text className="text-2xl">2</Text>
-            </View>
-          </Pressable>
-          <Pressable className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3">
-            <View className="w-12 items-start">
-              <Shirt size={40} />
-            </View>
-
-            <View className="flex-1 items-center">
-              <Text className="text-2xl">Changes</Text>
-            </View>
-
-            <View className="w-12 items-end">
-              <Text className="text-2xl">2</Text>
-            </View>
-          </Pressable>
-          <Pressable className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3">
-            <View className="w-12 items-start">
-              <HeartPlus size={40} />
-            </View>
-
-            <View className="flex-1 items-center">
-              <Text className="text-2xl">Santé</Text>
-            </View>
-
-            <View className="w-12 items-end">
-              <Text className="text-2xl">0</Text>
-            </View>
-          </Pressable>
+          {activities}
         </ScrollView>
       </View>
     </View>

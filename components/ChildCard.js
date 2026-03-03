@@ -1,9 +1,12 @@
 import { Text, View, Image, TouchableOpacity, Pressable } from "react-native";
 import { Baby } from "lucide-react-native";
 
-export default function ChildCard({ photo, name, birthDate, jours }) {
+export default function ChildCard({ photo, name, birthDate, jours, onPress }) {
   return (
-    <Pressable className="items-center bg-white py-6 rounded-3xl shadow-sm elevation-3">
+    <Pressable
+      className="items-center bg-white py-6 rounded-3xl shadow-sm elevation-3"
+      onPress={onPress}
+    >
       <View className="flex-row items-center justify-center">
         {photo ? (
           <Image source={{ uri: photo }} className="w-16 h-16 rounded-full" />

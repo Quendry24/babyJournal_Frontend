@@ -16,19 +16,22 @@ export default function HomeScreen() {
 
   return (
     <>
-      <View className="flex-1 p-4 pt-16 bg-back gap-4">
+      {/*<View className="flex-1 p-4 pt-16 bg-back gap-4">
         {child === "" && <ProHome setChildName={setChildName} />}
         {child !== "" && (
           <ProChild childName={child} setChildName={setChildName} />
         )}
+      </View>*/}
+      <View className="flex-1 p-4 bg-back">
+        {selectedChild ? (
+          <ChildJournee
+            child={selectedChild}
+            OnBack={() => setSelectedChild(null)}
+          />
+        ) : (
+          <ParentsHome onSelectChild={setSelectedChild} />
+        )}
       </View>
-      {/* <View className="flex-1 p-4 bg-back">
-        <Pressable className="pt-14 mr-5 items-end">
-          <Send />
-        </Pressable>
-
-        <ChildJournee />
-      </View> */}
     </>
   );
 }
