@@ -5,6 +5,7 @@ import ButtonAdd from "../components/ButtonAdd";
 import ButtonRetour from "../components/ButtonRetour";
 import { useState } from "react";
 import ProChild from "../components/ProChild";
+import { Text, View, ScrollView, Pressable } from "react-native";
 import ProHome from "../components/ProHome";
 import ParentsHome from "../components/ParentsHome";
 

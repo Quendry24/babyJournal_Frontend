@@ -9,8 +9,9 @@ import {
   ArrowLeft,
   Send,
 } from "lucide-react-native";
+import dayjs from "dayjs";
 
-export default function ChildJournee({ photo, name, birthDate, OnBack }) {
+export default function ChildJournee({ photo, child, OnBack }) {
   const activityTypes = [
     { id: 1, label: "Sieste", icon: Bed, count: 4 },
     { id: 2, label: "Repas", icon: Utensils, count: 1 },
@@ -18,6 +19,8 @@ export default function ChildJournee({ photo, name, birthDate, OnBack }) {
     { id: 4, label: "Changes", icon: Shirt, count: 3 },
     { id: 5, label: "Santé", icon: HeartPlus, count: 0 },
   ];
+
+  const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
 
   const activities = activityTypes.map((data) => {
     let IconComponent = data.icon;
@@ -60,8 +63,9 @@ export default function ChildJournee({ photo, name, birthDate, OnBack }) {
         )}
       </View>
       <Text className=" pt-2 pb-2 text-center text-black text-4xl font-bold">
-        Léa
+        {child.name},
       </Text>
+      <Text className="text-center italic">{ageInMonths} mois</Text>
       <View>
         <ScrollView
           className="pt-4"
