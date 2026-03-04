@@ -17,6 +17,7 @@ import CreateFamilyScreen from "./screens/CreateFamilyScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import JoinFamilyScreen from "./screens/JoinFamilyScreen";
 import InformationScreen from "./screens/InformationScreen";
+import CalendarScreen from "./screens/CalendarScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -151,7 +152,7 @@ const TabNavigator = ({ route }) => {
       <Tab.Screen name="Home">
         {(props) => <HomeScreen {...props} user={user} />}
       </Tab.Screen>
-      <Tab.Screen name="Calendar" component={ProfileScreen} />
+      <Tab.Screen name="Calendar" component={CalendarScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
       <Tab.Screen name="Folder" component={ProfileScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
