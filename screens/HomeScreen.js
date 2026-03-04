@@ -5,7 +5,15 @@ import ButtonAdd from "../components/ButtonAdd";
 import ButtonRetour from "../components/ButtonRetour";
 
 export default function HomeScreen() {
+  const [child, setChild] = useState("");
+  const [selectedChild, setSelectedChild] = useState(null);
+
+  const setChildName = (name) => {
+    setChild(name);
+  };
+
   return (
+    <>
     <View className="flex-1 px-3 items-center justify-center bg-back">
       <Text className="text-white text-2xl font-bold">
       </Text>
@@ -44,5 +52,24 @@ export default function HomeScreen() {
 
     </View>
     </View>
+    <>
+      {/*<View className="flex-1 p-4 pt-16 bg-back gap-4">
+        {child === "" && <ProHome setChildName={setChildName} />}
+        {child !== "" && (
+          <ProChild childName={child} setChildName={setChildName} />
+        )}
+      </View>*/}
+      <View className="flex-1 p-4 bg-back">
+        {selectedChild ? (
+          <ChildJournee
+            child={selectedChild}
+            OnBack={() => setSelectedChild(null)}
+          />
+        ) : (
+          <ParentsHome onSelectChild={setSelectedChild} />
+        )}
+      </View>
+    </>
+     </>
   );
 }

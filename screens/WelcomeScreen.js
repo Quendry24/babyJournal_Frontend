@@ -12,6 +12,7 @@ import LoginScreen from "./LoginScreen";
 
 export default function WelcomeScreen({ navigation }) {
   return (
+<<<<<<< HEAD
     <SafeAreaView className="flex-1 p-16 bg-[#EADFD7]">
       <View>
 
@@ -50,6 +51,34 @@ export default function WelcomeScreen({ navigation }) {
 
       </View>
     </SafeAreaView>
+=======
+    <Pressable
+      className="flex-1 p-4 pt-16 bg-back"
+      onPress={() => navigation.navigate("TabNavigator")}
+    >
+      <Text className="text-green-500 text-3xl pb-4">WelcomeScreen</Text>
+      <View className="border ">
+        <Input title="Nom" value={nom} onChangeText={setNom} />
+        <Input
+          title="Password"
+          value={password}
+          onChangeText={setPassword}
+          isPassword={true}
+        />
+      </View>
+      <ItemDetailcard />
+
+      {/* Bouton pour aller vers l'écran enfant */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AcceuilEnfant")}
+        className="mt-6 bg-amber-700 rounded-xl py-4 items-center"
+      >
+        <Text className="text-white font-bold text-base">
+          Voir fiche enfant
+        </Text>
+      </TouchableOpacity>
+    </Pressable>
+>>>>>>> 0a7256da277bc285ca99bb5042a6a1f531406806
   );
 }
 

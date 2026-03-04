@@ -3,27 +3,30 @@ import { Text, TouchableOpacity } from "react-native";
 import { ChevronLeft } from "lucide-react-native";
 
 export default function ButtonRetour({
-  title,
   onPress,
   variant = "jaune",
-  textSize = "md",
+  textSize = "sm",
 }) {
   const variants = {
     jaune: {
       container: "bg-jaune",
       text: "text-white",
+      iconColor: "white",
     },
     ter: {
       container: "bg-ter",
       text: "text-white",
+      iconColor: "white",
     },
     outlineJaune: {
       container: "bg-white border-2 border-jaune",
       text: "text-jaune",
+      iconColor: "#F9BC50",
     },
     outlineTer: {
       container: "bg-white border-2 border-ter",
       text: "text-ter",
+      iconColor: "#BE7D61",
     },
   };
   const textSizes = {
@@ -43,16 +46,15 @@ export default function ButtonRetour({
         ${selectedVariant.container}
         flex-row
         h-10
-        p-2.5
-        mt-1
         w-24
         rounded-2xl
-
+        justify-center
+        items-center
       `}
     >
       <ChevronLeft
         size={20}
-        color={selectedVariant.textColor}
+        color={selectedVariant.iconColor}
         strokeWidth={2}
       />
       <Text
@@ -61,10 +63,10 @@ export default function ButtonRetour({
           ${selectedTextSize}
           font-bold
           text-right
-        
+      
         `}
       >
-        {title}
+        Retour
       </Text>
     </TouchableOpacity>
   );
