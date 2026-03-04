@@ -10,8 +10,10 @@ import {
   Send,
 } from "lucide-react-native";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 export default function ChildJournee({ photo, child, OnBack }) {
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const activityTypes = [
     { id: 1, label: "Sieste", icon: Bed, count: 4 },
     { id: 2, label: "Repas", icon: Utensils, count: 1 },

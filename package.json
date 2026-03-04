@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "6",
-    "@react-navigation/core": "^7.14.0",
     "@react-navigation/native": "6",
     "@react-navigation/native-stack": "6",
     "dayjs": "^1.11.19",
