@@ -9,6 +9,7 @@ import {
 import { Send } from "lucide-react-native";
 import { ArrowLeft } from "lucide-react-native";
 import ChildCard from "./ChildCard";
+import ItemDetail from "./ItemDetail";
 
 export default function ParentsHome({ onSelectChild }) {
   const child = [
@@ -16,6 +17,7 @@ export default function ParentsHome({ onSelectChild }) {
       name: "Alysée",
       birthDate: "2025-05-09",
       jours: "lundi-mercredi-jeudi",
+      activities: [{ type: "Sieste" }],
     },
     {
       name: "Julien",
@@ -48,6 +50,7 @@ export default function ParentsHome({ onSelectChild }) {
       <Text className=" pt-4 pb-10 text-center text-black text-4xl font-bold">
         Ma Famille
       </Text>
+
       <ScrollView contentContainerStyle={{ paddingBottom: 240 }}>
         <View className="gap-8">{allChild}</View>
 
