@@ -17,6 +17,7 @@ import CreateFamilyScreen from "./screens/CreateFamilyScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import JoinFamilyScreen from "./screens/JoinFamilyScreen";
 import InformationScreen from "./screens/InformationScreen";
+import CalendarScreen from "./screens/CalendarScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
