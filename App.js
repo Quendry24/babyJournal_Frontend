@@ -21,8 +21,7 @@ import InformationScreen from "./screens/InformationScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = ({ route }) => {
-  const user = route?.params?.user;
+const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -148,9 +147,7 @@ const TabNavigator = ({ route }) => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home">
-        {(props) => <HomeScreen {...props} user={user} />}
-      </Tab.Screen>
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Calendar" component={ProfileScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
       <Tab.Screen name="Folder" component={ProfileScreen} />
@@ -170,8 +167,12 @@ export default function App() {
         <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
         <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
         <Stack.Screen name="Information" component={InformationScreen} />
+
+
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
+
+  
   );
 }
