@@ -2,8 +2,7 @@
 //import { useEffect, useState } from "react";
 //import ItemDetailcard from "../components/ItemDetailCard";
 
-import { Text, View } from "react-native";
-import Button from "../components/Button";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Pressable, Text, View } from "react-native";
 import Button from "../components/Button";
