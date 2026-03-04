@@ -11,6 +11,12 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { BlurView } from "expo-blur";
 import SettingsScreen from "./screens/SettingsScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignInScreen from "./screens/SignInScreen";
+import CreateFamilyScreen from "./screens/CreateFamilyScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import JoinFamilyScreen from "./screens/JoinFamilyScreen";
+import InformationScreen from "./screens/InformationScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -155,6 +161,14 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+        <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+        <Stack.Screen name="Information" component={InformationScreen} />
+
+
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>

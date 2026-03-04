@@ -1,4 +1,4 @@
-import { Text, View, ScrollView,TextInput,SafeAreaView } from "react-native";
+import { Text, View, ScrollView,TextInput } from "react-native";
 import ChildCard from "../components/ChildCard";
 import Button from "../components/Button";
 import ButtonAdd from "../components/ButtonAdd";
@@ -8,7 +8,6 @@ export default function HomeScreen() {
   return (
     <View className="flex-1 px-3 items-center justify-center bg-back">
       <Text className="text-white text-2xl font-bold">
-        NativeWind fonctionne ! 🎉
       </Text>
       <ChildCard />
 
@@ -32,7 +31,7 @@ export default function HomeScreen() {
 
       <View>
         <ButtonAdd
-          variant="jaune"
+          variant="outlineJaune"
         />
       </View>
        <ButtonRetour
