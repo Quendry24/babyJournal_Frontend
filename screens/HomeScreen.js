@@ -1,6 +1,6 @@
+import { Text, View, ScrollView, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import ProChild from "../components/ProChild";
-import { Text, View, ScrollView, Pressable } from "react-native";
 import ProHome from "../components/ProHome";
 import ParentsHome from "../components/ParentsHome";
 import ChildJournee from "../components/ChildJournee";
