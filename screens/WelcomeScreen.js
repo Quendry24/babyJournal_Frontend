@@ -24,16 +24,6 @@ export default function WelcomeScreen({ navigation }) {
         />
       </View>
       <ItemDetailcard />
-
-      {/* Bouton pour aller vers l'écran enfant */}
-      <TouchableOpacity
-        onPress={() => navigation.navigate("AcceuilEnfant")}
-        className="mt-6 bg-amber-700 rounded-xl py-4 items-center"
-      >
-        <Text className="text-white font-bold text-base">
-          Voir fiche enfant
-        </Text>
-      </TouchableOpacity>
     </Pressable>
   );
 }

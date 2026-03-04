@@ -40,7 +40,7 @@ export default function ProChild({ childName, setChildName }) {
       </View>
       <View className="w-full flex-row flex-wrap justify-center pb-4 ">
         {items.map((data, i) => (
-          <View className="w-1/3 h-24 p-2" key={i}>
+          <View className="w-1/3 h-24 p-2 " key={i}>
             <Button
               variant={selectedItem === data ? "outlineTer" : "ter"}
               title={data}
