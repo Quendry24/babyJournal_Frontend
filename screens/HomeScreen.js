@@ -1,8 +1,4 @@
 import { Text, View, ScrollView, TextInput, Pressable } from "react-native";
-import ChildCard from "../components/ChildCard";
-import Button from "../components/Button";
-import ButtonAdd from "../components/ButtonAdd";
-import ButtonRetour from "../components/ButtonRetour";
 import { useState } from "react";
 import ProChild from "../components/ProChild";
 import ProHome from "../components/ProHome";
