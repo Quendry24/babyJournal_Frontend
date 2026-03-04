@@ -11,11 +11,18 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import AcceuilEnfant from "./screens/AcceuilEnfant";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import SettingsScreen from "./screens/SettingsScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignInScreen from "./screens/SignInScreen";
+import CreateFamilyScreen from "./screens/CreateFamilyScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import JoinFamilyScreen from "./screens/JoinFamilyScreen";
+import InformationScreen from "./screens/InformationScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ({ route }) => {
+  const user = route?.params?.user;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -141,7 +148,9 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home">
+        {(props) => <HomeScreen {...props} user={user} />}
+      </Tab.Screen>
       <Tab.Screen name="Calendar" component={ProfileScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
       <Tab.Screen name="Folder" component={ProfileScreen} />
@@ -155,7 +164,12 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="AcceuilEnfant" component={AcceuilEnfant} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+        <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+        <Stack.Screen name="Information" component={InformationScreen} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
