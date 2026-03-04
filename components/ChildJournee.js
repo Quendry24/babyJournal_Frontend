@@ -12,6 +12,9 @@ import {
 import dayjs from "dayjs";
 import { useState } from "react";
 
+import ItemDetail from "./ItemDetail";
+import ButtonRetour from "./ButtonRetour";
+
 export default function ChildJournee({ photo, child, OnBack }) {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const activityTypes = [
@@ -24,11 +27,22 @@ export default function ChildJournee({ photo, child, OnBack }) {
 
   const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
 
+  if (selectedActivity) {
+    return (
+      <ItemDetail
+        activityTypes={selectedActivity}
+        child={child}
+        OnBack={() => setSelectedActivity(null)}
+      />
+    );
+  }
+
   const activities = activityTypes.map((data) => {
     let IconComponent = data.icon;
     return (
       <Pressable
         key={data.id}
+        onPress={() => setSelectedActivity(data.label)}
         className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3"
       >
         <View className="w-12 items-start">
@@ -46,10 +60,10 @@ export default function ChildJournee({ photo, child, OnBack }) {
     );
   });
   return (
-    <View className="flex-1 pt-4">
-      <View className="flex-row pt-16 justify-between ml-4 mr-4">
+    <View className="flex-1">
+      <View className="flex-row items-center justify-between mr-4">
         <Pressable>
-          <ArrowLeft onPress={OnBack} />
+          <ButtonRetour onPress={OnBack} />
         </Pressable>
         <Pressable>
           <Send />
