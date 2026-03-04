@@ -38,7 +38,7 @@ export default function ProChildChanges() {
           <Input fond="sans" title="Commentaires" nbLignes={4} />
         </View>
       </View>
-      <View className="absolute bottom-4 self-center w-1/2">
+      <View className="absolute bottom-4 self-center w-1/2 ">
         <Button title="Enregistrer" textSize="xl" variant="ter" />
       </View>
     </View>
