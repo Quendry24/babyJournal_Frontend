@@ -10,6 +10,7 @@ import { Send } from "lucide-react-native";
 import { ArrowLeft } from "lucide-react-native";
 import ChildCard from "./ChildCard";
 import ItemDetail from "./ItemDetail";
+import Button from "./Button";
 
 export default function ParentsHome({ onSelectChild }) {
   const child = [
@@ -41,8 +42,8 @@ export default function ParentsHome({ onSelectChild }) {
     />
   ));
   return (
-    <View className="flex-1 pt-4 ">
-      <View className="pt-16 pr-4 flex-row justify-end ">
+    <View className="flex-1">
+      <View className="pr-4 flex-row justify-end ">
         <Pressable>
           <Send />
         </Pressable>
@@ -54,9 +55,10 @@ export default function ParentsHome({ onSelectChild }) {
       <ScrollView contentContainerStyle={{ paddingBottom: 240 }}>
         <View className="gap-8">{allChild}</View>
 
-        <Pressable className="items-center pt-4 ">
-          <Text>Ajouter un enfant</Text>
-        </Pressable>
+        <Pressable className="items-center pt-4 "></Pressable>
+        <View className="w-1/2 self-center h-16 mt-4">
+          <Button title="Ajouter un enfant" textSize="xl" />
+        </View>
       </ScrollView>
     </View>
   );
