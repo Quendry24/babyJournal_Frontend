@@ -1,5 +1,4 @@
 import "./global.css";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -8,7 +7,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
-import AcceuilEnfant from "./screens/AcceuilEnfant";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import SettingsScreen from "./screens/SettingsScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -22,7 +20,9 @@ import CalendarScreen from "./screens/CalendarScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ({ route }) => {
+  const user = route?.params?.user;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -148,7 +148,9 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home">
+        {(props) => <HomeScreen {...props} user={user} />}
+      </Tab.Screen>
       <Tab.Screen name="Calendar" component={ProfileScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
       <Tab.Screen name="Folder" component={ProfileScreen} />
@@ -169,11 +171,8 @@ export default function App() {
         <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
         <Stack.Screen name="Information" component={InformationScreen} />
 
-
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
-
-  
   );
 }

@@ -1,13 +1,9 @@
-
-import ChildCard from "../components/ChildCard";
-import Button from "../components/Button";
-import ButtonAdd from "../components/ButtonAdd";
-import ButtonRetour from "../components/ButtonRetour";
 import { useState } from "react";
 import ProChild from "../components/ProChild";
 import { Text, View, ScrollView, Pressable,TextInput } from "react-native";
 import ProHome from "../components/ProHome";
 import ParentsHome from "../components/ParentsHome";
+import ChildJournee from "../components/ChildJournee";
 
 export default function HomeScreen({ user }) {
   const [child, setChild] = useState("");

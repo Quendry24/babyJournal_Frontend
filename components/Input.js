@@ -8,7 +8,7 @@ export default function Input({
   title,
   value,
   onChangeText,
-  isPassword,
+  isPassword = false,
   fond,
   nbLignes = 1,
 }) {
