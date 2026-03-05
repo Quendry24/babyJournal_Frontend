@@ -1,5 +1,5 @@
 import "./global.css";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,11 +18,20 @@ import InformationScreen from "./screens/InformationScreen";
 import CalendarScreen from "./screens/CalendarScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import FolderScreen from "./screens/FolderScreen";
+import { Provider } from "react-redux";
+
+import { configureStore } from "@reduxjs/toolkit";
+import user from "./reducers/user";
+import { useState } from "react";
+const store = configureStore({
+  reducer: { user },
+});
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({ route }) => {
+  const [plus, setPlus] = useState(false);
   const user = route?.params?.user;
   return (
     <Tab.Navigator
@@ -46,9 +55,9 @@ const TabNavigator = ({ route }) => {
             return (
               <LinearGradient
                 colors={["transparent", "transparent", "#EADFD7", "#EADFD7"]}
-                locations={[0, 0.49, 0.49, 1]}
+                locations={[0, 0.43, 0.43, 1]}
                 style={{
-                  position: "absolute",
+                  position: "relative",
                   bottom: 30,
                   width: 74,
                   height: 74,
@@ -72,33 +81,46 @@ const TabNavigator = ({ route }) => {
                     size={24}
                     color="white"
                     style={
-                      focused ? { transform: [{ rotate: "45deg" }] } : undefined
+                      plus ? { transform: [{ rotate: "45deg" }] } : undefined
                     }
                   />
 
-                  {focused && (
-                    <View style={{ position: "absolute" }}>
+                  {plus && (
+                    <View
+                      style={{
+                        position: "absolute",
+                        borderWidth: 1,
+                        width: 120,
+                        height: 120,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <FontAwesome
                         name="phone"
                         size={22}
-                        color="white"
-                        style={{ position: "absolute", bottom: 24, right: 34 }}
+                        color="red"
+                        style={{
+                          position: "absolute",
+                          bottom: 44,
+                          right: 34,
+                        }}
                       />
                       <FontAwesome
                         name="camera"
                         size={22}
-                        color="white"
+                        color="red"
                         style={{
                           position: "absolute",
-                          bottom: 34,
-                          left: -12,
+                          bottom: 54,
+                          left: 34,
                         }}
                       />
                       <FontAwesome
                         name="send"
                         size={22}
-                        color="white"
-                        style={{ position: "absolute", bottom: 24, left: 34 }}
+                        color="red"
+                        style={{ position: "absolute", bottom: 44, left: 34 }}
                       />
                     </View>
                   )}
@@ -154,7 +176,16 @@ const TabNavigator = ({ route }) => {
         {(props) => <HomeScreen {...props} user={user} />}
       </Tab.Screen>
       <Tab.Screen name="Calendar" component={CalendarScreen} />
-      <Tab.Screen name="Plus" component={ProfileScreen} />
+      <Tab.Screen
+        name="Plus"
+        component={ProfileScreen}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            setPlus(!plus);
+          },
+        }}
+      />
       <Tab.Screen name="Folder" component={FolderScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
@@ -163,17 +194,19 @@ const TabNavigator = ({ route }) => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
-        <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
-        <Stack.Screen name="Information" component={InformationScreen} />
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+          <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+          <Stack.Screen name="Information" component={InformationScreen} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
