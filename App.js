@@ -117,6 +117,7 @@ const TabNavigator = ({ route }) => {
                           bottom: 54,
                           left: 34,
                         }}
+                        onPress={() => navigation.navigate("CameraScreen")}
                       />
                       <FontAwesome
                         name="send"

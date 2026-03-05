@@ -37,20 +37,24 @@ export default function ChildJournee({ photo, child, OnBack }) {
     );
   }
 
-  const activities = activityTypes.map((data) => {
+  const activities = activityTypes.map((data, i) => {
     let IconComponent = data.icon;
     return (
       <Pressable
         key={data.id}
         onPress={() => setSelectedActivity(data.label)}
-        className="flex-row bg-white items-center py-8 px-8 rounded-3xl shadow-sm elevation-3"
+        className={`flex-row ${i % 2 === 0 ? "bg-vert" : "bg-ter"} items-center py-8 px-8 rounded-3xl shadow-sm elevation-3`}
       >
         <View className="w-12 items-start">
           <IconComponent size={40} />
         </View>
 
         <View className="flex-1 items-center">
-          <Text className="text-2xl">{data.label} </Text>
+          <Text
+            className={` ${i % 2 === 0 ? "text-black" : "text-white"} text-2xl`}
+          >
+            {data.label}{" "}
+          </Text>
         </View>
 
         <View className="w-12 items-end">
