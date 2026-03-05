@@ -5,94 +5,70 @@ import { useEffect, useState } from "react";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function SignInScreen({ navigation }) {
+export default function SignInScreen({ navigation, route }) {
+  const { role } = route.params;
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   return (
-    // const [password, setPassword] = useState("");
-    // const [email, setEmail] = useState("");
-    //************** SIGNIN PARENT **************
-    <SafeAreaView className="flex-1 p-16 bg-[#EADFD7]">
-      <View>
-        <View className="flex-row  justify-between">
-          <ButtonRetour title="Retour" variant="jaune" textSize="sm" />
-          <Text className="text-black-300 text-2xl text-right font-bold pb-16">
-            Baby Journal
-          </Text>
+    //************** SignIn parent **************
+    <>
+      {role === "parent" && (
+        <View className="flex-1 pt-16 px-8 bg-back">
+          <View className="flex-row  justify-between">
+            <ButtonRetour
+              title="Retour"
+              variant="jaune"
+              textSize="sm"
+              onPress={() => navigation.goBack()}
+            />
+            <Text className="text-2xl text-right font-bold pb-16">
+              Baby Journal
+            </Text>
+          </View>
+          <View>
+            <Text className=" text-4xl font-bold text-center pb-24">
+              Se connecter
+            </Text>
+          </View>
+          <View className="mb-30">
+            <Input
+              className="color-[#F9BC50]"
+              title="Email"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <Input
+              title="Password"
+              value={password}
+              onChangeText={setPassword}
+              isPassword={true}
+            />
+          </View>
+          {role === "parent" && (
+            <View className="w-80 h-16 self-center mt-16">
+              <Button
+                title="Se connecter"
+                variant="jaune"
+                textSize="lg"
+                onPress={() => navigation.navigate.goBack()}
+              />
+            </View>
+          )}
+          //************** SIGNUP ASSITANTE MATERNELLE **************
+          {role === "nounou" && (
+            //************** SignIn Assistante maternelle **************
+            <View className="w-80 h-16 self-center mt-16">
+              <Button
+                title="Se connecter"
+                variant="ter"
+                textSize="lg"
+                onPress={() => navigation.navigate("Profile")}
+              />
+            </View>
+          )}
         </View>
-        <View>
-          <Text className="text-black-300 text-4xl font-bold text-center pb-24">
-            Inscription
-          </Text>
-          <Text className="text-black-300 text-xl font-bold text-center pb-1 m-4">
-            Vous voulez créer une famille ?
-          </Text>
-        </View>
-
-        <View className="flex-1 items-center justify-center">
-          <Text>IMAGE</Text>
-          {/* Image ici */}
-        </View>
-        <View className="pb_32">
-          <Button
-            title="Je créer une famille"
-            variant="jaune"
-            textSize="lg"
-            onPress={() => navigation.navigate("Home")}
-          />
-
-          <View className="h-[1px] bg-gray-300 w-full my-16" />
-
-          <Text className="text-black-300 text-xl font-bold text-center pb-1 m-4">
-            {" "}
-            Vous voulez rejoindre une famille existante ?
-          </Text>
-          <Button
-            title="Rejoindre une famille"
-            variant="outlineJaune"
-            textSize="lg"
-            onPress={() => navigation.navigate("Home")}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
+      )}
+    </>
   );
 }
-//************** SIGNIN ASSISTANTE MATERNELLE **************
-
-// {/* <SafeAreaView className="flex-1 p-16 bg-[#EADFD7]">
-
-//       <View>
-// <View className="flex-row  justify-between">
-//         <ButtonRetour
-//         title="Retour"
-//         variant="ter"
-//         textSize="sm"/>
-//         <Text className="text-black-300 text-2xl text-right font-bold pb-16">Baby Journal</Text>
-//  </View>
-//         <View>
-//           <Text className="text-black-300 text-4xl font-bold text-center pb-24">Inscription</Text>
-//           {/* <Text className="text-black-300 text-xl font-bold text-center pb-1 m-4">Vous voulez créer une famille ?</Text> */}
-//         </View>
-
-//       <View className="mb-30">
-//         <Input title="Email" value={email} onChangeText={setEmail} />
-//         <Input
-//           title="Password"
-//           value={password}
-//           onChangeText={setPassword}
-//           isPassword={true}
-//         />
-
-//           <Button
-//             title="Créer mon profil pro"
-//             variant="ter"
-//             textSize="lg"
-//             onPress={() => navigation.navigate("Home")}
-//           />
-//       </View>
-//       </View>
-//     </SafeAreaView>
-//   );
-
-// } */}

@@ -27,6 +27,14 @@
     },
     "plugins": [
       "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow BabyJournal to access your camera",
+          "microphonePermission": "Allow BabyJournal to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
       "@react-native-community/datetimepicker"
     ]
   }

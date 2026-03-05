@@ -26,6 +26,7 @@ import { useState } from "react";
 const store = configureStore({
   reducer: { user },
 });
+import CameraScreen from "./screens/CameraScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,9 +34,10 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = ({ route }) => {
   const [plus, setPlus] = useState(false);
   const user = route?.params?.user;
+
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ color, focused }) => {
           let iconName = "";
 
@@ -194,19 +196,21 @@ const TabNavigator = ({ route }) => {
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
-          <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
-          <Stack.Screen name="Information" component={InformationScreen} />
-          <Stack.Screen name="TabNavigator" component={TabNavigator} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+        <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+        <Stack.Screen name="Information" component={InformationScreen} />
+
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
+
+        {/* Les écrans du bouton + */}
+        <Stack.Screen name="Camera" component={CameraScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
