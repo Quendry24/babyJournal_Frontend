@@ -16,6 +16,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 import JoinFamilyScreen from "./screens/JoinFamilyScreen";
 import InformationScreen from "./screens/InformationScreen";
 import CalendarScreen from "./screens/CalendarScreen";
+import { LinearGradient } from "expo-linear-gradient";
 import FolderScreen from "./screens/FolderScreen";
 import CameraScreen from "./screens/CameraScreen";
 
@@ -24,6 +25,7 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({ route }) => {
   const user = route?.params?.user;
+
   return (
     <Tab.Navigator
       screenOptions={({ route, navigation }) => ({
@@ -44,14 +46,15 @@ const TabNavigator = ({ route }) => {
 
           if (route.name === "Plus") {
             return (
-              <View
+              <LinearGradient
+                colors={["transparent", "transparent", "#EADFD7", "#EADFD7"]}
+                locations={[0, 0.49, 0.49, 1]}
                 style={{
                   position: "absolute",
                   bottom: 30,
                   width: 74,
                   height: 74,
                   borderRadius: 40,
-                  backgroundColor: "#EADFD7",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -106,7 +109,7 @@ const TabNavigator = ({ route }) => {
                     </View>
                   )}
                 </View>
-              </View>
+              </LinearGradient>
             );
           }
           return (
@@ -156,7 +159,7 @@ const TabNavigator = ({ route }) => {
       <Tab.Screen name="Home">
         {(props) => <HomeScreen {...props} user={user} />}
       </Tab.Screen>
-      <Tab.Screen name="Calendar" component={CalendarScreen} />
+      <Tab.Screen name="Calendar" component={ProfileScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
       <Tab.Screen name="Folder" component={FolderScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
@@ -175,6 +178,7 @@ export default function App() {
         <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
         <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
         <Stack.Screen name="Information" component={InformationScreen} />
+
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
 
         {/* Les écrans du bouton + */}

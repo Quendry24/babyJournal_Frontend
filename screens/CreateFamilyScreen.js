@@ -5,48 +5,55 @@ import { useEffect, useState } from "react";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function CreateFamilyScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  return (
-  //************** CREER UNE FAMILLE **************   
-    <SafeAreaView className="flex-1 p-16 bg-[#EADFD7]">
-<View> 
-<View className="flex-row  justify-between">
-        <ButtonRetour
-        title="Retour"
-        variant="jaune"
-        textSize="sm"/>
-        <Text className="text-black-300 text-2xl text-right font-bold pb-16">Baby Journal</Text>
- </View>
-        <View>
-          <Text className="text-black-300 text-4xl font-bold text-center pb-24">Créer une famille</Text>
-        </View>
 
-       <View className="mb-30">
-       <Input className="color-[#F9BC50]" title="Email" value={email} onChangeText={setEmail} />
-       <Input className="color-[#F9BC50]" title="Nom de la famille" value={username} onChangeText={setUsername} />
-      <Input
+  return (
+    //************** CREER UNE FAMILLE **************
+    <View className="flex-1 p-16 bg-back">
+      <View className="flex-row  justify-between">
+        <ButtonRetour
+          title="Retour"
+          variant="jaune"
+          textSize="sm"
+          onPress={() => navigation.goBack()}
+        />
+        <Text className="text-2xl text-right font-bold pb-16">
+          Baby Journal
+        </Text>
+      </View>
+      <View>
+        <Text className="text-4xl font-bold text-center pb-24">
+          Créer une famille
+        </Text>
+      </View>
+
+      <View>
+        <Input title="Email" value={email} onChangeText={setEmail} />
+        <Input
+          title="Nom de la famille"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <Input
           title="Password"
           value={password}
           onChangeText={setPassword}
           isPassword={true}
         />
-    
       </View>
-            <View className="pb_32">
-                  <Button
-                    title="Se connecter"
-                    variant="jaune"
-                    textSize="lg"
-                    onPress={() => navigation.navigate("Home")}
-                  />
- 
+      <View className="w-80 h-16 self-center mt-8">
+        <Button
+          title="Se connecter"
+          variant="jaune"
+          textSize="lg"
+          onPress={() => navigation.navigate("Information")}
+        />
       </View>
-            </View>
-    </SafeAreaView>
-  )
+    </View>
+  );
 }
