@@ -16,6 +16,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 import JoinFamilyScreen from "./screens/JoinFamilyScreen";
 import InformationScreen from "./screens/InformationScreen";
 import CalendarScreen from "./screens/CalendarScreen";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,14 +43,15 @@ const TabNavigator = ({ route }) => {
 
           if (route.name === "Plus") {
             return (
-              <View
+              <LinearGradient
+                colors={["transparent", "transparent", "#EADFD7", "#EADFD7"]}
+                locations={[0, 0.49, 0.49, 1]}
                 style={{
                   position: "absolute",
                   bottom: 30,
                   width: 74,
                   height: 74,
                   borderRadius: 40,
-                  backgroundColor: "#EADFD7",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -100,7 +102,7 @@ const TabNavigator = ({ route }) => {
                     </View>
                   )}
                 </View>
-              </View>
+              </LinearGradient>
             );
           }
           return (

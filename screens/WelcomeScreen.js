@@ -23,7 +23,7 @@ export default function WelcomeScreen({ navigation }) {
             title="Je suis parent"
             variant="jaune"
             textSize="lg"
-            onPress={() => navigation.navigate("LoginScreen")}
+            onPress={() => navigation.navigate("Login")}
           />
 
           <Button
