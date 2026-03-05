@@ -9,14 +9,17 @@ import {
   ArrowLeft,
   Send,
 } from "lucide-react-native";
+import ItemDetailCard from "./ItemDetailCard";
 import dayjs from "dayjs";
+import ButtonRetour from "./ButtonRetour";
 
 export default function ItemDetail({ photo, child, OnBack }) {
+  const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
   return (
-    <View className="flex-1 pt-4">
-      <View className="flex-row pt-16 justify-between ml-4 mr-4">
+    <View className="flex-1">
+      <View className="flex-row justify-between mr-4 items-center">
         <Pressable>
-          <ArrowLeft onPress={OnBack} />
+          <ButtonRetour onPress={OnBack} />
         </Pressable>
         <Pressable>
           <Send />
@@ -36,6 +39,7 @@ export default function ItemDetail({ photo, child, OnBack }) {
       </Text>
       <Text className="text-center italic">{ageInMonths} mois</Text>
       <View></View>
+      <ItemDetailCard />
     </View>
   );
 }

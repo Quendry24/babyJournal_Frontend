@@ -14,9 +14,9 @@ export default function HomeScreen({ user }) {
   };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1  p-4 pt-16 bg-back">
       {user === "Pro" && (
-        <View className="flex-1 p-4 pt-16 bg-back gap-4">
+        <View className="flex-1 gap-4">
           {child === "" && <ProHome setChildName={setChildName} />}
           {child !== "" && (
             <ProChild childName={child} setChildName={setChildName} />
@@ -24,7 +24,7 @@ export default function HomeScreen({ user }) {
         </View>
       )}
       {user === "Parents" && (
-        <View className="flex-1 p-4 bg-back">
+        <View className="flex-1 ">
           {selectedChild ? (
             <ChildJournee
               child={selectedChild}

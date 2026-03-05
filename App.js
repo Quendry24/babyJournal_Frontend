@@ -16,6 +16,8 @@ import SignUpScreen from "./screens/SignUpScreen";
 import JoinFamilyScreen from "./screens/JoinFamilyScreen";
 import InformationScreen from "./screens/InformationScreen";
 import CalendarScreen from "./screens/CalendarScreen";
+import { LinearGradient } from "expo-linear-gradient";
+import FolderScreen from "./screens/FolderScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,14 +45,15 @@ const TabNavigator = ({ route }) => {
 
           if (route.name === "Plus") {
             return (
-              <View
+              <LinearGradient
+                colors={["transparent", "transparent", "#EADFD7", "#EADFD7"]}
+                locations={[0, 0.49, 0.49, 1]}
                 style={{
                   position: "absolute",
                   bottom: 30,
                   width: 74,
                   height: 74,
                   borderRadius: 40,
-                  backgroundColor: "#EADFD7",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -101,7 +104,7 @@ const TabNavigator = ({ route }) => {
                     </View>
                   )}
                 </View>
-              </View>
+              </LinearGradient>
             );
           }
           return (
@@ -153,7 +156,7 @@ const TabNavigator = ({ route }) => {
       </Tab.Screen>
       <Tab.Screen name="Calendar" component={ProfileScreen} />
       <Tab.Screen name="Plus" component={ProfileScreen} />
-      <Tab.Screen name="Folder" component={ProfileScreen} />
+      <Tab.Screen name="Folder" component={FolderScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
