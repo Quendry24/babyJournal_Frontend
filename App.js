@@ -46,10 +46,6 @@ import { Camera, Phone, Send } from "lucide-react-native";
 
 //déplacer les import camera et provider avec les autres imports + rajouter <Provider store={store}> autour de la fontion App
 
-const store = configureStore({
-  reducer: { user, parent, nounou },
-});
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
