@@ -22,11 +22,16 @@ import { Provider } from "react-redux";
 
 import { configureStore } from "@reduxjs/toolkit";
 import user from "./reducers/user";
+import parent from "./reducers/parent";
+import nounou from "./reducers/nounou";
 import { useState } from "react";
-const store = configureStore({
-  reducer: { user },
-});
 import CameraScreen from "./screens/CameraScreen";
+
+//déplacer les import camera et provider avec les autres imports + rajouter <Provider store={store}> autour de la fontion App
+
+const store = configureStore({
+  reducer: { user, parent, nounou },
+});
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -196,21 +201,23 @@ const TabNavigator = ({ route }) => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
-        <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
-        <Stack.Screen name="Information" component={InformationScreen} />
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+          <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+          <Stack.Screen name="Information" component={InformationScreen} />
 
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
 
-        {/* Les écrans du bouton + */}
-        <Stack.Screen name="Camera" component={CameraScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+          {/* Les écrans du bouton + */}
+          <Stack.Screen name="Camera" component={CameraScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }

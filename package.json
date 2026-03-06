@@ -16,12 +16,7 @@
     "@react-navigation/native-stack": "6",
     "@reduxjs/toolkit": "^2.11.2",
     "dayjs": "^1.11.19",
-<<<<<<< HEAD
-    "dotenv": "^17.3.1",
-    "expo": "~54.0.33",
-=======
     "expo": "54.0.33",
->>>>>>> 2255d2ec7c91d600f3e430da8c0c03c8633892d0
     "expo-blur": "~15.0.8",
     "expo-camera": "^55.0.9",
     "expo-font": "~14.0.11",
