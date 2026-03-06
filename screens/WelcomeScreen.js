@@ -1,7 +1,3 @@
-//import ChildCard from "../components/ChildCard";
-//import { useEffect, useState } from "react";
-//import ItemDetailcard from "../components/ItemDetailCard";
-
 import { Pressable, Text, View } from "react-native";
 import Button from "../components/Button";
 import { NavigationContainer } from "@react-navigation/native";

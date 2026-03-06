@@ -26,6 +26,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import user from "./reducers/user";
+import parent from "./reducers/parent";
+import nounou from "./reducers/nounou";
 
 const reducers = combineReducers({ user });
 const persistConfig = { key: "BabyJournal", storage: AsyncStorage };
@@ -41,6 +43,12 @@ const persistor = persistStore(store);
 import { useState } from "react";
 import CameraScreen from "./screens/CameraScreen";
 import { Camera, Phone, Send } from "lucide-react-native";
+
+//déplacer les import camera et provider avec les autres imports + rajouter <Provider store={store}> autour de la fontion App
+
+const store = configureStore({
+  reducer: { user, parent, nounou },
+});
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

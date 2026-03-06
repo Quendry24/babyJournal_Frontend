@@ -2,14 +2,42 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Input from "../components/Input";
 import ChildCard from "../components/ChildCard";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
+import { parentToStore } from "../reducers/parent";
 
-export default function JoinFamilyScreen({ navigation }) {
+export default function JoinFamilyScreen({ navigation, route }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [idFamilly, setIdFamily] = useState("");
+  const dispatch = useDispatch();
+  const parent = useSelector((state) => state.parent.value);
+
+  const { role } = route.params;
+
+  const handleParentRegister = () => {
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/parents/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((parentData) => {
+        dispatch(SignUp({ email: email, token: parent.token }));
+        console.log(parentData);
+        navigation.navigate("Information", { role: "parent" });
+        setEmail("");
+        setPassword("");
+      });
+  };
+
   return (
     //************** Rejoindre une famille **************
     <View className="flex-1 pt-16 px-8 bg-back">
@@ -56,7 +84,7 @@ export default function JoinFamilyScreen({ navigation }) {
             title="Se connecter"
             variant="jaune"
             textSize="lg"
-            onPress={() => navigation.navigate("Profil")}
+            onPress={() => handleParentRegister()}
           />
         </View>
       </View>
