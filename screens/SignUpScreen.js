@@ -14,14 +14,15 @@ export default function SignUpScreen({ navigation, route }) {
   }
   const dispatch = useDispatch();
   const nounou = useSelector((state) => state.nounou.value);
+  const parent = useSelector((state) => state.parent.value);
 
   const { role } = route.params;
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleNounouRegister = () => {
-    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/signUp`, {
+  const handleRegister = () => {
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/${role}/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,10 +33,9 @@ export default function SignUpScreen({ navigation, route }) {
       }),
     })
       .then((response) => response.json())
-      .then((nounou) => {
-        dispatch(SignUp({ email: email, token: nounou.token }));
-        console.log("reponse du backend");
-        navigation.navigate("Information", { role: "nounou" });
+      .then((parent) => {
+        dispatch(SignUp({ email: email, token: parent.token }));
+        console.log(parent);
         setEmail("");
         setPassword("");
       });
@@ -44,6 +44,7 @@ export default function SignUpScreen({ navigation, route }) {
   return (
     <>
       {role === "parent" && (
+        //************** SignUp parents **************
         <View className="flex-1 pt-16 px-8 bg-back">
           <View className="flex-row justify-between">
             <ButtonRetour
@@ -80,7 +81,9 @@ export default function SignUpScreen({ navigation, route }) {
               variant="jaune"
               textSize="lg"
               onPress={() =>
-                navigation.navigate("Information", { role: "parent" })
+                navigation.navigate.handleRegister("JoinFamily", {
+                  role: "parent",
+                })
               }
             />
           </View>

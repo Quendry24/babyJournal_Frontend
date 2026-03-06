@@ -10,7 +10,6 @@ import {
 import { useState } from "react";
 import Button from "../components/Button";
 import { ChevronLeft, Ellipsis } from "lucide-react-native";
-//import GallerySwiper from "react-native-gallery-swiper";
 
 export default function FolderScreen() {
   const [visible, setVisible] = useState(false);
@@ -134,13 +133,6 @@ export default function FolderScreen() {
                 </View>
               ))}
             </ScrollView>
-            {/*<Pressable className="flex-1 justify-center items-center">
-              <Image
-                source={{ uri: selectedPhoto }}
-                style={{ width: "100%", height: "100%" }}
-                resizeMode="contain"
-              />
-            </Pressable>*/}
           </View>
         </Modal>
       </View>
