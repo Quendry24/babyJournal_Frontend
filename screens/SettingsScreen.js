@@ -2,8 +2,8 @@ import { View, Text, Pressable } from "react-native";
 import ButtonRetour from "../components/ButtonRetour";
 export default function SettingsScreen(OnBack) {
   return (
-    <View className="flex-1 bg-back">
-      <Pressable className="pt-16 pl-4">
+    <View className="flex-1 bg-back p-4 pt-16">
+      <Pressable className="">
         <ButtonRetour onPress={OnBack} />
       </Pressable>
       <View className="flex-1 bg-back items-center ">
