@@ -2,23 +2,22 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Input from "../components/Input";
 import ChildCard from "../components/ChildCard";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function SignUpScreen({ navigation, route }) {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const parent = useSelector((state) => state.parent.value);
 
   const { role } = route.params;
-  
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  
+
   const handleRegister = () => {
-    
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/parents/signUp`, {
       method: "POST",
       headers: {
@@ -31,20 +30,16 @@ const dispatch = useDispatch();
     })
       .then((response) => response.json())
       .then((parent) => {
-          dispatch(SignUp({ email:email,token:parent.token}));
-          console.log(parent);
-          setEmail(""),
-          setPassword(""),
-        })
-    
-
-  }};
+        dispatch(SignUp({ email: email, token: parent.token }));
+        console.log(parent);
+        setEmail("");
+        setPassword("");
+      });
+  };
 
   return (
-
     <>
       {role === "parent" && (
-
         //************** SignUp parents **************
         <View className="flex-1 pt-16 px-8 bg-back">
           <View className=" flex-row  justify-between">
@@ -90,7 +85,9 @@ const dispatch = useDispatch();
               variant="outlineJaune"
               textSize="lg"
               onPress={() =>
-                navigation.navigate.handleRegister ("JoinFamily", { role: "parent" })
+                navigation.navigate.handleRegister("JoinFamily", {
+                  role: "parent",
+                })
               }
             />
           </View>

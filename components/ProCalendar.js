@@ -26,6 +26,7 @@ dayjs.extend(isoWeek);
 export default function ProCalendar() {
   const [offset, setOffset] = useState(0);
   const [weekDays, setWeekDays] = useState([]);
+  const [affichageJours, setAffichageJours] = useState([]);
   const [myWeek, setMyWeek] = useState([]);
   const [semaine, setSemaine] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState();
@@ -33,16 +34,40 @@ export default function ProCalendar() {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [reglage, setReglage] = useState(false);
 
-  const idNounou = "1234"; // a mettre dans le store a la connexion
+  const idNounou = "12345"; // a mettre dans le store a la connexion
   const options = {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   };
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    let todayChild = [];
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/jour/${idNounou}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          today,
+        }),
+      },
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("fetch", data.child);
+        todayChild.push(data.child);
+        console.log(todayChild[0]);
+      })
+      .catch((err) => {
+        console.log("FETCH ERROR:", err);
+      });
+  }, []);
 
   useEffect(() => {
     let week = [];
+    let jours = [];
     const today = new Date();
     const day = today.getDay();
     const diffToMonday = (day + 6) % 7;
@@ -51,10 +76,11 @@ export default function ProCalendar() {
     for (let i = 0; i < 7; i++) {
       let newDay = new Date(monday);
       newDay.setDate(newDay.getDate() + i);
-      week.push(newDay.toLocaleDateString("fr-FR", options));
+      jours.push(newDay.toLocaleDateString("fr-FR", options));
+      week.push(newDay.toISOString().split("T")[0]);
     }
     setWeekDays(week);
-
+    setAffichageJours(jours);
     fetch(
       `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/semaine/${idNounou}`,
       {
@@ -62,6 +88,7 @@ export default function ProCalendar() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           date: monday.toISOString(),
+          allChild,
         }),
       },
     )
@@ -109,7 +136,6 @@ export default function ProCalendar() {
       presence: [false, false, false, false, false, false, false],
     },
   ]);
-
   const changePresence = (iChild, iDay) => {
     setAllChild((data) => {
       const updatedChildren = [...data]; //on copie le tableau AllChild
@@ -185,7 +211,7 @@ export default function ProCalendar() {
         }}
       >
         {!reglage &&
-          weekDays.map((data, i) => (
+          affichageJours.map((data, i) => (
             <View key={i} className="w-full">
               <View className="border border-jaune rounded-full relative"></View>
               <Text className="text-xl absolute top-0 -translate-y-1/2 text-jaune font-bold self-center bg-white px-2">
@@ -225,9 +251,8 @@ export default function ProCalendar() {
             <View className="flex-1">
               <View className=" gap-2">
                 {allChild.map((data, iChild) => (
-                  <View className="flex-row">
+                  <View key={iChild} className="flex-row">
                     <View
-                      key={iChild}
                       className="items-center w-20"
                       onPress={() => {
                         setModalVisible(true);
@@ -247,7 +272,7 @@ export default function ProCalendar() {
                       </Text>
                     </View>
                     <View className="flex-row flex-1  w-full items-center justify-around">
-                      {weekDays.map((day, iDay) => (
+                      {affichageJours.map((day, iDay) => (
                         <Pressable
                           key={iDay}
                           onPress={() => {

@@ -27,6 +27,7 @@ const store = configureStore({
   reducer: { user },
 });
 import CameraScreen from "./screens/CameraScreen";
+import { Camera, Phone, Send } from "lucide-react-native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,79 +56,92 @@ const TabNavigator = ({ route }) => {
 
           if (route.name === "Plus") {
             return (
-              <LinearGradient
-                colors={["transparent", "transparent", "#EADFD7", "#EADFD7"]}
-                locations={[0, 0.43, 0.43, 1]}
+              <View
                 style={{
                   position: "relative",
-                  bottom: 30,
-                  width: 74,
-                  height: 74,
-                  borderRadius: 40,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  overflow: "visible",
+                  width: "auto",
+                  bottom: 0,
                 }}
               >
-                <View
+                {plus && (
+                  <View
+                    style={{
+                      position: "absolute",
+                      width: 74,
+                      bottom: 68,
+                      height: 80,
+                    }}
+                  >
+                    <Phone
+                      size={30}
+                      color="gray"
+                      style={{
+                        position: "absolute",
+                        bottom: 20,
+                        left: -15,
+                        zIndex: 10,
+                      }}
+                      onPress={() => console.log("phone")}
+                    />
+                    <Camera
+                      size={30}
+                      color="gray"
+                      style={{
+                        position: "absolute",
+                        bottom: 42,
+                        left: 22,
+                        zIndex: 10,
+                      }}
+                      onPress={() => console.log("camera")}
+                    />
+                    <Send
+                      size={30}
+                      color="gray"
+                      style={{
+                        position: "absolute",
+                        bottom: 20,
+                        right: -15,
+                        zIndex: 10,
+                      }}
+                      onPress={() => console.log("send")}
+                    />
+                  </View>
+                )}
+                <LinearGradient
+                  colors={["transparent", "transparent", "#EADFD7", "#EADFD7"]}
+                  locations={[0, 0.43, 0.43, 1]}
                   style={{
-                    width: 50,
-                    height: 50,
+                    position: "relative",
+                    bottom: 30,
+                    width: 74,
+                    height: 74,
                     borderRadius: 40,
-                    backgroundColor: "#F9BC50",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <FontAwesome
-                    name={iconName}
-                    size={24}
-                    color="white"
-                    style={
-                      plus ? { transform: [{ rotate: "45deg" }] } : undefined
-                    }
-                  />
-
-                  {plus && (
-                    <View
-                      style={{
-                        position: "absolute",
-                        borderWidth: 1,
-                        width: 120,
-                        height: 120,
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <FontAwesome
-                        name="phone"
-                        size={22}
-                        color="red"
-                        style={{
-                          position: "absolute",
-                          bottom: 44,
-                          right: 34,
-                        }}
-                      />
-                      <FontAwesome
-                        name="camera"
-                        size={22}
-                        color="red"
-                        style={{
-                          position: "absolute",
-                          bottom: 54,
-                          left: 34,
-                        }}
-                      />
-                      <FontAwesome
-                        name="send"
-                        size={22}
-                        color="red"
-                        style={{ position: "absolute", bottom: 44, left: 34 }}
-                      />
-                    </View>
-                  )}
-                </View>
-              </LinearGradient>
+                  <View
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 40,
+                      backgroundColor: "#F9BC50",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <FontAwesome
+                      name={iconName}
+                      size={24}
+                      color="white"
+                      style={
+                        plus ? { transform: [{ rotate: "45deg" }] } : undefined
+                      }
+                    />
+                  </View>
+                </LinearGradient>
+              </View>
             );
           }
           return (
@@ -196,21 +210,21 @@ const TabNavigator = ({ route }) => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
-        <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
-        <Stack.Screen name="Information" component={InformationScreen} />
-
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
-
-        {/* Les écrans du bouton + */}
-        <Stack.Screen name="Camera" component={CameraScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+          <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+          <Stack.Screen name="Information" component={InformationScreen} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          {/* Les écrans du bouton + */}
+          <Stack.Screen name="Camera" component={CameraScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
