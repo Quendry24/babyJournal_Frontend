@@ -53,12 +53,16 @@ export default function ChildJournee({ photo, child, OnBack }) {
           <Text
             className={` ${i % 2 === 0 ? "text-black" : "text-white"} text-2xl`}
           >
-            {data.label}{" "}
+            {data.label}
           </Text>
         </View>
 
         <View className="w-12 items-end">
-          <Text className="text-2xl">{data.count}</Text>
+          <Text
+            className={`${i % 2 === 0 ? "text-black" : "text-white"} text-2xl`}
+          >
+            {data.count}
+          </Text>
         </View>
       </Pressable>
     );
