@@ -7,6 +7,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function Input({
   title,
   value,
+  type,
+  inputMode,
+  editable,
   onChangeText,
   isPassword = false,
   fond,
@@ -35,6 +38,10 @@ export default function Input({
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           value={value}
+          enterKeyHint="next"
+          inputMode={inputMode}
+          editable={editable !== false}
+          textContentType={type}
           onChangeText={onChangeText}
           secureTextEntry={hide}
           multiline={nbLignes > 1}
