@@ -1,14 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = { value: [] };
+const initialState = {
+  value: {
+    type: null,
+    user: null,
+  },
+};
 export const UserSlice = createSlice({
   name: "user",
 
   initialState,
   reducers: {
-    addFriendToStore: (state, action) => {
-      state.value.push(action.payload);
+    setUserType: (state, action) => {
+      state.value.type = action.payload;
     },
   },
 });
-export const { addFriendToStore } = UserSlice.actions;
+export const { setUserType } = UserSlice.actions;
 export default UserSlice.reducer;

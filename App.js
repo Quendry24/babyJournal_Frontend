@@ -18,14 +18,27 @@ import InformationScreen from "./screens/InformationScreen";
 import CalendarScreen from "./screens/CalendarScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import FolderScreen from "./screens/FolderScreen";
-import { Provider } from "react-redux";
 
-import { configureStore } from "@reduxjs/toolkit";
+//redux
+import { Provider } from "react-redux";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import user from "./reducers/user";
-import { useState } from "react";
+
+const reducers = combineReducers({ user });
+const persistConfig = { key: "BabyJournal", storage: AsyncStorage };
+
 const store = configureStore({
-  reducer: { user },
+  reducer: persistReducer(persistConfig, reducers),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
+
+const persistor = persistStore(store);
+
+import { useState } from "react";
 import CameraScreen from "./screens/CameraScreen";
 import { Camera, Phone, Send } from "lucide-react-native";
 
@@ -34,7 +47,6 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({ route }) => {
   const [plus, setPlus] = useState(false);
-  const user = route?.params?.user;
 
   return (
     <Tab.Navigator
@@ -75,7 +87,7 @@ const TabNavigator = ({ route }) => {
                   >
                     <Phone
                       size={30}
-                      color="gray"
+                      color="black"
                       style={{
                         position: "absolute",
                         bottom: 20,
@@ -86,7 +98,7 @@ const TabNavigator = ({ route }) => {
                     />
                     <Camera
                       size={30}
-                      color="gray"
+                      color="black"
                       style={{
                         position: "absolute",
                         bottom: 42,
@@ -97,7 +109,7 @@ const TabNavigator = ({ route }) => {
                     />
                     <Send
                       size={30}
-                      color="gray"
+                      color="black"
                       style={{
                         position: "absolute",
                         bottom: 20,
@@ -188,9 +200,7 @@ const TabNavigator = ({ route }) => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home">
-        {(props) => <HomeScreen {...props} user={user} />}
-      </Tab.Screen>
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Calendar" component={CalendarScreen} />
       <Tab.Screen
         name="Plus"
@@ -211,20 +221,22 @@ const TabNavigator = ({ route }) => {
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
-          <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
-          <Stack.Screen name="Information" component={InformationScreen} />
-          <Stack.Screen name="TabNavigator" component={TabNavigator} />
-          {/* Les écrans du bouton + */}
-          <Stack.Screen name="Camera" component={CameraScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="CreateFamily" component={CreateFamilyScreen} />
+            <Stack.Screen name="JoinFamily" component={JoinFamilyScreen} />
+            <Stack.Screen name="Information" component={InformationScreen} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            {/* Les écrans du bouton + */}
+            <Stack.Screen name="Camera" component={CameraScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }

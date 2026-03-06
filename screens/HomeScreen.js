@@ -1,14 +1,16 @@
 import { useState } from "react";
 import ProChild from "../components/ProChild";
-import { Text, View, ScrollView, Pressable,TextInput } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
 import ProHome from "../components/ProHome";
 import ParentsHome from "../components/ParentsHome";
 import ChildJournee from "../components/ChildJournee";
+import { useSelector } from "react-redux";
 
-export default function HomeScreen({ user }) {
+export default function HomeScreen() {
   const [child, setChild] = useState("");
   const [selectedChild, setSelectedChild] = useState(null);
-
+  const user = useSelector((state) => state.user.value.type);
+  console.log(user);
   const setChildName = (name) => {
     setChild(name);
   };
