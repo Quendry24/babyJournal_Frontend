@@ -121,6 +121,7 @@ const TabNavigator = ({ route }) => {
                     alignItems: "center",
                   }}
                 >
+<<<<<<< HEAD
                   <View
                     style={{
                       width: 50,
@@ -142,6 +143,59 @@ const TabNavigator = ({ route }) => {
                   </View>
                 </LinearGradient>
               </View>
+=======
+                  <FontAwesome
+                    name={iconName}
+                    size={24}
+                    color="white"
+                    style={
+                      plus ? { transform: [{ rotate: "45deg" }] } : undefined
+                    }
+                  />
+
+                  {plus && (
+                    <View
+                      style={{
+                        position: "absolute",
+                        borderWidth: 1,
+                        width: 120,
+                        height: 120,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <FontAwesome
+                        name="phone"
+                        size={22}
+                        color="red"
+                        style={{
+                          position: "absolute",
+                          bottom: 44,
+                          right: 34,
+                        }}
+                      />
+                      <FontAwesome
+                        name="camera"
+                        size={22}
+                        color="red"
+                        style={{
+                          position: "absolute",
+                          bottom: 54,
+                          left: 34,
+                        }}
+                        onPress={() => navigation.navigate("CameraScreen")}
+                      />
+                      <FontAwesome
+                        name="send"
+                        size={22}
+                        color="red"
+                        style={{ position: "absolute", bottom: 44, left: 34 }}
+                      />
+                    </View>
+                  )}
+                </View>
+              </LinearGradient>
+>>>>>>> f0242cc78951ffa36ea12df3a19654e51c4edb5d
             );
           }
           return (
