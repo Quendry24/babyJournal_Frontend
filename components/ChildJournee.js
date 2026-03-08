@@ -46,7 +46,7 @@ export default function ChildJournee({ photo, child, OnBack }) {
         className={`flex-row ${i % 2 === 0 ? "bg-vert" : "bg-ter"} items-center py-8 px-8 rounded-3xl shadow-sm elevation-3`}
       >
         <View className="w-12 items-start">
-          <IconComponent size={40} />
+          <IconComponent size={40} color={i % 2 === 0 ? "black" : "white"} />
         </View>
 
         <View className="flex-1 items-center">
@@ -87,7 +87,7 @@ export default function ChildJournee({ photo, child, OnBack }) {
         )}
       </View>
       <Text className=" pt-2 pb-2 text-center text-black text-4xl font-bold">
-        {child.name},
+        {child.name}
       </Text>
       <Text className="text-center italic">{ageInMonths} mois</Text>
       <View>

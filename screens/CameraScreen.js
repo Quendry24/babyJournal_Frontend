@@ -1,14 +1,17 @@
 import { CameraView, Camera } from "expo-camera";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import { useState, useEffect, useRef } from "react";
 import { Circle, X, SwitchCamera } from "lucide-react-native";
 import { useIsFocused } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { addPhoto } from "../reducers/user";
 
 export default function CameraScreen({ navigation }) {
   const cameraRef = useRef(null);
   const [hasPermission, setHasPermission] = useState(false);
   const isFocused = useIsFocused();
   const [facing, setFacing] = useState("back");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -16,7 +19,7 @@ export default function CameraScreen({ navigation }) {
       setHasPermission(result && result?.status === "granted");
     })();
   }, []);
-  if (!hasPermission) {
+  if (!hasPermission || !isFocused) {
     return <View />;
   }
   const toggleCameraFacing = () => {
@@ -24,8 +27,11 @@ export default function CameraScreen({ navigation }) {
   };
 
   const takePicture = async () => {
-    const photo = await cameraRef.current?.takePictureAsync({ quality: 0.3 });
-    photo && console.log(photo);
+    const photo = await cameraRef.current?.takePictureAsync({ quality: 0.8 });
+    if (photo) {
+      console.log("Photo ajoutée :", photo.uri);
+      dispatch(addPhoto(photo.uri));
+    }
   };
   return (
     <CameraView
@@ -42,12 +48,9 @@ export default function CameraScreen({ navigation }) {
         </Pressable>
       </View>
       <View className="absolute bottom-16 self-center">
-        <Circle
-          className="items-center"
-          size={75}
-          color="white"
-          onPress={takePicture}
-        />
+        <TouchableOpacity onPress={takePicture}>
+          <Circle className="items-center" size={75} color="white" />
+        </TouchableOpacity>
       </View>
     </CameraView>
   );
