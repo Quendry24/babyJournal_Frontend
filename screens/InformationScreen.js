@@ -9,7 +9,7 @@ import ButtonRetour from "../components/ButtonRetour";
 export default function InformationScreen({ navigation, route }) {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
-  //const [role, setRole] = useState("");
+  const [type, setType] = useState("");
   const [birthday, setBirthday] = useState("");
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
@@ -56,8 +56,8 @@ export default function InformationScreen({ navigation, route }) {
             <Input
               className="jaune"
               title="Rôle"
-              value={role}
-              onChangeText={setRole}
+              value={type}
+              onChangeText={setType}
             />
             <Input
               className="jaune"
@@ -145,7 +145,7 @@ export default function InformationScreen({ navigation, route }) {
               className="ter"
               title="Agrément"
               value={agrement}
-              onChangeText={setagrement}
+              onChangeText={setAgrement}
             />
           </View>
           <View className="w-80 h-16 self-center mt-8">

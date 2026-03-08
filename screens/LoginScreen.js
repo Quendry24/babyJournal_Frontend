@@ -22,7 +22,6 @@ export default function LoginScreen({ navigation, route }) {
 
   return (
     <>
-      <Text>{role}</Text>
       {role === "parent" && (
         //************** PORTAIL PARENT **************
         <View className="flex-1 pt-16 px-8 bg-back">
@@ -51,7 +50,7 @@ export default function LoginScreen({ navigation, route }) {
               title="Inscription"
               variant={config.variantPrimary}
               textSize="lg"
-              onPress={() => navigation.navigate("SignIn", { role: "parent" })}
+              onPress={() => navigation.navigate("SignUp", { role: "parent" })}
             />
           </View>
           <View className=" w-80 h-16 self-center mt-8">
@@ -59,7 +58,7 @@ export default function LoginScreen({ navigation, route }) {
               title="connexion"
               variant={config.variantSecondary}
               textSize="lg"
-              onPress={() => navigation.navigate("SignUp", { role: "parent" })}
+              onPress={() => navigation.navigate("SignIn", { role: "parent" })}
             />
           </View>
         </View>
@@ -95,7 +94,7 @@ export default function LoginScreen({ navigation, route }) {
                 variant={config.variantPrimary}
                 textSize="lg"
                 onPress={() =>
-                  navigation.navigate("SignIn", { role: "nounou" })
+                  navigation.navigate("SignUp", { role: "nounou" })
                 }
               />
             </View>
@@ -105,7 +104,7 @@ export default function LoginScreen({ navigation, route }) {
                 variant={config.variantSecondary}
                 textSize="lg"
                 onPress={() =>
-                  navigation.navigate("SignUp", { role: "nounou" })
+                  navigation.navigate("SignIn", { role: "nounou" })
                 }
               />
             </View>

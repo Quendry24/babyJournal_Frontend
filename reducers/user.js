@@ -3,8 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   value: {
     type: null,
+<<<<<<< HEAD
     user: null,
     photos: [],
+=======
+    userId: null,
+    all: [],
+>>>>>>> 6a517d62a05704d4e34b9bd6575bad5288d3a26e
   },
 };
 export const UserSlice = createSlice({
@@ -15,6 +20,7 @@ export const UserSlice = createSlice({
     setUserType: (state, action) => {
       state.value.type = action.payload;
     },
+<<<<<<< HEAD
     addPhoto: (state, action) => {
       console.log(state.value.photos.length, "photo reçue", action.payload);
       //state.value.photos = [];
@@ -29,4 +35,15 @@ export const UserSlice = createSlice({
   },
 });
 export const { setUserType, addPhoto, removePhoto } = UserSlice.actions;
+=======
+    addUserId: (state, action) => {
+      state.value.userId = action.payload;
+    },
+    allChilds: (state, value) => {
+      state.value.all.push(action.payload);
+    },
+  },
+});
+export const { setUserType, addUserId, allChilds } = UserSlice.actions;
+>>>>>>> 6a517d62a05704d4e34b9bd6575bad5288d3a26e
 export default UserSlice.reducer;

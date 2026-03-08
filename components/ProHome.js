@@ -1,7 +1,13 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { Send, Baby } from "lucide-react-native";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { allChilds } from "../reducers/user";
 
 export default function ProHome({ child, setChildName }) {
+  const idNounou = useSelector((state) => state.user.value.userId);
+  // const [todayChild, setTodayChild] = useState([]);
+  const dispatch = useDispatch();
   const date = new Date();
   const options = {
     weekday: "long",
@@ -9,6 +15,24 @@ export default function ProHome({ child, setChildName }) {
     month: "long",
     day: "numeric",
   };
+
+  useEffect(() => {
+    console.log("'c'est chargé");
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/enfants/${idNounou}`)
+      .then((res) => res.json())
+      .then((data) => {
+        let childs = [];
+        data.childs.map((child, i) => {
+          childs.push({
+            idbabyJournal: child.idBabyJournal,
+            name: child.Prenom,
+            photo: "Baby",
+          });
+        });
+        dispatch(allChilds(childs));
+      });
+    //fetch pour les todays childs
+  }, []);
 
   const todayChild = [
     { name: "Léa", arrival: "7h00", photo: "Baby" },
