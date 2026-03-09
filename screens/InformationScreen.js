@@ -5,8 +5,13 @@ import { useEffect, useState } from "react";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
+import { setUserType } from "../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function InformationScreen({ navigation, route }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value.type);
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [type, setType] = useState("");
@@ -16,12 +21,12 @@ export default function InformationScreen({ navigation, route }) {
   const [pajemploi, setPajemploi] = useState("");
   const [agrement, setAgrement] = useState("");
 
-  const { role } = route.params;
+  console.log("type user :", user);
 
   return (
     //************** Information parent **************
     <>
-      {role === "parent" && (
+      {user === "parents" && (
         <View className="flex-1 p-16 bg-back">
           <View className="flex-row  justify-between">
             <ButtonRetour
@@ -90,7 +95,7 @@ export default function InformationScreen({ navigation, route }) {
       )}
       {/* ************** Information parent ************** */}
 
-      {role === "nounou" && (
+      {user === "nounou" && (
         <View className="flex-1 p-16 bg-back">
           <View className="flex-row  justify-between">
             <ButtonRetour

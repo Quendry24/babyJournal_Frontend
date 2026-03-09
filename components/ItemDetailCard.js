@@ -1,6 +1,9 @@
 import { Image, Text, View, ScrollView } from "react-native";
+import { useState } from "react";
 
-export default function ItemDetailCard() {
+import ChildJournee from "./ChildJournee";
+
+export default function ItemDetailCard({ activityTypes }) {
   const cards = [
     {
       sousTitre: "Sous-titre",
@@ -45,7 +48,7 @@ export default function ItemDetailCard() {
     <View className="flex-1 p-4 bg-white rounded-3xl shadow-sm elevation-3">
       <View className=" flex-1 p-4 border relative border-jaune  rounded-xl">
         <Text className="text-2xl color-jaune absolute top-0  -translate-y-1/2 translate-x-4 bg-white">
-          Titre ici
+          {activityTypes.label}
         </Text>
         <Image
           width={60}

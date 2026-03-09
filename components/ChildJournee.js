@@ -25,6 +25,9 @@ export default function ChildJournee({ photo, child, OnBack }) {
     { id: 5, label: "Santé", icon: HeartPlus, count: 0 },
   ];
 
+  const notesNounou = [
+    { type: "Infos", note: "Amenez un maillot de bain pour demain" },
+  ];
   const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
 
   if (selectedActivity) {
@@ -42,7 +45,7 @@ export default function ChildJournee({ photo, child, OnBack }) {
     return (
       <Pressable
         key={data.id}
-        onPress={() => setSelectedActivity(data.label)}
+        onPress={() => setSelectedActivity(data)}
         className={`flex-row ${i % 2 === 0 ? "bg-vert" : "bg-ter"} items-center py-8 px-8 rounded-3xl shadow-sm elevation-3`}
       >
         <View className="w-12 items-start">

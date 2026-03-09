@@ -42,3 +42,6 @@ yarn-error.*
 /android
 
 app.test.js
+
+#yarn lock
+yarn.lock

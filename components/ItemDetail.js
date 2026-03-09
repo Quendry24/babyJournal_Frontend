@@ -13,7 +13,7 @@ import ItemDetailCard from "./ItemDetailCard";
 import dayjs from "dayjs";
 import ButtonRetour from "./ButtonRetour";
 
-export default function ItemDetail({ photo, child, OnBack }) {
+export default function ItemDetail({ photo, child, OnBack, activityTypes }) {
   const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
   return (
     <View className="flex-1">
@@ -39,7 +39,7 @@ export default function ItemDetail({ photo, child, OnBack }) {
       </Text>
       <Text className="text-center italic">{ageInMonths} mois</Text>
       <View></View>
-      <ItemDetailCard />
+      <ItemDetailCard activityTypes={activityTypes} />
     </View>
   );
 }

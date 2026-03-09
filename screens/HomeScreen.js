@@ -16,6 +16,7 @@ export default function HomeScreen() {
   const setChildName = (name) => {
     setChild(name);
   };
+
   const idNounou = "1234"; // viendra de la connexion
 
   useEffect(() => {
