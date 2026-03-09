@@ -109,7 +109,7 @@ const TabNavigator = ({ route }) => {
                         left: 22,
                         zIndex: 10,
                       }}
-                      onPress={() => console.log("camera")}
+                      onPress={() => navigation.navigate("Camera")} // remplacer ici !!
                     />
                     <Send
                       size={30}
