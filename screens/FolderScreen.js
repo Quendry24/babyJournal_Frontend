@@ -11,7 +11,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import Button from "../components/Button";
-import { useSelector } from "react-redux";
 import { ChevronLeft, Ellipsis, Trash2 } from "lucide-react-native";
 import { removePhoto } from "../reducers/user";
 
@@ -26,9 +25,9 @@ export default function FolderScreen() {
   //const user = useSelector((state) => state.user.value);
 
   const { width } = Dimensions.get("window");
-  const photosData = useSelector((state) => state.user?.value?.photos);
-  console.log("store", photosData.length);
-  /*[
+  // const photosData = useSelector((state) => state.user?.value?.photos);
+  // console.log("store", photosData.length);
+  const photosData = [
     "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
     "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
     "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
@@ -64,7 +63,7 @@ export default function FolderScreen() {
     "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
     "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
     "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
-  ]*/
+  ];
 
   //const images = photosData.map((url) => ({ source: { uri: url } }));
   const show = (index) => {
@@ -73,7 +72,7 @@ export default function FolderScreen() {
   };
   const hide = () => setVisible(false);
 
-  const photos = photosData.map((data, i) => {
+  const photos = photosData?.map((data, i) => {
     return (
       <Pressable key={i} className="items-center w-1/4" onPress={() => show(i)}>
         <Image source={{ uri: data }} className="w-full aspect-square" />
@@ -134,12 +133,12 @@ export default function FolderScreen() {
                 contentOffset={{ x: selectedIndex * width, y: 0 }}
                 showsHorizontalScrollIndicator={false}
               >
-                {photosData.map((uri, i) => (
+                {photosData?.map((uri, i) => (
                   <View
                     key={i}
                     style={{
                       width,
-
+                      maxWidth: "100%",
                       height: "100%",
                       justifyContent: "center",
                       alignItems: "center",
