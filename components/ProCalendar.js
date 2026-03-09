@@ -17,9 +17,6 @@ import {
   SquareCheck,
 } from "lucide-react-native";
 import Button from "./Button";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
-import { Picker } from "@react-native-picker/picker";
 import { getWeekDays } from "../utils/getWeekDays";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
@@ -30,16 +27,44 @@ export default function ProCalendar() {
   const [offset, setOffset] = useState(0);
   const [weekDays, setWeekDays] = useState([]);
   const [affichageJours, setAffichageJours] = useState([]);
-  const [myWeek, setMyWeek] = useState([]);
   const [semaine, setSemaine] = useState(0);
-  const [selectedLanguage, setSelectedLanguage] = useState();
-  const [time, setTime] = useState(new Date());
-  const [showTimePicker, setShowTimePicker] = useState(false);
   const [reglage, setReglage] = useState(false);
-  const [allChild, setAllChild] = useState([]);
+
+  const [allChild, setAllChild] = useState([
+    {
+      name: "Léa",
+      photo: "Baby",
+      presence: [false, false, false, false, false, false, false],
+    },
+    {
+      name: "Timothée",
+      photo: "Baby",
+      presence: [false, false, false, false, false, false, false],
+    },
+    {
+      name: "Martin",
+      photo: "Baby",
+      presence: [false, false, false, false, false, false, false],
+    },
+    {
+      name: "Constance",
+      photo: "Baby",
+      presence: [false, false, false, false, false, false, false],
+    },
+    {
+      name: "Yves",
+      photo: "Baby",
+      presence: [false, false, false, false, false, false, false],
+    },
+    {
+      name: "Vincent",
+      photo: "Baby",
+      presence: [false, false, false, false, false, false, false],
+    },
+  ]);
 
   const idNounou = useSelector((state) => state.user.value.userId); // a mettre dans le store a la connexion
-  // const allChild = useSelector(state=>state.user.value.all)   d'abord modifier le map pour les case a cocher
+  // const allChild = useSelector((state) => state.user.value.all); // d'abord modifier le map pour les case a cocher
   const options = {
     weekday: "long",
     year: "numeric",
@@ -47,89 +72,63 @@ export default function ProCalendar() {
     day: "numeric",
   };
 
-  useEffect(() => {
-    const today = new Date().toISOString().split("T")[0];
-    let todayChild = [];
-    fetch(
-      `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/jour/${idNounou}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          today,
-        }),
-      },
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("fetch", data.child);
-        todayChild.push(data.child);
-        console.log(todayChild[0]);
-      })
-      .catch((err) => {
-        console.log("FETCH ERROR:", err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const today = new Date().toISOString().split("T")[0];
+  //   let todayChild = [];
+  //   fetch(
+  //     `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/jour/${idNounou}`,
+  //     {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         today,
+  //       }),
+  //     },
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("fetch", data.child);
+  //       todayChild.push(data.child);
+  //       console.log(todayChild[0]);
+  //     })
+  //     .catch((err) => {
+  //       console.log("FETCH ERROR:", err);
+  //     });
+  // }, []);
+
+  console.log("allchild", allChild);
 
   useEffect(() => {
     const { week, jours, monday } = getWeekDays(offset, options);
     setWeekDays(week);
     setAffichageJours(jours);
-
-    fetch(
-      `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/semaine/${idNounou}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: monday.toISOString(),
-          allChild,
-        }),
-      },
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("fetch result:", data);
-      })
-      .catch((err) => {
-        console.log("FETCH ERROR:", err);
-      });
-
     const numSemaine = dayjs(monday).isoWeek();
     setSemaine(numSemaine);
-  }, [offset]);
 
-  //   {
-  //     name: "Léa",
-  //     photo: "Baby",
-  //     presence: [false, false, false, false, false, false, false],
-  //   },
-  //   {
-  //     name: "Timothée",
-  //     photo: "Baby",
-  //     presence: [false, false, false, false, false, false, false],
-  //   },
-  //   {
-  //     name: "Martin",
-  //     photo: "Baby",
-  //     presence: [false, false, false, false, false, false, false],
-  //   },
-  //   {
-  //     name: "Constance",
-  //     photo: "Baby",
-  //     presence: [false, false, false, false, false, false, false],
-  //   },
-  //   {
-  //     name: "Yves",
-  //     photo: "Baby",
-  //     presence: [false, false, false, false, false, false, false],
-  //   },
-  //   {
-  //     name: "Vincent",
-  //     photo: "Baby",
-  //     presence: [false, false, false, false, false, false, false],
-  //   },
-  // ]);
+    // const tableauVide = allChild.map((child) => ({
+    //   ...child,
+    //   presence: Array(7).fill(false),
+    // }));
+
+    // fetch(
+    //   `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/semaine/${idNounou}`,
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //       date: monday.toISOString(),
+    //       allChild,
+    //     }),
+    //   },
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("fetch result:", data);
+    //   })
+    //   .catch((err) => {
+    //     console.log("FETCH ERROR:", err);
+    //   });
+  }, [offset]);
 
   const changePresence = (iChild, iDay) => {
     setAllChild((data) => {
@@ -216,7 +215,7 @@ export default function ProCalendar() {
                 {allChild.map((child, iChild) => {
                   if (child.presence[i]) {
                     return (
-                      <View className="items-center">
+                      <View className="items-center" key={iChild}>
                         <View className="border-4 border-jaune rounded-full">
                           <Baby color="gray" size={48} />
                         </View>

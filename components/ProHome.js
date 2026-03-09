@@ -2,10 +2,12 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { Send, Baby } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allChilds } from "../reducers/user";
+import { allChilds, getTodayChilds } from "../reducers/user";
 
 export default function ProHome({ child, setChildName }) {
   const idNounou = useSelector((state) => state.user.value.userId);
+  const childs = useSelector((state) => state.user.value.all);
+  const todayChilds = useSelector((state) => state.user.value.today);
   // const [todayChild, setTodayChild] = useState([]);
   const dispatch = useDispatch();
   const date = new Date();
@@ -17,22 +19,32 @@ export default function ProHome({ child, setChildName }) {
   };
 
   useEffect(() => {
-    console.log("'c'est chargé");
+    //recuperation de tous les enfants dont la nounou à cet Id
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/enfants/${idNounou}`)
       .then((res) => res.json())
       .then((data) => {
-        let childs = [];
-        data.childs.map((child, i) => {
-          childs.push({
-            idbabyJournal: child.idBabyJournal,
-            name: child.Prenom,
-            photo: "Baby",
-          });
-        });
+        const childs = data.childs.map((child, i) => ({
+          idBabyJournal: child.idBabyJournal,
+          name: child.Prenom,
+          photo: "Baby",
+        }));
         dispatch(allChilds(childs));
-      });
-    //fetch pour les todays childs
-  }, []);
+      })
+      .catch((err) => console.log(err));
+
+    // recherche dans le calendrier de la nounou les enfants présent ce jour la
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/jour/${idNounou}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          console.log(data.enfantsDuJour);
+          dispatch(getTodayChilds(data.enfantsDuJour));
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [idNounou]);
 
   const todayChild = [
     { name: "Léa", arrival: "7h00", photo: "Baby" },

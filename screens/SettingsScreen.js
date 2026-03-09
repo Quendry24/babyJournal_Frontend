@@ -1,7 +1,6 @@
 import { View, Text, Pressable } from "react-native";
 import ButtonRetour from "../components/ButtonRetour";
 import { useSelector } from "react-redux";
-import Button from "../components/Button";
 import AddChild from "../components/AddChild";
 
 export default function SettingsScreen({ OnBack }) {
@@ -12,9 +11,9 @@ export default function SettingsScreen({ OnBack }) {
     <View className="flex-1 bg-back p-4 pt-16">
       {user === "Parents" && (
         <View className="flex-1">
-          <Pressable className="">
+          {/* <Pressable className="">
             <ButtonRetour onPress={OnBack} />
-          </Pressable>
+          </Pressable> */}
           <View className="flex-1 bg-back items-center ">
             <Text className="pt-4 pb-2 text-center text-black text-4xl font-bold">
               Paramètres
@@ -27,9 +26,9 @@ export default function SettingsScreen({ OnBack }) {
       )}
       {user === "Pro" && (
         <View className="flex-1">
-          <Pressable className="py-4">
+          {/* <Pressable className="py-4">
             <ButtonRetour onPress={OnBack} />
-          </Pressable>
+          </Pressable> */}
           <AddChild />
         </View>
       )}

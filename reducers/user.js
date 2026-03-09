@@ -4,6 +4,7 @@ const initialState = {
     type: null,
     userId: null,
     all: [],
+    today: [],
   },
 };
 export const UserSlice = createSlice({
@@ -17,10 +18,14 @@ export const UserSlice = createSlice({
     addUserId: (state, action) => {
       state.value.userId = action.payload;
     },
-    allChilds: (state, value) => {
-      state.value.all.push(action.payload);
+    getAllChilds: (state, action) => {
+      state.value.all = action.payload;
+    },
+    getTodayChilds: (state, action) => {
+      state.value.today = action.payload;
     },
   },
 });
-export const { setUserType, addUserId, allChilds } = UserSlice.actions;
+export const { setUserType, addUserId, getAllChilds, getTodayChilds } =
+  UserSlice.actions;
 export default UserSlice.reducer;

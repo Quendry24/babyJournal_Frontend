@@ -10,8 +10,11 @@ import {
 import { useState } from "react";
 import Button from "../components/Button";
 import { ChevronLeft, Ellipsis } from "lucide-react-native";
+import { useSelector } from "react-redux";
 
 export default function FolderScreen() {
+  const user = useSelector((state) => state.user.value.type);
+
   const [visible, setVisible] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -69,73 +72,80 @@ export default function FolderScreen() {
   });
 
   return (
-    <>
-      <View className="flex-1 pt-16 bg-back">
-        <Text className="pt-4 pb-2 text-center text-black text-4xl font-bold">
-          Documents
-        </Text>
+    <View className="flex-1">
+      {user === "Pro" && (
+        <View className="flex-1 pt-16 bg-back items-center justify-center">
+          <Text className="text-2xl">Page en cours de création</Text>
+        </View>
+      )}
+      {user === "Parents" && (
+        <View className="flex-1 pt-16 bg-back">
+          <Text className="pt-4 pb-2 text-center text-black text-4xl font-bold">
+            Documents
+          </Text>
 
-        <Text className="text-2xl pl-4 pb-4">Fichiers</Text>
-        <Text className="text-2xl pl-4 pb-4">Photos</Text>
-        <ScrollView
-          contentContainerStyle={{
-            justifyContent: "center",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            paddingBottom: 180,
-            width: "100%",
-          }}
-        >
-          {photos}
-        </ScrollView>
-        <Modal visible={visible} transparent animationType="fade">
-          <View className="flex-1 bg-back">
-            <View className="mt-16 flex-row justify-between mx-4">
-              <View className="w-10 aspect-square">
-                <Button
-                  title={<ChevronLeft color="white" />}
-                  textSize="xl"
-                  onPress={hide}
-                />
-              </View>
-
-              <View className=" self-center">
-                <Text className=" font-semibold text-xl text-center">
-                  12 mars 2026
-                </Text>
-                <Text className="text-center">11:11</Text>
-              </View>
-              <View className="w-10 aspect-square">
-                <Button title={<Ellipsis color="white" />} textSize="xl" />
-              </View>
-            </View>
-            <ScrollView
-              horizontal
-              pagingEnabled
-              contentOffset={{ x: selectedIndex * width, y: 0 }}
-              showsHorizontalScrollIndicator={false}
-            >
-              {photosData.map((uri, i) => (
-                <View
-                  key={i}
-                  style={{
-                    width,
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image
-                    source={{ uri }}
-                    style={{ width: "100%", height: "100%" }}
-                    resizeMode="contain"
+          <Text className="text-2xl pl-4 pb-4">Fichiers</Text>
+          <Text className="text-2xl pl-4 pb-4">Photos</Text>
+          <ScrollView
+            contentContainerStyle={{
+              justifyContent: "center",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              paddingBottom: 180,
+              width: "100%",
+            }}
+          >
+            {photos}
+          </ScrollView>
+          <Modal visible={visible} transparent animationType="fade">
+            <View className="flex-1 bg-back">
+              <View className="mt-16 flex-row justify-between mx-4">
+                <View className="w-10 aspect-square">
+                  <Button
+                    title={<ChevronLeft color="white" />}
+                    textSize="xl"
+                    onPress={hide}
                   />
                 </View>
-              ))}
-            </ScrollView>
-          </View>
-        </Modal>
-      </View>
-    </>
+
+                <View className=" self-center">
+                  <Text className=" font-semibold text-xl text-center">
+                    12 mars 2026
+                  </Text>
+                  <Text className="text-center">11:11</Text>
+                </View>
+                <View className="w-10 aspect-square">
+                  <Button title={<Ellipsis color="white" />} textSize="xl" />
+                </View>
+              </View>
+              <ScrollView
+                horizontal
+                pagingEnabled
+                contentOffset={{ x: selectedIndex * width, y: 0 }}
+                showsHorizontalScrollIndicator={false}
+              >
+                {photosData.map((uri, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      width,
+                      height: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={{ uri }}
+                      style={{ width: "100%", height: "100%" }}
+                      resizeMode="contain"
+                    />
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+          </Modal>
+        </View>
+      )}
+    </View>
   );
 }
