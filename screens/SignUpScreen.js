@@ -6,23 +6,30 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { setUserType } from "../reducers/user";
 
-export default function SignUpScreen({ navigation, route }) {
-  {
-    /* ************** SignUp Parent ************** */
-  }
+export default function SignUpScreen({ navigation }) {
   const dispatch = useDispatch();
-  const nounou = useSelector((state) => state.nounou.value);
-  const parent = useSelector((state) => state.parent.value);
-
-  const { role } = route.params;
+  const user = useSelector((state) => state.user.value.type);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorEmail, setErrorEmail] = useState(false);
+
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  console.log("type user :", user);
 
   const handleRegister = () => {
-    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/${role}/signUp`, {
+    console.log("handleRegister déclenché");
+    if (!EMAIL_REGEX.test(email)) {
+      setErrorEmail(true);
+      return;
+    }
+
+    setErrorEmail(false);
+
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/${user}/signUp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,65 +40,75 @@ export default function SignUpScreen({ navigation, route }) {
       }),
     })
       .then((response) => response.json())
-      .then((parent) => {
-        dispatch(SignUp({ email: email, token: parent.token }));
-        console.log(parent);
+      .then((dataUser) => {
+        console.log("réponse backend :", dataUser);
+        dispatch(setUserType("nounou"));
+        navigation.navigate("Information");
         setEmail("");
         setPassword("");
+      })
+      .catch((error) => {
+        console.log("Erreur fetch :", error);
       });
   };
 
   return (
     <>
-      {role === "parent" && (
-        //************** SignUp parents **************
+      {user === "parents" && (
         <View className="flex-1 pt-16 px-8 bg-back">
-          <View className="flex-row justify-between">
+          <View className=" flex-row  justify-between">
             <ButtonRetour
               title="Retour"
               variant="jaune"
               textSize="sm"
               onPress={() => navigation.goBack()}
             />
-
-            <Text className="text-2xl text-right font-bold pb-16">
+            <Text className=" text-2xl text-right font-bold pb-16">
               Baby Journal
             </Text>
           </View>
-
-          <View>
-            <Text className="text-4xl font-bold text-center pb-24">
+          <View className="">
+            <Text className=" text-4xl font-bold text-center pb-8">
               Inscription
             </Text>
           </View>
 
-          <View className="mb-30">
-            <Input title="Email" value={email} onChangeText={setEmail} />
-            <Input
-              title="Password"
-              value={password}
-              onChangeText={setPassword}
-              isPassword={true}
+          <Text className=" text-xl font-bold text-center ">
+            Vous voulez créer une famille ?
+          </Text>
+          <View className=" w-80 h-16 self-center mt-16">
+            <Button
+              className="border"
+              title="Je créer une famille"
+              variant="jaune"
+              textSize="lg"
+              onPress={() => {
+                dispatch(setUserType("parents"));
+                navigation.navigate("CreateFamily");
+              }}
             />
           </View>
 
-          <View className="w-80 h-16 self-center mt-16">
+          <View className="border m-16"></View>
+
+          <Text className=" text-xl font-bold text-center">
+            Vous voulez rejoindre une famille existante ?
+          </Text>
+          <View className=" w-80 h-16 self-center mt-16">
             <Button
-              title="Créer mon profil parent"
-              variant="jaune"
+              title="Rejoindre une famille"
+              variant="outlineJaune"
               textSize="lg"
-              onPress={() =>
-                navigation.navigate.handleRegister("JoinFamily", {
-                  role: "parent",
-                })
-              }
+              onPress={() => {
+                dispatch(setUserType("parents"));
+                navigation.navigate("JoinFamily");
+              }}
             />
           </View>
         </View>
       )}
 
-      {/* ************** SignUp Nounou ************** */}
-      {role === "nounou" && (
+      {user === "nounou" && (
         <View className="flex-1 pt-16 px-8 bg-back">
           <View className="flex-row justify-between">
             <ButtonRetour
@@ -114,6 +131,12 @@ export default function SignUpScreen({ navigation, route }) {
 
           <View className="mb-30">
             <Input title="Email" value={email} onChangeText={setEmail} />
+            {errorEmail && (
+              <Text className="text-red-500 mt-2">
+                Email ou mot de passe incorrect.
+              </Text>
+            )}
+
             <Input
               title="Password"
               value={password}
@@ -127,7 +150,9 @@ export default function SignUpScreen({ navigation, route }) {
               title="Créer mon profil pro"
               variant="ter"
               textSize="lg"
-              onPress={() => handleNounouRegister()}
+              onPress={() => {
+                handleRegister();
+              }}
             />
           </View>
         </View>
