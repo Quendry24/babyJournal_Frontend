@@ -6,15 +6,16 @@ import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserType } from "../reducers/user";
+import { setUserType, login } from "../reducers/user";
 
 export default function CreateFamilyScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [nom, setNom] = useState("");
   const [errorEmail, setErrorEmail] = useState(false);
+  // const [userId, setUserId] = useState("");
 
   const user = useSelector((state) => state.user.value.type);
 
@@ -36,6 +37,7 @@ export default function CreateFamilyScreen({ navigation }) {
       },
       body: JSON.stringify({
         email: email,
+        Nom: nom,
         password: password,
       }),
     })
@@ -43,9 +45,17 @@ export default function CreateFamilyScreen({ navigation }) {
       .then((dataUser) => {
         console.log(dataUser);
         dispatch(setUserType("parents"));
+        dispatch(
+          login({
+            email,
+            Nom: nom,
+            familyId: dataUser.familyId,
+          }),
+        );
         navigation.navigate("Information");
         setEmail("");
         setPassword("");
+        setNom("");
       });
   };
 
@@ -84,8 +94,8 @@ export default function CreateFamilyScreen({ navigation }) {
 
             <Input
               title="Nom de la famille"
-              value={username}
-              onChangeText={setUsername}
+              value={nom}
+              onChangeText={setNom}
             />
 
             <Input

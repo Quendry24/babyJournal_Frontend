@@ -1,11 +1,7 @@
 import { Pressable, Text, View, Image } from "react-native";
 import Button from "../components/Button";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import { setUserType } from "../reducers/user";
-
-const Stack = createNativeStackNavigator();
 
 export default function WelcomeScreen({ navigation }) {
   const dispatch = useDispatch();

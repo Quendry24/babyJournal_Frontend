@@ -7,6 +7,7 @@ import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { setUserType } from "../reducers/user";
+import { login } from "../reducers/user";
 
 export default function SignUpScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -42,7 +43,15 @@ export default function SignUpScreen({ navigation }) {
       .then((response) => response.json())
       .then((dataUser) => {
         console.log("réponse backend :", dataUser);
-        dispatch(setUserType("nounou"));
+        dispatch(
+          login({
+            token: dataUser.token,
+            userId: dataUser.userId,
+            email: email,
+            idFamille: dataUser.idFamille,
+            IdNounou: dataUser.IdNounou,
+          }),
+        );
         navigation.navigate("Information");
         setEmail("");
         setPassword("");

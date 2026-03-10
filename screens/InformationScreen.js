@@ -5,24 +5,67 @@ import { useEffect, useState } from "react";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType } from "../reducers/user";
+import { setUserType, infos } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function InformationScreen({ navigation, route }) {
+export default function InformationScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value.type);
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [type, setType] = useState("");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [role, setRole] = useState("");
   const [birthday, setBirthday] = useState("");
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
   const [pajemploi, setPajemploi] = useState("");
   const [agrement, setAgrement] = useState("");
 
-  console.log("type user :", user);
-
+  const handleSaveInfos = () => {
+    console.log("type user :", user);
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/${user}/updateInfos`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nom,
+        prenom,
+        role,
+        birthday,
+        address,
+        contact,
+        pajemploi,
+        agrement,
+      }),
+    })
+      .then((response) => response.json())
+      .then((dataUser) => {
+        console.log(dataUser);
+        dispatch(setUserType("user"));
+        dispatch(
+          infos({
+            nom,
+            prenom,
+            role,
+            birthday,
+            address,
+            contact,
+            pajemploi,
+            agrement,
+          }),
+        );
+        navigation.navigate("TabNavigator");
+        setNom("");
+        setPrenom("");
+        setRole("");
+        setBirthday("");
+        setAddress("");
+        setContact("");
+        setPajemploi("");
+        setAgrement("");
+      });
+  };
   return (
     //************** Information parent **************
     <>
@@ -49,20 +92,20 @@ export default function InformationScreen({ navigation, route }) {
             <Input
               className="color-[#F9BC50]"
               title="Nom"
-              value={name}
-              onChangeText={setName}
+              value={nom}
+              onChangeText={setNom}
             />
             <Input
               className="jaune"
               title="Prénom"
-              value={username}
-              onChangeText={setUsername}
+              value={prenom}
+              onChangeText={setPrenom}
             />
             <Input
               className="jaune"
               title="Rôle"
-              value={type}
-              onChangeText={setType}
+              value={role}
+              onChangeText={setRole}
             />
             <Input
               className="jaune"
@@ -88,19 +131,18 @@ export default function InformationScreen({ navigation, route }) {
               title="Se connecter"
               variant="jaune"
               textSize="lg"
-              onPress={() => navigation.navigate("Profil", { role: "parent" })}
+              onPress={handleSaveInfos}
             />
           </View>
         </View>
       )}
-      {/* ************** Information parent ************** */}
 
       {user === "nounou" && (
         <View className="flex-1 p-16 bg-back">
           <View className="flex-row  justify-between">
             <ButtonRetour
               title="Retour"
-              variant="jaune"
+              variant="ter"
               textSize="sm"
               onPress={() => navigation.goBack()}
             />
@@ -118,14 +160,14 @@ export default function InformationScreen({ navigation, route }) {
             <Input
               className="ter"
               title="Nom"
-              value={name}
-              onChangeText={setName}
+              value={nom}
+              onChangeText={setNom}
             />
             <Input
               className="ter"
               title="Prénom"
-              value={username}
-              onChangeText={setUsername}
+              value={prenom}
+              onChangeText={setPrenom}
             />
 
             <Input
@@ -156,9 +198,9 @@ export default function InformationScreen({ navigation, route }) {
           <View className="w-80 h-16 self-center mt-8">
             <Button
               title="Se connecter"
-              variant="jaune"
+              variant="ter"
               textSize="lg"
-              onPress={() => navigation.navigate("Profil", { role: "nounou" })}
+              onPress={handleSaveInfos}
             />
           </View>
         </View>

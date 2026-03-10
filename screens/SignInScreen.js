@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType } from "../reducers/user";
+import { setUserType, login, logout } from "../reducers/user";
 
 export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ export default function SignInScreen({ navigation }) {
       body: JSON.stringify({
         email: email,
         password: password,
+        idFamille: idFamille,
       }),
     })
       .then((response) => response.json())
@@ -35,17 +36,14 @@ export default function SignInScreen({ navigation }) {
 
         if (dataUser.result) {
           dispatch(setUserType("user"));
-          ("MainTabs",
-            {
-              screen: "Home",
-            });
-
+          navigation.navigate("Tabnavigator");
           setEmail("");
           setPassword("");
         } else {
           dispatch(
             login({
               email: user.email,
+              idFamille: user.idFamille,
               token: dataUser.token,
             }),
           );
@@ -59,7 +57,7 @@ export default function SignInScreen({ navigation }) {
       });
   };
 
-  const handleLogout = () => {
+  const Logout = () => {
     dispatch(setUserType("user"));
     dispatch(logout());
   };
