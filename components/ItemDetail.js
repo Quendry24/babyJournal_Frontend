@@ -14,7 +14,7 @@ import dayjs from "dayjs";
 import ButtonRetour from "./ButtonRetour";
 
 export default function ItemDetail({ photo, child, OnBack, activityTypes }) {
-  const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
+  const ageInMonths = dayjs().diff(dayjs(child.Birthday), "month");
   return (
     <View className="flex-1">
       <View className="flex-row justify-between mr-4 items-center">
@@ -35,7 +35,7 @@ export default function ItemDetail({ photo, child, OnBack, activityTypes }) {
         )}
       </View>
       <Text className=" pt-2 pb-2 text-center text-black text-4xl font-bold">
-        {child.name},
+        {child.Prenom}
       </Text>
       <Text className="text-center italic">{ageInMonths} mois</Text>
       <View></View>

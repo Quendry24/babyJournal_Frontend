@@ -12,18 +12,23 @@ import ChildCard from "./ChildCard";
 import ItemDetail from "./ItemDetail";
 import Button from "./Button";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function ParentsHome({ onSelectChild }) {
   //Remplacement tableau dur
   const [child, setChild] = useState([]);
+  const idFamille = useSelector((state) => state.user.value.idFamille);
 
   useEffect(() => {
-    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/enfant`)
+    if (!idFamille) return;
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/famille/${idFamille}`)
       .then((res) => res.json())
       .then((data) => {
-        setChild(data.child);
-      });
-  }, []);
+        console.log(data);
+        setChild(data.enfants);
+      })
+      .catch((error) => console.log(error));
+  }, [idFamille]);
 
   // ANCIEN TABLEAU EN DUR
   /*const child = [
@@ -45,12 +50,13 @@ export default function ParentsHome({ onSelectChild }) {
     },
   ];*/
 
-  const allChild = child.map((data, i) => (
+  const allChild = child?.map((data, i) => (
     <ChildCard
       key={i}
-      name={data.name}
-      birthDate={data.birthDate}
+      name={data.Prenom}
+      birthDate={data.Birthday}
       jours={data.jours}
+      idBabyJournal={data.idBabyJournal}
       onPress={() => onSelectChild(data)}
     />
   ));

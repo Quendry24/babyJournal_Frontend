@@ -18,17 +18,17 @@ import ButtonRetour from "./ButtonRetour";
 export default function ChildJournee({ photo, child, OnBack }) {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const activityTypes = [
-    { id: 1, label: "Sieste", icon: Bed, count: 4 },
-    { id: 2, label: "Repas", icon: Utensils, count: 1 },
-    { id: 3, label: "Activités", icon: Shapes, count: 2 },
-    { id: 4, label: "Changes", icon: Shirt, count: 3 },
+    { id: 1, label: "Sieste", icon: Bed, count: 0 }, // {count :donnéesNounou.length || 0}
+    { id: 2, label: "Repas", icon: Utensils, count: 0 },
+    { id: 3, label: "Activités", icon: Shapes, count: 0 },
+    { id: 4, label: "Changes", icon: Shirt, count: 0 },
     { id: 5, label: "Santé", icon: HeartPlus, count: 0 },
   ];
 
   const notesNounou = [
     { type: "Infos", note: "Amenez un maillot de bain pour demain" },
   ];
-  const ageInMonths = dayjs().diff(dayjs(child.birthDate), "month");
+  const ageInMonths = dayjs().diff(dayjs(child.Birthday), "month");
 
   if (selectedActivity) {
     return (
@@ -90,9 +90,9 @@ export default function ChildJournee({ photo, child, OnBack }) {
         )}
       </View>
       <Text className=" pt-2 pb-2 text-center text-black text-4xl font-bold">
-        {child.name}
+        {child.Prenom}
       </Text>
-      <Text className="text-center italic">{ageInMonths} mois</Text>
+      <Text className="text-center italic pb-4">{ageInMonths} mois</Text>
       <View>
         <ScrollView
           className="pt-4"

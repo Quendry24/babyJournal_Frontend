@@ -44,17 +44,17 @@ export default function ItemDetailCard({ activityTypes }) {
     </View>
   ));
 
+  const IconComponent = activityTypes.icon;
   return (
     <View className="flex-1 p-4 bg-white rounded-3xl shadow-sm elevation-3">
       <View className=" flex-1 p-4 border relative border-jaune  rounded-xl">
         <Text className="text-2xl color-jaune absolute top-0  -translate-y-1/2 translate-x-4 bg-white">
           {activityTypes.label}
         </Text>
-        <Image
-          width={60}
-          height={60}
-          className="border self-end rounded-xl -mb-4"
-        ></Image>
+        <View className="items-end">
+          {IconComponent && <IconComponent size={45} />}
+        </View>
+
         <ScrollView className="">{allcards}</ScrollView>
         <Text className="text-3xl font-bold absolute right-4 bottom-4 ">
           {cards.length}
