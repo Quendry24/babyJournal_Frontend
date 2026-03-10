@@ -2,15 +2,17 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserType } from "../reducers/user";
 
-export default function LoginScreen({ navigation, route }) {
-  const { role } = route.params;
+export default function LoginScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value.type);
 
   const config =
-    role === "parent"
+    user === "parents"
       ? {
-          title: "Portail parents",
+          title: "Portail parent",
           variantPrimary: "jaune",
           variantSecondary: "outlineJaune",
         }
@@ -22,7 +24,7 @@ export default function LoginScreen({ navigation, route }) {
 
   return (
     <>
-      {role === "parent" && (
+      {user === "parents" && (
         //************** PORTAIL PARENT **************
         <View className="flex-1 pt-16 px-8 bg-back">
           <View className="flex-row  justify-between">
@@ -43,14 +45,18 @@ export default function LoginScreen({ navigation, route }) {
           </View>
 
           <Text className=" text-xl h-96 font-bold text-center">
-            {config.title}{" "}
+            {config.title}
           </Text>
           <View className="w-80 h-16 self-center mt-8 ">
             <Button
               title="Inscription"
               variant={config.variantPrimary}
               textSize="lg"
-              onPress={() => navigation.navigate("SignUp", { role: "parent" })}
+              onPress={() => {
+                dispatch(setUserType("parents"));
+
+                navigation.navigate("SignUp");
+              }}
             />
           </View>
           <View className=" w-80 h-16 self-center mt-8">
@@ -58,14 +64,18 @@ export default function LoginScreen({ navigation, route }) {
               title="connexion"
               variant={config.variantSecondary}
               textSize="lg"
-              onPress={() => navigation.navigate("SignIn", { role: "parent" })}
+              onPress={() => {
+                dispatch(setUserType("parents"));
+
+                navigation.navigate("SignIn");
+              }}
             />
           </View>
         </View>
       )}
 
       {/* ************** PORTAIL ASSISTANTE MATERNELLE ************** */}
-      {role === "nounou" && (
+      {user === "nounou" && (
         <View className="flex-1 pt-16 px-8 bg-back">
           <View>
             <View className="flex-row  justify-between">
@@ -93,9 +103,10 @@ export default function LoginScreen({ navigation, route }) {
                 title="Inscription"
                 variant={config.variantPrimary}
                 textSize="lg"
-                onPress={() =>
-                  navigation.navigate("SignUp", { role: "nounou" })
-                }
+                onPress={() => {
+                  dispatch(setUserType("nounou"));
+                  navigation.navigate("SignUp");
+                }}
               />
             </View>
             <View className=" w-80 h-16 self-center mt-8">
@@ -103,9 +114,10 @@ export default function LoginScreen({ navigation, route }) {
                 title="connexion"
                 variant={config.variantSecondary}
                 textSize="lg"
-                onPress={() =>
-                  navigation.navigate("SignIn", { role: "nounou" })
-                }
+                onPress={() => {
+                  dispatch(setUserType("nounou"));
+                  navigation.navigate("SignIn");
+                }}
               />
             </View>
           </View>

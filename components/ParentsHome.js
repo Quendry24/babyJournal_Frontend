@@ -11,9 +11,22 @@ import { ArrowLeft } from "lucide-react-native";
 import ChildCard from "./ChildCard";
 import ItemDetail from "./ItemDetail";
 import Button from "./Button";
+import { useState, useEffect } from "react";
 
 export default function ParentsHome({ onSelectChild }) {
-  const child = [
+  //Remplacement tableau dur
+  const [child, setChild] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/enfant`)
+      .then((res) => res.json())
+      .then((data) => {
+        setChild(data.child);
+      });
+  }, []);
+
+  // ANCIEN TABLEAU EN DUR
+  /*const child = [
     {
       name: "Alysée",
       birthDate: "2025-05-09",
@@ -30,7 +43,7 @@ export default function ParentsHome({ onSelectChild }) {
       birthDate: "2024-08-02",
       jours: "mercredi-jeudi-vendredi",
     },
-  ];
+  ];*/
 
   const allChild = child.map((data, i) => (
     <ChildCard

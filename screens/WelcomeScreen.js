@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, Image } from "react-native";
 import Button from "../components/Button";
 import { useDispatch } from "react-redux";
 import { setUserType } from "../reducers/user";
@@ -16,17 +16,21 @@ export default function WelcomeScreen({ navigation }) {
         </Text>
       </View>
 
-      <View className=" h-64 items-center justify-center my-20">
-        <Text>IMAGE</Text>
-        {/* Image ici */}
+      <View className="items-center justify-center mt-24 mb-16">
+        <Image
+          source={require("../assets/nounou-baby-sitter-moderne-tenant-bebe-jouant-enfants-disant-au-revoir-mere-occupee-ca.png")}
+          style={{ width: 350, height: 250 }}
+        />
       </View>
-
       <View className="w-80 h-16 self-center mt-8">
         <Button
           title="Je suis parent"
           variant="jaune"
           textSize="lg"
-          onPress={() => navigation.navigate("Login", { role: "parent" })}
+          onPress={() => {
+            dispatch(setUserType("parents"));
+            navigation.navigate("Login");
+          }}
         />
       </View>
       <View className="w-80 h-16 self-center mt-8">
@@ -34,7 +38,10 @@ export default function WelcomeScreen({ navigation }) {
           title="Je suis assistante maternelle"
           variant="ter"
           textSize="lg"
-          onPress={() => navigation.navigate("Login", { role: "nounou" })}
+          onPress={() => {
+            dispatch(setUserType("nounou"));
+            navigation.navigate("Login");
+          }}
         />
       </View>
 

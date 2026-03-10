@@ -27,12 +27,29 @@ export default function CameraScreen({ navigation }) {
   };
 
   const takePicture = async () => {
+    console.log("bouton cliqué");
     const photo = await cameraRef.current?.takePictureAsync({ quality: 0.8 });
-    if (photo) {
-      console.log("Photo ajoutée :", photo.uri);
-      dispatch(addPhoto(photo.uri));
-    }
+    console.log("photo prise");
+    const formData = new FormData();
+
+    formData.append("photoFromFront", {
+      uri: photo.uri,
+      name: "photo.jpg",
+      type: "image/jpeg",
+    });
+
+    console.log("envoi au backend");
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/upload`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Photo ajoutée :", photo.uri);
+        data.result && dispatch(addPhoto(data.url));
+      });
   };
+
   return (
     <CameraView
       style={{ flex: 1 }}

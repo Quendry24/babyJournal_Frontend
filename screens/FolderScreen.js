@@ -24,11 +24,13 @@ export default function FolderScreen() {
   const dispatch = useDispatch();
 
   //const user = useSelector((state) => state.user.value);
-
+  console.log("Photos:", photosData);
+  console.log("User type:", user);
   const { width } = Dimensions.get("window");
-  // const photosData = useSelector((state) => state.user?.value?.photos);
+  const photosData = useSelector((state) => state.user?.value?.photos);
   // console.log("store", photosData.length);
-  const photosData = [
+
+  /*const photosData = [
     "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
     "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
     "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
@@ -64,7 +66,7 @@ export default function FolderScreen() {
     "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
     "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
     "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
-  ];
+  ];*/
 
   //const images = photosData.map((url) => ({ source: { uri: url } }));
   const show = (index) => {

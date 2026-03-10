@@ -40,6 +40,10 @@ export const UserSlice = createSlice({
       state.value.today = [];
       state.value.today = action.payload;
     },
+    // login: (state, action) => {
+    //   console.log("user dans reducer", action.payload);
+    //   state.value.email = action;
+    // },
   },
 });
 export const {
