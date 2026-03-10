@@ -8,6 +8,12 @@ const initialState = {
     userId: null,
     all: [],
     today: [],
+
+    infos: {},
+    login: null,
+    logout: null,
+    famille: null,
+    isConnected: false,
   },
 };
 export const UserSlice = createSlice({
@@ -18,6 +24,21 @@ export const UserSlice = createSlice({
     setUserType: (state, action) => {
       state.value.type = action.payload;
     },
+    login: (state, action) => {
+      state.value.login = action.payload;
+    },
+
+    logout: (state) => {
+      state.value = initialState.value;
+    },
+
+    infos: (state, action) => {
+      state.value = action.payload;
+    },
+    famille: (state, action) => {
+      state.value.famille = action.payload;
+    },
+
     addPhoto: (state, action) => {
       console.log(state.value.photos.length, "photo reçue", action.payload);
       //state.value.photos = [];
@@ -38,10 +59,6 @@ export const UserSlice = createSlice({
     getTodayChilds: (state, action) => {
       state.value.today = action.payload;
     },
-    // login: (state, action) => {
-    //   console.log("user dans reducer", action.payload);
-    //   state.value.email = action;
-    // },
   },
 });
 export const {
@@ -51,5 +68,9 @@ export const {
   getTodayChilds,
   addPhoto,
   removePhoto,
+  login,
+  logout,
+  infos,
+  famille,
 } = UserSlice.actions;
 export default UserSlice.reducer;
