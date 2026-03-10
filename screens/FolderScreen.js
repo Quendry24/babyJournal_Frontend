@@ -13,6 +13,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import { ChevronLeft, Ellipsis, Trash2 } from "lucide-react-native";
 import { removePhoto } from "../reducers/user";
+import ProFolder from "../components/ProFolder";
 
 export default function FolderScreen() {
   const user = useSelector((state) => state.user.value.type);
@@ -84,6 +85,7 @@ export default function FolderScreen() {
     <View className="flex-1">
       {user === "Pro" && (
         <View className="flex-1 pt-16 bg-back items-center justify-center">
+          <ProFolder />
           <Text className="text-2xl">Page en cours de création</Text>
         </View>
       )}

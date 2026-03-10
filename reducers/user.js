@@ -18,6 +18,7 @@ export const UserSlice = createSlice({
     setUserType: (state, action) => {
       state.value.type = action.payload;
     },
+
     addPhoto: (state, action) => {
       console.log(state.value.photos.length, "photo reçue", action.payload);
       //state.value.photos = [];
@@ -36,6 +37,7 @@ export const UserSlice = createSlice({
       state.value.all = action.payload;
     },
     getTodayChilds: (state, action) => {
+      state.value.today = [];
       state.value.today = action.payload;
     },
   },

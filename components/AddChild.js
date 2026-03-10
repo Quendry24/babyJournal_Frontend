@@ -4,8 +4,9 @@ import { Baby } from "lucide-react-native";
 import Button from "./Button";
 import { useState } from "react";
 
-import { useSelector } from "react-redux";
-import { DatePickerInput, DatePickerModal } from "react-native-paper-dates";
+import { useDispatch, useSelector } from "react-redux";
+import { DatePickerInput } from "react-native-paper-dates";
+import { getAllChilds } from "../reducers/user";
 
 export default function AddChild() {
   const user = useSelector((state) => state.user.value.type); // a mettre dans le store a la connexion
@@ -14,7 +15,9 @@ export default function AddChild() {
   const [prenom, setPrenom] = useState(null);
   const [open, setOpen] = useState(false);
   const idNounou = useSelector((state) => state.user.value.userId);
+  const allChilds = useSelector((state) => state.user.value.all);
 
+  const dispatch = useDispatch();
   const addChild = () => {
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/add`, {
       method: "POST",
@@ -28,8 +31,12 @@ export default function AddChild() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const date2 = new Date(data.Birthday).toLocaleDateString("fr-FR");
-        data && console.log(data.idBabyJournal, date, date2);
+        const child = {
+          Prenom: data.newChild.Prenom,
+          idBabyJournal: data.newChild.idBabyJournal,
+        };
+        console.log(data.newChild);
+        data && dispatch(getAllChilds([...allChilds, child]));
         setNom("");
         setPrenom("");
         setDate("");
@@ -59,7 +66,6 @@ export default function AddChild() {
             value={prenom}
             onChangeText={setPrenom}
           />
-          {user === "Parents" && <Input title="Poids" inputMode="numeric" />}
           <View
             style={{ justifyContent: "center", flex: 1, alignItems: "center" }}
           >
@@ -76,6 +82,7 @@ export default function AddChild() {
               inputMode="start"
             />
           </View>
+          {user === "Parents" && <Input title="Poids" inputMode="numeric" />}
           {user === "Parents" && (
             <>
               <Input title="Adresse" type="fullStreetAddress" />
