@@ -57,6 +57,7 @@ export const UserSlice = createSlice({
       state.value.all = action.payload;
     },
     getTodayChilds: (state, action) => {
+      state.value.today = [];
       state.value.today = action.payload;
     },
   },

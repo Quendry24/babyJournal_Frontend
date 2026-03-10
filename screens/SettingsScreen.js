@@ -20,10 +20,12 @@ export default function SettingsScreen({ OnBack }) {
             </Text>
             <Pressable>
               <Text>Partager mon Baby Journal</Text>
+              <AddChild />
             </Pressable>
           </View>
         </View>
       )}
+
       {user === "Pro" && (
         <View className="flex-1">
           {/* <Pressable className="py-4">

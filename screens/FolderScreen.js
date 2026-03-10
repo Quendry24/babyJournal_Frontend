@@ -13,6 +13,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import { ChevronLeft, Ellipsis, Trash2 } from "lucide-react-native";
 import { removePhoto } from "../reducers/user";
+import ProFolder from "../components/ProFolder";
 
 export default function FolderScreen() {
   const user = useSelector((state) => state.user.value.type);
@@ -23,11 +24,13 @@ export default function FolderScreen() {
   const dispatch = useDispatch();
 
   //const user = useSelector((state) => state.user.value);
-
+  console.log("Photos:", photosData);
+  console.log("User type:", user);
   const { width } = Dimensions.get("window");
-  // const photosData = useSelector((state) => state.user?.value?.photos);
+  const photosData = useSelector((state) => state.user?.value?.photos);
   // console.log("store", photosData.length);
-  const photosData = [
+
+  /*const photosData = [
     "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
     "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
     "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
@@ -63,7 +66,7 @@ export default function FolderScreen() {
     "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
     "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
     "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
-  ];
+  ];*/
 
   //const images = photosData.map((url) => ({ source: { uri: url } }));
   const show = (index) => {
@@ -84,6 +87,7 @@ export default function FolderScreen() {
     <View className="flex-1">
       {user === "Pro" && (
         <View className="flex-1 pt-16 bg-back items-center justify-center">
+          <ProFolder />
           <Text className="text-2xl">Page en cours de création</Text>
         </View>
       )}

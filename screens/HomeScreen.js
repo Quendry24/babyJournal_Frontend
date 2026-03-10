@@ -9,28 +9,38 @@ import { addUserId } from "../reducers/user";
 
 export default function HomeScreen() {
   const [child, setChild] = useState("");
+  const [childId, setChildId] = useState("");
   const [selectedChild, setSelectedChild] = useState(null);
   const user = useSelector((state) => state.user.value.type);
   const dispatch = useDispatch();
-  console.log(user);
   const setChildName = (name) => {
     setChild(name);
   };
 
-  const idNounou = "1234"; // viendra de la connexion
+  const idNounou = "123456"; // viendra de la connexion
 
   useEffect(() => {
+    //fetch pour idNounou ou idparents => idparent => idFamille =>idfamille =>Enfants
     dispatch(addUserId(idNounou));
   }, []);
 
-  console.log(idNounou);
   return (
     <View className="flex-1  p-4 pt-16 bg-back">
       {user === "Pro" && (
         <View className="flex-1 gap-4">
-          {child === "" && <ProHome setChildName={setChildName} />}
+          {child === "" && (
+            <ProHome
+              setChildName={setChildName}
+              childId={childId}
+              setChildId={setChildId}
+            />
+          )}
           {child !== "" && (
-            <ProChild childName={child} setChildName={setChildName} />
+            <ProChild
+              childName={child}
+              setChildName={setChildName}
+              childId={childId}
+            />
           )}
         </View>
       )}

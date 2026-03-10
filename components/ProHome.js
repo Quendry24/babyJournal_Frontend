@@ -1,22 +1,44 @@
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { Send, Baby } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allChilds, getTodayChilds } from "../reducers/user";
+import { getAllChilds, getTodayChilds } from "../reducers/user";
+import * as Location from "expo-location";
 
-export default function ProHome({ child, setChildName }) {
+export default function ProHome({ child, childId, setChildName, setChildId }) {
   const idNounou = useSelector((state) => state.user.value.userId);
   const childs = useSelector((state) => state.user.value.all);
   const todayChilds = useSelector((state) => state.user.value.today);
-  // const [todayChild, setTodayChild] = useState([]);
   const dispatch = useDispatch();
   const date = new Date();
+  const [currentPosition, setCurrentPosition] = useState(null);
+  const [meteo, setMeteo] = useState(null);
   const options = {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   };
+
+  // localisation et  météo
+  useEffect(() => {
+    (async () => {
+      const result = await Location.requestForegroundPermissionsAsync();
+
+      if (result?.status === "granted") {
+        const location = await Location.getCurrentPositionAsync({});
+        const { latitude, longitude } = location.coords;
+
+        fetch(
+          `${process.env.EXPO_PUBLIC_URL_BACKEND}/meteo?lat=${latitude}&lon=${longitude}`,
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            setMeteo(data);
+          });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     //recuperation de tous les enfants dont la nounou à cet Id
@@ -25,10 +47,10 @@ export default function ProHome({ child, setChildName }) {
       .then((data) => {
         const childs = data.childs.map((child, i) => ({
           idBabyJournal: child.idBabyJournal,
-          name: child.Prenom,
+          Prenom: child.Prenom,
           photo: "Baby",
         }));
-        dispatch(allChilds(childs));
+        dispatch(getAllChilds(childs));
       })
       .catch((err) => console.log(err));
 
@@ -39,31 +61,27 @@ export default function ProHome({ child, setChildName }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.enfantsDuJour);
+          console.log("edj", data.enfantsDuJour);
           dispatch(getTodayChilds(data.enfantsDuJour));
         }
       })
       .catch((err) => console.log(err));
   }, [idNounou]);
 
-  const todayChild = [
-    { name: "Léa", arrival: "7h00", photo: "Baby" },
-    { name: "Timothée", arrival: "8h00", photo: "Baby" },
-    { name: "Martin", arrival: "9h30", photo: "Baby" },
-    { name: "Constance", arrival: "7h00", photo: "Baby" },
-  ];
-
-  const childsProfil = todayChild.map((data, i) => (
+  const childsProfil = todayChilds?.map((data, i) => (
     <Pressable
       key={i}
       className="items-center"
-      onPress={() => setChildName(data.name)}
+      onPress={() => {
+        setChildName(data.Prenom);
+        setChildId(data.idBabyJournal);
+      }}
     >
       <View className="border-4 border-jaune rounded-full">
         <Baby color="gray" size={48} />
       </View>
-      <Text className="text-xl">{data.name}</Text>
-      <Text className="text-sm">{data.arrival}</Text>
+      <Text className="text-xl">{data.Prenom}</Text>
+      <Text className="text-sm">{data.arrival || "7h00"}</Text>
     </Pressable>
   ));
 
@@ -75,13 +93,39 @@ export default function ProHome({ child, setChildName }) {
       <View className="border-b-2 w-full border-jaune"></View>
 
       <View className="w-full items-center py-4 gap-4">
-        <Text className="text-2xl">Météo (Connecté à openweather)</Text>
+        <Text className="text-2xl">Prévision météo</Text>
         <View className="w-full flex-row justify-around items-center">
-          <View className="w-1/4 aspect-square border justify-end items-center">
-            <Text>Matin</Text>
+          <View className="w-1/5 aspect-square justify-around items-center">
+            <Text>8h</Text>
+            <Image
+              source={{ uri: `https:${meteo?.huitH.condition.icon}` }}
+              style={{ width: 50, height: 50 }}
+            />
+            <Text>{meteo?.huitH.temp_c}°C</Text>
           </View>
-          <View className="w-1/4 aspect-square border justify-end items-center">
-            <Text>Après-midi</Text>
+          <View className="w-1/5 aspect-square justify-around items-center">
+            <Text>11h</Text>
+            <Image
+              source={{ uri: `https:${meteo?.onzeH.condition.icon}` }}
+              style={{ width: 50, height: 50 }}
+            />
+            <Text>{meteo?.onzeH.temp_c}°C</Text>
+          </View>
+          <View className="w-1/5 aspect-square  justify-around items-center">
+            <Text>14h</Text>
+            <Image
+              source={{ uri: `https:${meteo?.quatorzeH.condition.icon}` }}
+              style={{ width: 50, height: 50 }}
+            />
+            <Text>{meteo?.quatorzeH.temp_c}°C</Text>
+          </View>
+          <View className="w-1/5 aspect-square  justify-around items-center">
+            <Text>17h</Text>
+            <Image
+              source={{ uri: `https:${meteo?.dixSeptH.condition.icon}` }}
+              style={{ width: 50, height: 50 }}
+            />
+            <Text>{meteo?.dixSeptH.temp_c}°C</Text>
           </View>
         </View>
       </View>
