@@ -6,7 +6,13 @@ import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserType, login, setIdFamille, idFamille } from "../reducers/user";
+import {
+  setUserType,
+  login,
+  setIdFamille,
+  idFamille,
+  addUserId,
+} from "../reducers/user";
 
 export default function CreateFamilyScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -56,6 +62,7 @@ export default function CreateFamilyScreen({ navigation }) {
               userId: dataUser.idParent,
             }),
           );
+          dispatch(addUserId(dataUser.idParent));
           navigation.navigate("Information");
           setEmail("");
           setPassword("");

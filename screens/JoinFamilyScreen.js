@@ -59,6 +59,7 @@ export default function JoinFamilyScreen({ navigation }) {
               userId: dataUser.idParent,
             }),
           );
+          dispatch(addUserId(dataUser.idParent));
           navigation.navigate("Information");
           setEmail("");
           setPassword("");

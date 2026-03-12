@@ -11,7 +11,13 @@ import { useEffect, useState } from "react";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType, userId, infos, idFamille } from "../reducers/user";
+import {
+  setUserType,
+  userId,
+  infos,
+  idFamille,
+  addUserId,
+} from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePickerInput } from "react-native-paper-dates";
 
@@ -70,6 +76,7 @@ export default function InformationScreen({ navigation }) {
             PajEmploi: dataUser.infos.p,
           }),
         );
+        dispatch(addUserId(dataUser.idParent));
         setNom("");
         setPrenom("");
         setRole("");

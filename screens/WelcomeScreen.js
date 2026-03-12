@@ -19,7 +19,7 @@ export default function WelcomeScreen({ navigation }) {
   }, []);
 
   return (
-    <View className="flex-1 pt-16 px-8 bg-back">
+    <View className="flex-1 pt-16 p-4 bg-back">
       <Text className=" text-3xl text-center font-bold mb-16">
         Baby Journal
       </Text>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType, login, logout } from "../reducers/user";
+import { setUserType, login, logout, addUserId } from "../reducers/user";
 
 export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -46,6 +46,7 @@ export default function SignInScreen({ navigation }) {
       .then((dataUser) => {
         if (dataUser.result) {
           console.log("réponse backend :", dataUser);
+          dispatch(addUserId(dataUser.userId));
           dispatch(
             login({
               userId: dataUser.userId,
