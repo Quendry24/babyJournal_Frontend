@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType } from "../reducers/user";
-import { login } from "../reducers/user";
+import { login, setUserType } from "../reducers/user";
 
 export default function SignUpScreen({ navigation }) {
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user.value.type);
+  const userId = useSelector((state) => state.user.value.userId);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -46,10 +47,8 @@ export default function SignUpScreen({ navigation }) {
         dispatch(
           login({
             token: dataUser.token,
-            userId: dataUser.userId,
+            userId: dataUser.idNounou,
             email: email,
-            idFamille: dataUser.idFamille,
-            IdNounou: dataUser.IdNounou,
           }),
         );
         navigation.navigate("Information");

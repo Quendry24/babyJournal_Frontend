@@ -1,9 +1,10 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
 import ButtonRetour from "../components/ButtonRetour";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import AddChild from "../components/AddChild";
 import Button from "../components/Button";
 import { useState } from "react";
+import { logout, setUserType } from "../reducers/user";
 
 export default function SettingsScreen({ navigation }) {
   const user = useSelector((state) => state.user.value.type);
@@ -13,8 +14,25 @@ export default function SettingsScreen({ navigation }) {
   const famille = useSelector((state) => state.user.value.famille);
   const [add, setAdd] = useState(false);
   console.log(famille);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(setUserType(null));
+    navigation.navigate("Login");
+  };
+
   return (
     <View className="flex-1 bg-back p-4 pt-16">
+      <View className="w-60 h-16 self-center mt-8">
+        <Button
+          title="Se déconnecter"
+          variant="jaune"
+          textSize="lg"
+          onPress={handleLogout}
+        />
+      </View>
       {user === "Parents" && (
         <View className="flex-1  gap-4">
           <Pressable className="">
