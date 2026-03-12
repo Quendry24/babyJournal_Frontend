@@ -23,7 +23,9 @@ export default function ChildCard({ photo, name, birthDate, jours, onPress }) {
           <Text className="text-xl font-medium">{frDate} </Text>
         </View>
       </View>
-      <Text className="italic mt-4">{jours}</Text>
+      <Text className="italic mt-4">
+        {jours && jours.length > 0 ? jours.join(",") : "Aucun jour de garde"}
+      </Text>
     </Pressable>
   );
 }

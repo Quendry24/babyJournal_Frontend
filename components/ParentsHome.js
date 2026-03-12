@@ -20,13 +20,17 @@ import AddChild from "./AddChild";
 import ButtonRetour from "./ButtonRetour";
 import Input from "./Input";
 import { famille } from "../reducers/user";
+import { getWeekDays } from "../utils/getWeekDays";
 
 export default function ParentsHome({ onSelectChild }) {
   //Remplacement tableau dur
   const [child, setChild] = useState([]);
   const [addChild, setAddchild] = useState(false);
   const idFamille = useSelector((state) => state.user.value.idFamille);
-  console.log(child);
+  const nounouId = useSelector((state) => state.user.value.userId);
+
+  //ajouter les jours de garde sur la childCard
+  const [planning, setplanning] = useState([]);
 
   //pour ajout enfant
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,17 +55,54 @@ export default function ParentsHome({ onSelectChild }) {
       .catch((error) => console.log(error));
   }, [idFamille]);
 
+  // ajouter les jours de garde sur la childCard
+
+  useEffect(() => {
+    const { monday } = getWeekDays();
+    if (!nounouId) return;
+
+    console.log("nounouId:", nounouId);
+
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/semaine/${nounouId}?monday=${monday}`,
+    )
+      .then((res) => {
+        console.log("Fetch status:", res.status);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Planning fetch result:", data);
+        if (data.result) setplanning(data.planning);
+      })
+      .catch((err) => console.log("Fetch planning error:", err));
+  }, [nounouId]);
+  console.log(planning);
+  // récuperer les jours de garde d'un enfant
+
+  const getJoursGarde = (child) => {
+    const jours = planning
+      .filter((jour) =>
+        jour.Enfants.some((e) => e.idBabyJournal === child.idBabyJournal),
+      )
+      .map((jour) =>
+        new Date(jour.Date_Du_Jour).toLocaleDateString("fr-FR", {
+          weekday: "long",
+        }),
+      );
+
+    return [...new Set(jours)];
+  };
+
   const allChild = child?.map((data, i) => (
     <ChildCard
       key={i}
       name={data.Prenom}
       birthDate={data.Birthday}
-      jours={data.jours}
+      jours={getJoursGarde(data)}
       idBabyJournal={data.idBabyJournal}
       onPress={() => onSelectChild(data)}
     />
   ));
-
   //verifie si l'id est correct et renvoie les données entrées par la nounou
   const ajout = async () => {
     try {
