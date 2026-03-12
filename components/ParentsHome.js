@@ -12,20 +12,26 @@ import ChildCard from "./ChildCard";
 import ItemDetail from "./ItemDetail";
 import Button from "./Button";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { famille } from "../reducers/user";
 
 export default function ParentsHome({ onSelectChild }) {
   //Remplacement tableau dur
   const [child, setChild] = useState([]);
   const idFamille = useSelector((state) => state.user.value.idFamille);
+  const dispatch = useDispatch();
 
+  //const idFamille = "123";
   useEffect(() => {
+    console.log("IDDDDDDDD", idFamille);
     if (!idFamille) return;
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/famille/${idFamille}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setChild(data.enfants);
+
+        dispatch(famille(data.enfants));
       })
       .catch((error) => console.log(error));
   }, [idFamille]);

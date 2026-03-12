@@ -34,7 +34,7 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
         )
           .then((res) => res.json())
           .then((data) => {
-            setMeteo(data);
+            data && setMeteo(data);
           });
       }
     })();
@@ -98,34 +98,34 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
           <View className="w-1/5 aspect-square justify-around items-center">
             <Text>8h</Text>
             <Image
-              source={{ uri: `https:${meteo?.huitH.condition.icon}` }}
+              source={{ uri: `https:${meteo?.huitH?.condition?.icon}` }}
               style={{ width: 50, height: 50 }}
             />
-            <Text>{meteo?.huitH.temp_c}°C</Text>
+            <Text>{meteo?.huitH?.temp_c}°C</Text>
           </View>
           <View className="w-1/5 aspect-square justify-around items-center">
             <Text>11h</Text>
             <Image
-              source={{ uri: `https:${meteo?.onzeH.condition.icon}` }}
+              source={{ uri: `https:${meteo?.onzeH?.condition?.icon}` }}
               style={{ width: 50, height: 50 }}
             />
-            <Text>{meteo?.onzeH.temp_c}°C</Text>
+            <Text>{meteo?.onzeH?.temp_c}°C</Text>
           </View>
           <View className="w-1/5 aspect-square  justify-around items-center">
             <Text>14h</Text>
             <Image
-              source={{ uri: `https:${meteo?.quatorzeH.condition.icon}` }}
+              source={{ uri: `https:${meteo?.quatorzeH?.condition?.icon}` }}
               style={{ width: 50, height: 50 }}
             />
-            <Text>{meteo?.quatorzeH.temp_c}°C</Text>
+            <Text>{meteo?.quatorzeH?.temp_c}°C</Text>
           </View>
           <View className="w-1/5 aspect-square  justify-around items-center">
             <Text>17h</Text>
             <Image
-              source={{ uri: `https:${meteo?.dixSeptH.condition.icon}` }}
+              source={{ uri: `https:${meteo?.dixSeptH?.condition?.icon}` }}
               style={{ width: 50, height: 50 }}
             />
-            <Text>{meteo?.dixSeptH.temp_c}°C</Text>
+            <Text>{meteo?.dixSeptH?.temp_c}°C</Text>
           </View>
         </View>
       </View>

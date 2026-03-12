@@ -62,7 +62,7 @@ export const UserSlice = createSlice({
       state.value.today = action.payload;
     },
 
-    famille: (state, action) => {
+    idfamille: (state, action) => {
       state.value.idFamille = action.payload;
     },
     // login: (state, action) => {
@@ -82,5 +82,6 @@ export const {
   logout,
   infos,
   famille,
+  idfamille,
 } = UserSlice.actions;
 export default UserSlice.reducer;

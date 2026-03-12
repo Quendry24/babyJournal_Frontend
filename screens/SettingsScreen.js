@@ -19,7 +19,6 @@ export default function SettingsScreen({ OnBack }) {
               Paramètres
             </Text>
             <Pressable>
-              <Text>Partager mon Baby Journal</Text>
               <AddChild />
             </Pressable>
           </View>

@@ -1,6 +1,9 @@
 import { Send } from "lucide-react-native";
 import { Text, View, Pressable } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getWeekDays } from "../utils/getWeekDays";
 
 LocaleConfig.locales["fr"] = {
   monthNames: [
@@ -45,18 +48,60 @@ LocaleConfig.locales["fr"] = {
 };
 LocaleConfig.defaultLocale = "fr";
 export default function ParentsCalendar() {
-  const joursEnfant = {
-    "2026-03-09": { selected: true, selectedColor: "#F9BC50" },
-    "2026-03-11": { selected: true, selectedColor: "#F9BC50" },
-    "2026-03-12": { selected: true, selectedColor: "#F9BC50" },
-    "2026-03-13": { selected: true, selectedColor: "#F9BC50" },
+  const [planning, setPlanning] = useState([]);
+  const nounouId = useSelector((state) => state.user.value.userId);
+  const enfants = useSelector((state) => state.user.value.famille);
+  console.log(enfants, "enfants log");
+  // const joursEnfant = {
+  //   "2026-03-09": { selected: true, selectedColor: "#F9BC50" },
+  //   "2026-03-11": { selected: true, selectedColor: "#F9BC50" },
+  //   "2026-03-12": { selected: true, selectedColor: "#F9BC50" },
+  //   "2026-03-13": { selected: true, selectedColor: "#F9BC50" },
 
-    "2026-03-23": { selected: true, selectedColor: "red" },
-    "2026-03-24": { selected: true, selectedColor: "red" },
-    "2026-03-25": { selected: true, selectedColor: "red" },
-    "2026-03-26": { selected: true, selectedColor: "red" },
-    "2026-03-27": { selected: true, selectedColor: "red" },
-  };
+  //   "2026-03-23": { selected: true, selectedColor: "red" },
+  //   "2026-03-24": { selected: true, selectedColor: "red" },
+  //   "2026-03-25": { selected: true, selectedColor: "red" },
+  //   "2026-03-26": { selected: true, selectedColor: "red" },
+  //   "2026-03-27": { selected: true, selectedColor: "red" },
+  // };
+
+  useEffect(() => {
+    const { monday } = getWeekDays();
+    console.log(monday, "monday");
+
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/semaine/${nounouId}?monday=${monday}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "log data");
+        //traitement du planning ici
+        const marked = {};
+
+        data.planning.forEach((jour) => {
+          let present = false;
+
+          for (let enfant of enfants) {
+            if (
+              jour.Enfants.some((e) => (e.idBabyJournal = enfant.idBabyJournal))
+            ) {
+              present = true;
+              break;
+            }
+          }
+          console.log(present);
+
+          if (jour.Enfants.length > 0) {
+            marked[jour.Date_Du_Jour] = {
+              selected: present,
+              selectedColor: "#F9BC50",
+            };
+          }
+          setPlanning(marked);
+        });
+      });
+  }, []);
+
   return (
     <View className="flex-1">
       <View className="pr-4 flex-row justify-end ">
@@ -74,13 +119,14 @@ export default function ParentsCalendar() {
         }}
       >
         <Calendar
-          markedDates={joursEnfant}
-          firstDay={1}
-          theme={{
-            borderRadius: 22,
-            arrowColor: "#F9BC50",
-            todayTextColor: "#F9BC50",
-          }}
+          markedDates={planning}
+          // markedDates={joursEnfant}
+          // firstDay={1}
+          // theme={{
+          //   borderRadius: 22,
+          //   arrowColor: "#F9BC50",
+          //   todayTextColor: "#F9BC50",
+          // }}
         />
       </View>
       <View className="pt-4 items-start gap-2">
