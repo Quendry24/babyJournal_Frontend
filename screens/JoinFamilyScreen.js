@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { login, setIdFamille, setUserType } from "../reducers/user";
+import { addUserId, login, setIdFamille, setUserType } from "../reducers/user";
 
 export default function JoinFamilyScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -56,10 +56,10 @@ export default function JoinFamilyScreen({ navigation }) {
               email,
               // Nom: nom,
               idFamille: dataUser.familyId,
-              userId: dataUser.idParent,
+              userId: dataUser.userId,
             }),
           );
-          dispatch(addUserId(dataUser.idParent));
+          dispatch(addUserId(dataUser.userId));
           navigation.navigate("Information");
           setEmail("");
           setPassword("");

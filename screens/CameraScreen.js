@@ -77,7 +77,7 @@ export default function CameraScreen({ navigation }) {
           <Circle className="items-center" size={75} color="white" />
         </TouchableOpacity>
       </View>
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -116,7 +116,7 @@ export default function CameraScreen({ navigation }) {
             </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
-      </Modal>
+      </Modal> */}
     </CameraView>
   );
 }

@@ -59,10 +59,10 @@ export default function CreateFamilyScreen({ navigation }) {
               email,
               Nom: nom,
               idFamille: dataUser.familyId,
-              userId: dataUser.idParent,
+              userId: dataUser.idUser,
             }),
           );
-          dispatch(addUserId(dataUser.idParent));
+          dispatch(addUserId(dataUser.idUser));
           navigation.navigate("Information");
           setEmail("");
           setPassword("");

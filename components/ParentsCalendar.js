@@ -49,21 +49,10 @@ LocaleConfig.locales["fr"] = {
 LocaleConfig.defaultLocale = "fr";
 export default function ParentsCalendar() {
   const [planning, setPlanning] = useState([]);
-  const nounouId = useSelector((state) => state.user.value.userId);
-  const enfants = useSelector((state) => state.user.value.famille);
+  const enfants = useSelector((state) => state.user.value.famille || []);
   console.log(enfants, "enfants log");
-  // const joursEnfant = {
-  //   "2026-03-09": { selected: true, selectedColor: "#F9BC50" },
-  //   "2026-03-11": { selected: true, selectedColor: "#F9BC50" },
-  //   "2026-03-12": { selected: true, selectedColor: "#F9BC50" },
-  //   "2026-03-13": { selected: true, selectedColor: "#F9BC50" },
-
-  //   "2026-03-23": { selected: true, selectedColor: "red" },
-  //   "2026-03-24": { selected: true, selectedColor: "red" },
-  //   "2026-03-25": { selected: true, selectedColor: "red" },
-  //   "2026-03-26": { selected: true, selectedColor: "red" },
-  //   "2026-03-27": { selected: true, selectedColor: "red" },
-  // };
+  const nounouId = enfants?.[0]?.["Nounou"];
+  console.log("idnounou calendrier", nounouId);
 
   useEffect(() => {
     const { monday } = getWeekDays();

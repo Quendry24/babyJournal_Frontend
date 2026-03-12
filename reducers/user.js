@@ -15,6 +15,7 @@ const initialState = {
     famille: null,
     idFamille,
     isConnected: false,
+    nounouId: null,
   },
 };
 

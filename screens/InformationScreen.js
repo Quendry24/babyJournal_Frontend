@@ -76,7 +76,6 @@ export default function InformationScreen({ navigation }) {
             PajEmploi: dataUser.infos.p,
           }),
         );
-        dispatch(addUserId(dataUser.idParent));
         setNom("");
         setPrenom("");
         setRole("");

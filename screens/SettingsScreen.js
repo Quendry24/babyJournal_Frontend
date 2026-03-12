@@ -13,7 +13,7 @@ export default function SettingsScreen({ navigation }) {
   const idFamille = useSelector((state) => state.user.value.idFamille);
   const famille = useSelector((state) => state.user.value.famille);
   const [add, setAdd] = useState(false);
-  console.log(famille);
+  console.log("famille", famille);
 
   const dispatch = useDispatch();
 

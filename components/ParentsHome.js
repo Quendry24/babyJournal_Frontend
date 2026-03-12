@@ -27,7 +27,8 @@ export default function ParentsHome({ onSelectChild }) {
   const [child, setChild] = useState([]);
   const [add, setAdd] = useState(false);
   const idFamille = useSelector((state) => state.user.value.idFamille);
-  const nounouId = useSelector((state) => state.user.value.userId);
+  const nounouId = child?.[0]?.["Nounou"];
+  console.log("idnounou", nounouId);
 
   //ajouter les jours de garde sur la childCard
   const [planning, setplanning] = useState([]);
@@ -41,7 +42,6 @@ export default function ParentsHome({ onSelectChild }) {
   const dispatch = useDispatch();
   console.log(idFamille);
 
-  //const idFamille = "123";
   useEffect(() => {
     console.log("IDDDDDDDD", idFamille);
     if (!idFamille) return;
@@ -56,12 +56,10 @@ export default function ParentsHome({ onSelectChild }) {
   }, [idFamille]);
 
   // ajouter les jours de garde sur la childCard
-
+  console.log(child);
   useEffect(() => {
     const { monday } = getWeekDays();
     if (!nounouId) return;
-
-    console.log("nounouId:", nounouId);
 
     fetch(
       `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/calendrier/semaine/${nounouId}?monday=${monday}`,
@@ -76,7 +74,9 @@ export default function ParentsHome({ onSelectChild }) {
       })
       .catch((err) => console.log("Fetch planning error:", err));
   }, [nounouId]);
+
   console.log(planning);
+
   // récuperer les jours de garde d'un enfant
 
   const getJoursGarde = (child) => {
@@ -139,6 +139,7 @@ export default function ParentsHome({ onSelectChild }) {
     const retour = await res.json();
     if (retour.result) {
       setChild([...child, data]);
+      dispatch(famille([...child, data]));
       setNewChild(data);
       setAdd(true);
       setModalVisible(!modalVisible);

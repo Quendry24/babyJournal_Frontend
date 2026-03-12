@@ -64,21 +64,6 @@ export default function SignInScreen({ navigation }) {
       });
   };
 
-  const Logout = () => {
-    dispatch(setUserType("user"));
-    dispatch(logout());
-  };
-
-  // let userSection;
-  // if (user.token) {
-  //   userSection = (
-  //     <div className={styles.logoutSection}>
-  //       <button onClick={() => handleLogout()}>Logout</button>
-  //       <FontAwesomeIcon icon={faXmark} onClick={() => dispatch(logout())} />
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
       {/* ************** SignIn parent ************** */}

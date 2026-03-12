@@ -14,7 +14,7 @@ export default function ItemDetailCard({ activityTypes, journee = [] }) {
   };
 
   return (
-    <View className="flex-1 p-4 bg-white rounded-3xl shadow-sm elevation-3">
+    <View className="flex-1 p-4 bg-white rounded-3xl shadow-sm elevation-3 mb-36">
       <View className="flex-1 p-4 border relative border-jaune rounded-xl">
         <Text className="text-2xl color-jaune absolute top-0 -translate-y-1/2 translate-x-4 bg-white">
           {activityTypes.label}
@@ -27,8 +27,8 @@ export default function ItemDetailCard({ activityTypes, journee = [] }) {
         <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
           {journee.map((data, i) => (
             <View className="my-5" key={i}>
-              <Text className="text-3xl">
-                {data.nom || data.heure || `Sieste ${i + 1}`}
+              <Text className="text-xl">
+                {`${activityTypes.label} ${i + 1}`}
               </Text>
 
               <View
