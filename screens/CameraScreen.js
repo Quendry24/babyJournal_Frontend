@@ -45,8 +45,10 @@ export default function CameraScreen({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Photo ajoutée :", photo.uri, data.url, data.result);
-        dispatch(addPhoto(data.url));
+        if (data.result) {
+          console.log("Photo ajoutée :", photo.uri, data.url, data.result);
+          dispatch(addPhoto(data.url));
+        }
       });
   };
 
