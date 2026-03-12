@@ -12,24 +12,34 @@ export default function HomeScreen() {
   const [childId, setChildId] = useState("");
   const [selectedChild, setSelectedChild] = useState(null);
   const user = useSelector((state) => state.user.value.type);
+  const userId = useSelector((state) => state.user.value.userId);
   const dispatch = useDispatch();
+  console.log("type: ", user, "id: ", userId);
   const setChildName = (name) => {
     setChild(name);
   };
 
-  const idNounou = "123456"; // viendra de la connexion
-  const idFamille = "123";
+  // const idNounou = "123456"; // viendra de la connexion
+  // const idFamille = "123";
 
+<<<<<<< HEAD
+  // useEffect(() => {
+  //   //fetch pour idNounou ou idparents => idparent => idFamille =>idfamille =>Enfants
+  //   dispatch(addUserId(idNounou));
+  //   dispatch(setIdFamille(idFamille));
+  // }, []);
+=======
   useEffect(() => {
     console.log("ça marche !");
     //fetch pour idNounou ou idparents => idparent => idFamille =>idfamille =>Enfants
     dispatch(addUserId(idNounou));
     dispatch(setIdFamille(idFamille));
   }, []);
+>>>>>>> f1a8391b064884bb62927c6f485aa13fa1e6e4ff
 
   return (
     <View className="flex-1 p-4 pt-16 bg-back">
-      {user === "Pro" && (
+      {user === "nounou" && (
         <View className="flex-1 gap-4">
           {child === "" && (
             <ProHome
@@ -47,7 +57,7 @@ export default function HomeScreen() {
           )}
         </View>
       )}
-      {user === "Parents" && (
+      {user === "parents" && (
         <View className="flex-1 ">
           {selectedChild ? (
             <ChildJournee

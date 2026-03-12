@@ -25,16 +25,13 @@ export const UserSlice = createSlice({
     setUserType: (state, action) => {
       state.value.type = action.payload;
     },
-
-    userId: (state, action) => {
-      state.value.type = action.payload;
-    },
-
     login: (state, action) => {
       state.value.login = action.payload;
     },
     logout: (state) => {
-      state.value = initialState.value;
+      state.value.type = null;
+      state.value.userId = null;
+      state.value.login = null;
     },
     infos: (state, action) => {
       state.value.infos = action.payload;

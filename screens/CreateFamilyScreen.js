@@ -6,7 +6,7 @@ import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserType, login } from "../reducers/user";
+import { setUserType, login, setIdFamille, idFamille } from "../reducers/user";
 
 export default function CreateFamilyScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -44,21 +44,25 @@ export default function CreateFamilyScreen({ navigation }) {
     })
       .then((response) => response.json())
       .then((dataUser) => {
-        console.log(dataUser);
-        dispatch(setUserType("parents"));
-        dispatch(
-          login({
-            email,
-            Nom: nom,
-            idFamille: dataUser.familyId,
-            userId: dataUser.idParent,
-          }),
-        );
-        navigation.navigate("Information");
-        setEmail("");
-        setPassword("");
-        setNom("");
-      });
+        if (dataUser.result) {
+          console.log(dataUser);
+          dispatch(setUserType("parents"));
+          dispatch(setIdFamille(dataUser.familyId));
+          dispatch(
+            login({
+              email,
+              Nom: nom,
+              idFamille: dataUser.familyId,
+              userId: dataUser.idParent,
+            }),
+          );
+          navigation.navigate("Information");
+          setEmail("");
+          setPassword("");
+          setNom("");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

@@ -25,7 +25,7 @@ import { getWeekDays } from "../utils/getWeekDays";
 export default function ParentsHome({ onSelectChild }) {
   //Remplacement tableau dur
   const [child, setChild] = useState([]);
-  const [addChild, setAddchild] = useState(false);
+  const [add, setAdd] = useState(false);
   const idFamille = useSelector((state) => state.user.value.idFamille);
   const nounouId = useSelector((state) => state.user.value.userId);
 
@@ -140,14 +140,14 @@ export default function ParentsHome({ onSelectChild }) {
     if (retour.result) {
       setChild([...child, data]);
       setNewChild(data);
-      setAddchild(true);
+      setAdd(true);
       setModalVisible(!modalVisible);
     }
   };
 
   return (
     <View className="flex-1 gap-2">
-      {!addChild && (
+      {!add && (
         <>
           <View className="pr-4 flex-row justify-end ">
             <Pressable>
@@ -214,14 +214,14 @@ export default function ParentsHome({ onSelectChild }) {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      {addChild && (
+      {add && (
         <>
           <ButtonRetour
             onPress={() => {
-              setAddchild(false);
+              setAdd(false);
             }}
           />
-          <AddChild infos={newChild} />
+          <AddChild infos={newChild} setAdd={setAdd} />
         </>
       )}
     </View>

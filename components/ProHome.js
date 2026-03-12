@@ -73,7 +73,7 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/enfants/${idNounou}`)
       .then((res) => res.json())
       .then((data) => {
-        const childs = data.childs.map((child, i) => ({
+        const childs = data?.childs.map((child, i) => ({
           idBabyJournal: child.idBabyJournal,
           Prenom: child.Prenom,
           photo: "Baby",
@@ -115,7 +115,7 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
 
   const activiteCommune = async () => {
     const ids = [];
-    todayChilds.map((child, i) => {
+    todayChilds?.map((child, i) => {
       ids.push(child.idBabyJournal);
     });
 
