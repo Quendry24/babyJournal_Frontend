@@ -1,5 +1,11 @@
 import { CameraView, Camera } from "expo-camera";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useState, useEffect, useRef } from "react";
 import { Circle, X, SwitchCamera } from "lucide-react-native";
 import { useIsFocused } from "@react-navigation/native";
@@ -71,6 +77,46 @@ export default function CameraScreen({ navigation }) {
           <Circle className="items-center" size={75} color="white" />
         </TouchableOpacity>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View className="flex-1 items-center justify-center">
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View className="items_center justify-center gap-2 p-4 aspect-square w-5/6 bg-white rounded-3xl border-4 border-jaune elevation-3">
+                <Text className="text-2xl text-center">
+                  Entrer l'identifiant BabyJournal de votre enfant
+                </Text>
+                <Input
+                  title="Identifiant"
+                  fond="sans"
+                  value={inputIdBabyJournal}
+                  onChangeText={(value) => setInputIdBabyJournal(value)}
+                />
+                {error && (
+                  <Text className="text-xl text-center text-red-600 mb-2">
+                    Identifiant inconnu
+                  </Text>
+                )}
+                <View className="w-1/2 h-12 self-center">
+                  <Button
+                    title="Ajouter"
+                    onPress={() => {
+                      ajout();
+                    }}
+                  />
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </CameraView>
   );
 }

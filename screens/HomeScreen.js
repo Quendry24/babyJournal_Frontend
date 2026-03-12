@@ -22,20 +22,11 @@ export default function HomeScreen() {
   // const idNounou = "123456"; // viendra de la connexion
   // const idFamille = "123";
 
-<<<<<<< HEAD
   // useEffect(() => {
   //   //fetch pour idNounou ou idparents => idparent => idFamille =>idfamille =>Enfants
   //   dispatch(addUserId(idNounou));
   //   dispatch(setIdFamille(idFamille));
   // }, []);
-=======
-  useEffect(() => {
-    console.log("ça marche !");
-    //fetch pour idNounou ou idparents => idparent => idFamille =>idfamille =>Enfants
-    dispatch(addUserId(idNounou));
-    dispatch(setIdFamille(idFamille));
-  }, []);
->>>>>>> f1a8391b064884bb62927c6f485aa13fa1e6e4ff
 
   return (
     <View className="flex-1 p-4 pt-16 bg-back">

@@ -57,26 +57,6 @@ export default function WelcomeScreen({ navigation }) {
           }}
         />
       </View>
-
-      {/* bouton provisoire pour type user */}
-      <Pressable
-        className="absolute bottom-0 right-0 h-20 p-4 border bg-back"
-        onPress={() => {
-          dispatch(setUserType("nounou"));
-          navigation.navigate("TabNavigator");
-        }}
-      >
-        <Text className=" text-3xl pb-4">Pro</Text>
-      </Pressable>
-      <Pressable
-        className="absolute bottom-0 h-20 p-4 border bg-back"
-        onPress={() => {
-          dispatch(setUserType("parents"));
-          navigation.navigate("TabNavigator");
-        }}
-      >
-        <Text className="text-3xl pb-4">Parents</Text>
-      </Pressable>
     </View>
   );
 }
