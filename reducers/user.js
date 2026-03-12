@@ -9,7 +9,6 @@ const initialState = {
     all: [],
     today: [],
     idFamille: null,
-
     infos: {},
     login: null,
     logout: null,
@@ -17,9 +16,9 @@ const initialState = {
     isConnected: false,
   },
 };
+
 export const UserSlice = createSlice({
   name: "user",
-
   initialState,
   reducers: {
     setUserType: (state, action) => {
@@ -28,21 +27,17 @@ export const UserSlice = createSlice({
     login: (state, action) => {
       state.value.login = action.payload;
     },
-
     logout: (state) => {
       state.value = initialState.value;
     },
-
     infos: (state, action) => {
       state.value = action.payload;
     },
-    famille: (state, action) => {
-      state.value.famille = action.payload;
-    },
-
     addPhoto: (state, action) => {
       console.log(state.value.photos.length, "photo reçue", action.payload);
-      //state.value.photos = [];
+      if (!state.value.photos) {
+        state.value.photos = [];
+      }
       state.value.photos.push(action.payload);
       console.log(state.value.photos, "deuxieme");
     },
@@ -61,26 +56,27 @@ export const UserSlice = createSlice({
       state.value.today = [];
       state.value.today = action.payload;
     },
-
-    famille: (state, action) => {
+    setIdFamille: (state, action) => {
       state.value.idFamille = action.payload;
     },
-    // login: (state, action) => {
-    //   console.log("user dans reducer", action.payload);
-    //   state.value.email = action;
-    // },
+    famille: (state, action) => {
+      state.value.famille = action.payload;
+    },
   },
 });
+
 export const {
   setUserType,
   addUserId,
   getAllChilds,
   getTodayChilds,
   addPhoto,
+  addPhoto2,
   removePhoto,
   login,
   logout,
   infos,
   famille,
+  setIdFamille,
 } = UserSlice.actions;
 export default UserSlice.reducer;

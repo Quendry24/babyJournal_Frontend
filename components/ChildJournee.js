@@ -14,9 +14,14 @@ import { useState } from "react";
 
 import ItemDetail from "./ItemDetail";
 import ButtonRetour from "./ButtonRetour";
+import AddChild from "./AddChild";
+import Button from "./Button";
+import InfosChild from "./InfosChild";
 
 export default function ChildJournee({ photo, child, OnBack }) {
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const [add, setAdd] = useState(false);
+  const [infos, setInfos] = useState(false);
   const activityTypes = [
     { id: 1, label: "Sieste", icon: Bed, count: 0 }, // {count :donnéesNounou.length || 0}
     { id: 2, label: "Repas", icon: Utensils, count: 0 },
@@ -70,40 +75,81 @@ export default function ChildJournee({ photo, child, OnBack }) {
       </Pressable>
     );
   });
+
   return (
     <View className="flex-1">
-      <View className="flex-row items-center justify-between mr-4">
-        <Pressable>
-          <ButtonRetour onPress={OnBack} />
-        </Pressable>
-        <Pressable>
-          <Send />
-        </Pressable>
-      </View>
-      <View className="flex-row items-center justify-center">
-        {photo ? (
-          <Image source={{ uri: photo }} className="w-16 h-16 rounded-full" />
-        ) : (
-          <View className="items-center  border-4  border-jaune rounded-full ">
-            <Baby color="gray" size={75} />
+      {!add && !infos && (
+        <>
+          <View className="flex-row items-center justify-between mr-4">
+            <Pressable>
+              <ButtonRetour onPress={OnBack} />
+            </Pressable>
+            <Pressable>
+              <Send />
+            </Pressable>
           </View>
-        )}
-      </View>
-      <Text className=" pt-2 pb-2 text-center text-black text-4xl font-bold">
-        {child.Prenom}
-      </Text>
-      <Text className="text-center italic pb-4">{ageInMonths} mois</Text>
-      <View>
-        <ScrollView
-          className="pt-4"
-          contentContainerStyle={{ gap: 16, paddingBottom: 380 }}
-        >
-          <Pressable className="bg-white items-center py-4 rounded-3xl shadow-sm elevation-3">
-            <Text className="text-2xl">Notes de nounou </Text>
+          <Pressable
+            className="flex-row items-center justify-center"
+            onPress={() => setInfos(true)}
+          >
+            {photo ? (
+              <Image
+                source={{ uri: photo }}
+                className="w-16 h-16 rounded-full"
+              />
+            ) : (
+              <View className="items-center  border-4  border-jaune rounded-full ">
+                <Baby color="gray" size={75} />
+              </View>
+            )}
           </Pressable>
-          {activities}
-        </ScrollView>
-      </View>
+          <Text className=" pt-2 pb-2 text-center text-black text-4xl font-bold">
+            {child.Prenom}
+          </Text>
+          <Text className="text-center italic pb-4">{ageInMonths} mois</Text>
+          <View>
+            <ScrollView
+              className="pt-4"
+              contentContainerStyle={{ gap: 16, paddingBottom: 380 }}
+            >
+              <Pressable className="bg-white items-center py-4 rounded-3xl shadow-sm elevation-3">
+                <Text className="text-2xl">Notes de nounou </Text>
+              </Pressable>
+              {activities}
+            </ScrollView>
+          </View>
+        </>
+      )}
+      {infos && (
+        <>
+          <View className="flex-row justify-between">
+            <ButtonRetour onPress={() => setInfos(false)} />
+            <View className="h-10 w-24">
+              <Button
+                title="Modifier"
+                variant="outlineJaune"
+                onPress={() => {
+                  setInfos(false);
+                  setAdd(true);
+                }}
+              />
+            </View>
+          </View>
+
+          <InfosChild infos={child} />
+        </>
+      )}
+      {add && (
+        <>
+          <ButtonRetour
+            onPress={() => {
+              setAdd(false);
+              setInfos(true);
+            }}
+          />
+          <AddChild infos={child} setAdd={setAdd} />
+        </>
+      )}
     </View>
   );
 }

@@ -47,7 +47,7 @@ export default function ProChild({
   }, []);
 
   return (
-    <View className="flex-1 mb-36">
+    <View className="flex-1 ">
       <View className="w-full flex-row items-center  justify-between">
         <ButtonRetour variant="ter" onPress={() => setChildName("")} />
         <Send color="gray" />
@@ -72,9 +72,12 @@ export default function ProChild({
           </View>
         ))}
       </View>
-      {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> */}
+      {/* <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+      > */}
       <View className="flex-1">
-        {selectedItem === null && <ProChildInfos />}
+        {selectedItem === null && <ProChildInfos childInfo={childInfo} />}
         {selectedItem === "Repas" && <ProChildRepas childInfo={childInfo} />}
         {selectedItem === "Siestes" && <ProChildSieste childInfo={childInfo} />}
         {selectedItem === "Changes" && (
@@ -88,7 +91,7 @@ export default function ProChild({
           <ProChildNotes childInfo={childInfo} />
         )}
       </View>
-      {/* </TouchableWithoutFeedback> */}
+      {/* </ScrollView> */}
     </View>
   );
 }

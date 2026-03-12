@@ -2,8 +2,10 @@ import { Pressable, Text, View, Image } from "react-native";
 import Button from "../components/Button";
 import { useDispatch } from "react-redux";
 import { setUserType } from "../reducers/user";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WelcomeScreen({ navigation }) {
+  // AsyncStorage.clear();
   const dispatch = useDispatch();
   return (
     <View className="flex-1 pt-16 px-8 bg-back">
