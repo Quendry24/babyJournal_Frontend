@@ -10,7 +10,8 @@ import {
   Send,
 } from "lucide-react-native";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import ItemDetail from "./ItemDetail";
 import ButtonRetour from "./ButtonRetour";
@@ -19,27 +20,81 @@ import Button from "./Button";
 import InfosChild from "./InfosChild";
 
 export default function ChildJournee({ photo, child, OnBack }) {
+  //console.log("CHILD :", child);
+  //console.log("ID BABY JOURNAL:", child.idBabyJournal);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const [journee, setJournee] = useState(null);
+
   const [add, setAdd] = useState(false);
   const [infos, setInfos] = useState(false);
   const activityTypes = [
-    { id: 1, label: "Sieste", icon: Bed, count: 0 }, // {count :donnéesNounou.length || 0}
-    { id: 2, label: "Repas", icon: Utensils, count: 0 },
-    { id: 3, label: "Activités", icon: Shapes, count: 0 },
-    { id: 4, label: "Changes", icon: Shirt, count: 0 },
-    { id: 5, label: "Santé", icon: HeartPlus, count: 0 },
+    {
+      id: 1,
+      label: "Sieste",
+      bdd: "Siestes",
+      icon: Bed,
+      count: journee?.Siestes?.length || 0,
+    },
+    {
+      id: 2,
+      label: "Repas",
+      bdd: "Repas",
+      icon: Utensils,
+      count: journee?.Repas?.length || 0,
+    },
+    {
+      id: 3,
+      label: "Activités",
+      bdd: "Activites",
+      icon: Shapes,
+      count: journee?.Activites?.length || 0,
+    },
+    {
+      id: 4,
+      label: "Changes",
+      bdd: "Changes",
+      icon: Shirt,
+      count: journee?.Changes?.length || 0,
+    },
+    {
+      id: 5,
+      label: "Santé",
+      bdd: "Sante",
+      icon: HeartPlus,
+      count: journee?.Sante?.length || 0,
+    },
   ];
 
-  const notesNounou = [
-    { type: "Infos", note: "Amenez un maillot de bain pour demain" },
-  ];
+  // const notesNounou = [
+  //   { type: "Infos", note: "Amenez un maillot de bain pour demain" },
+  // ];
+
   const ageInMonths = dayjs().diff(dayjs(child.Birthday), "month");
+  const idBabyJournal = child.idBabyJournal;
+
+  useEffect(() => {
+    if (!child?.idBabyJournal) return;
+
+    console.log("ID bbj début fetch", idBabyJournal);
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/journee/${idBabyJournal}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "fetch enfant journée");
+        if (data.data === null) setJournee({});
+        if (data.data) {
+          setJournee(data.data);
+        }
+      });
+  }, [idBabyJournal]);
 
   if (selectedActivity) {
     return (
       <ItemDetail
         activityTypes={selectedActivity}
         child={child}
+        journee={journee}
         OnBack={() => setSelectedActivity(null)}
       />
     );

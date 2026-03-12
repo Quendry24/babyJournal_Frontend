@@ -37,7 +37,9 @@ export default function ParentsHome({ onSelectChild }) {
   const dispatch = useDispatch();
   console.log(idFamille);
 
+  //const idFamille = "123";
   useEffect(() => {
+    console.log("IDDDDDDDD", idFamille);
     if (!idFamille) return;
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/famille/${idFamille}`)
       .then((res) => res.json())
