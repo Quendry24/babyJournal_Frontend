@@ -46,12 +46,12 @@ export default function FolderScreen() {
 
   return (
     <View className="flex-1">
-      {user === "Pro" && (
+      {user === "nounou" && (
         <View className="flex-1 pt-16 bg-back ">
           <ProFolder />
         </View>
       )}
-      {user === "Parents" && (
+      {user === "parents" && (
         <View className="flex-1 pt-16 bg-back">
           <Text className="pt-4 pb-2 text-center text-black text-4xl font-bold">
             Documents

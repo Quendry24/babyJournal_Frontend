@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DatePickerInput } from "react-native-paper-dates";
 import { getAllChilds } from "../reducers/user";
 
-export default function AddChild({ infos = {}, setAdd }) {
+export default function AddChild({ infos = {}, setAdd, setAddChild }) {
   const user = useSelector((state) => state.user.value.type); // a mettre dans le store a la connexion
   const [date, setDate] = useState(
     infos.Birthday ? new Date(infos.Birthday) : null,
@@ -97,7 +97,7 @@ export default function AddChild({ infos = {}, setAdd }) {
   return (
     <View className="flex-1 items-center max-w-full">
       <Text className="text-3xl">Profil enfant</Text>
-      {user === "Parents" && (
+      {user === "parents" && (
         <View className="my-4 w-20 items-center justify-center aspect-square rounded-full border-2 border-jaune">
           <Baby size={65} color="gray" />
         </View>
@@ -132,7 +132,7 @@ export default function AddChild({ infos = {}, setAdd }) {
               inputMode="start"
             />
           </View>
-          {user === "Parents" && (
+          {user === "parents" && (
             <Input
               title="Poids"
               inputMode="numeric"
@@ -140,7 +140,7 @@ export default function AddChild({ infos = {}, setAdd }) {
               onChangeText={setPoids}
             />
           )}
-          {user === "Parents" && (
+          {user === "parents" && (
             <>
               <Input
                 title="Adresse"
@@ -193,7 +193,7 @@ export default function AddChild({ infos = {}, setAdd }) {
             </>
           )}
         </View>
-        {user === "Parents" && (
+        {user === "parents" && (
           <View className="h-14 mb-36">
             <Button
               title="Mettre à jour les données de l'enfant"
@@ -202,7 +202,7 @@ export default function AddChild({ infos = {}, setAdd }) {
             />
           </View>
         )}
-        {user === "Pro" && (
+        {user === "nounou" && (
           <View className="h-14 mb-36 w-2/3 self-center">
             <Button
               title="Ajouter un enfant"

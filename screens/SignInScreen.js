@@ -16,8 +16,6 @@ export default function SignInScreen({ navigation }) {
   const [errorAuth, setErrorAuth] = useState(false);
 
   const user = useSelector((state) => state.user.value.type);
-  const userId = useSelector((state) => state.user.value.userId);
-  const idFamille = useSelector((state) => state.user.value.idFamille);
 
   console.log("type user :", user);
 
@@ -46,22 +44,23 @@ export default function SignInScreen({ navigation }) {
     })
       .then((response) => response.json())
       .then((dataUser) => {
-        console.log(dataUser);
-        console.log("réponse backend :", dataUser);
-        console.log("type user :", user);
-
-        -dispatch(
-          login({
-            userId: dataUser.idParent,
-            email: email,
-          }),
-        );
-        navigation.navigate("TabNavigator");
-        setEmail("");
+        if (dataUser.result) {
+          console.log("réponse backend :", dataUser);
+          dispatch(
+            login({
+              userId: dataUser.userId,
+              email: dataUser.email,
+            }),
+          );
+          navigation.navigate("TabNavigator");
+          setEmail("");
+        } else {
+          console.log(dataUser.error);
+        }
+      })
+      .catch((error) => {
+        console.log("Erreur connexion :", error);
       });
-    // .catch((error) => {
-    //   console.log("Erreur connexion :", error);
-    // });
   };
 
   const Logout = () => {

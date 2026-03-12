@@ -19,21 +19,12 @@ export default function SettingsScreen({ navigation }) {
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(setUserType(null));
-    navigation.navigate("Login");
+    navigation.navigate("Welcome");
   };
 
   return (
     <View className="flex-1 bg-back p-4 pt-16">
-      <View className="w-60 h-16 self-center mt-8">
-        <Button
-          title="Se déconnecter"
-          variant="jaune"
-          textSize="lg"
-          onPress={handleLogout}
-        />
-      </View>
-      {user === "Parents" && (
+      {user === "parents" && (
         <View className="flex-1  gap-4">
           <Pressable className="">
             <ButtonRetour onPress={() => navigation.navigate("Home")} />
@@ -48,7 +39,7 @@ export default function SettingsScreen({ navigation }) {
             </Text>
             <View className="border-t-2 border-b-2 border-jaune w-full">
               <Text className="text-3xl text-center">Ma famille</Text>
-              {famille.map((data, i) => (
+              {famille?.map((data, i) => (
                 <Text key={i} className="text-2xl text-center">
                   {data.Prenom} - id : {data.idBabyJournal}
                 </Text>
@@ -58,14 +49,14 @@ export default function SettingsScreen({ navigation }) {
               <Button
                 title="Deconnexion"
                 variant="outlineJaune"
-                onPress={() => setAdd(true)}
+                onPress={() => handleLogout()}
               />
             </View>
           </View>
         </View>
       )}
 
-      {user === "Pro" && (
+      {user === "nounou" && (
         <View className="flex-1 gap-4 items-center justify-around mb-60">
           <Text className="text-3xl font-bold text-center">Paramètres</Text>
           <View className="border-b-2 w-full border-ter"></View>
@@ -75,7 +66,7 @@ export default function SettingsScreen({ navigation }) {
             <>
               <View className=" w-full items-center">
                 <Text className="text-2xl">Mes enfants :</Text>
-                {allChild.map((data, i) => (
+                {allChild?.map((data, i) => (
                   <View key={i} className="flex-row">
                     <Text className="text-xl">{data.Prenom}</Text>
                     <Text className="text-xl">
@@ -98,7 +89,7 @@ export default function SettingsScreen({ navigation }) {
                   <Button
                     title="Deconnexion"
                     variant="outlineTer"
-                    onPress={() => setAdd(true)}
+                    onPress={() => handleLogout()}
                   />
                 </View>
               </View>

@@ -57,6 +57,7 @@ export default function ParentsCalendar() {
     "2026-03-26": { selected: true, selectedColor: "red" },
     "2026-03-27": { selected: true, selectedColor: "red" },
   };
+
   return (
     <View className="flex-1">
       <View className="pr-4 flex-row justify-end ">

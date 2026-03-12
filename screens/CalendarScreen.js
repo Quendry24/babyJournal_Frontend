@@ -7,12 +7,12 @@ export default function CalendarScreen() {
 
   return (
     <View className="flex-1 p-4 pt-16 bg-back ">
-      {user === "Parents" && (
+      {user === "parents" && (
         <View className="flex-1">
           <ParentsCalendar />
         </View>
       )}
-      {user === "Pro" && (
+      {user === "nounou" && (
         <View className="flex-1">
           <ProCalendar />
         </View>

@@ -1,12 +1,22 @@
 import { Pressable, Text, View, Image } from "react-native";
 import Button from "../components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserType } from "../reducers/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
 export default function WelcomeScreen({ navigation }) {
   // AsyncStorage.clear();
   const dispatch = useDispatch();
+  const login = useSelector((state) => state.user.value.login);
+  const user = useSelector((state) => state.user.value.type);
+  console.log(login?.userId, user);
+
+  useEffect(() => {
+    if (user && login?.userId) {
+      user && navigation.navigate("TabNavigator");
+    }
+  }, []);
 
   return (
     <View className="flex-1 pt-16 px-8 bg-back">
@@ -52,7 +62,7 @@ export default function WelcomeScreen({ navigation }) {
       <Pressable
         className="absolute bottom-0 right-0 h-20 p-4 border bg-back"
         onPress={() => {
-          dispatch(setUserType("Pro"));
+          dispatch(setUserType("nounou"));
           navigation.navigate("TabNavigator");
         }}
       >
@@ -61,7 +71,7 @@ export default function WelcomeScreen({ navigation }) {
       <Pressable
         className="absolute bottom-0 h-20 p-4 border bg-back"
         onPress={() => {
-          dispatch(setUserType("Parents"));
+          dispatch(setUserType("parents"));
           navigation.navigate("TabNavigator");
         }}
       >

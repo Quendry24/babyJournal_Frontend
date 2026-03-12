@@ -6,13 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { login, setUserType } from "../reducers/user";
+import { addUserId, login, setUserType } from "../reducers/user";
 
 export default function SignUpScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.value.type);
-  const userId = useSelector((state) => state.user.value.userId);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -43,17 +42,19 @@ export default function SignUpScreen({ navigation }) {
     })
       .then((response) => response.json())
       .then((dataUser) => {
-        console.log("réponse backend :", dataUser);
-        dispatch(
-          login({
-            token: dataUser.token,
-            userId: dataUser.idNounou,
-            email: email,
-          }),
-        );
-        navigation.navigate("Information");
-        setEmail("");
-        setPassword("");
+        if (dataUser.result) {
+          console.log("réponse backend :", dataUser);
+          dispatch(
+            login({
+              userId: dataUser.idNounou,
+              email,
+            }),
+          );
+          dispatch(addUserId(dataUser.idNounou));
+          setEmail("");
+          setPassword("");
+          navigation.navigate("Information");
+        }
       })
       .catch((error) => {
         console.log("Erreur fetch :", error);
@@ -61,9 +62,9 @@ export default function SignUpScreen({ navigation }) {
   };
 
   return (
-    <>
+    <View className="flex-1 pt-16 p-4 bg-back">
       {user === "parents" && (
-        <View className="flex-1 pt-16 px-8 bg-back">
+        <View className="flex-1">
           <View className=" flex-row  justify-between">
             <ButtonRetour
               title="Retour"
@@ -117,7 +118,7 @@ export default function SignUpScreen({ navigation }) {
       )}
 
       {user === "nounou" && (
-        <View className="flex-1 pt-16 px-8 bg-back">
+        <View className="flex-1">
           <View className="flex-row justify-between">
             <ButtonRetour
               title="Retour"
@@ -165,6 +166,6 @@ export default function SignUpScreen({ navigation }) {
           </View>
         </View>
       )}
-    </>
+    </View>
   );
 }
