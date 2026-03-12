@@ -53,7 +53,7 @@ export default function LoginScreen({ navigation }) {
               variant={config.variantPrimary}
               textSize="lg"
               onPress={() => {
-                dispatch(setUserType("parents"));
+                dispatch(setUserType);
 
                 navigation.navigate("SignUp");
               }}

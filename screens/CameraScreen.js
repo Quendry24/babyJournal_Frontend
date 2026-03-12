@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Circle, X, SwitchCamera } from "lucide-react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { addPhoto } from "../reducers/user";
+import { addPhoto, addPhoto2 } from "../reducers/user";
 
 export default function CameraScreen({ navigation }) {
   const cameraRef = useRef(null);
@@ -45,8 +45,8 @@ export default function CameraScreen({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Photo ajoutée :", photo.uri);
-        data.result && dispatch(addPhoto(data.url));
+        console.log("Photo ajoutée :", photo.uri, data.url, data.result);
+        dispatch(addPhoto(data.url));
       });
   };
 

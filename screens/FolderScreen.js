@@ -24,51 +24,11 @@ export default function FolderScreen() {
   const dispatch = useDispatch();
 
   //const user = useSelector((state) => state.user.value);
-  console.log("Photos:", photosData);
   console.log("User type:", user);
   const { width } = Dimensions.get("window");
   const photosData = useSelector((state) => state.user?.value?.photos);
-  // console.log("store", photosData.length);
 
-  /*const photosData = [
-    "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
-    "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
-    "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
-    "https://images.pexels.com/photos/774910/pexels-photo-774910.jpeg",
-    "https://images.pexels.com/photos/2505101/pexels-photo-2505101.jpeg",
-    "https://images.pexels.com/photos/265987/pexels-photo-265987.jpeg",
-    "https://images.pexels.com/photos/266004/pexels-photo-266004.jpeg",
-    "https://images.pexels.com/photos/2869315/pexels-photo-2869315.jpeg",
-    "https://images.pexels.com/photos/1735742/pexels-photo-1735742.jpeg",
-    "https://images.pexels.com/photos/421884/pexels-photo-421884.jpeg",
-    "https://images.pexels.com/photos/37664/pexels-photo-37664.jpeg",
-    "https://images.pexels.com/photos/101537/baby-boy-hat-covered-101537.jpeg",
-    "https://images.pexels.com/photos/803277/pexels-photo-803277.jpeg",
-    "https://images.pexels.com/photos/1470677/pexels-photo-1470677.jpeg",
-    "https://images.pexels.com/photos/62272/pexels-photo-62272.jpeg",
-    "https://images.pexels.com/photos/421884/pexels-photo-421884.jpeg",
-    "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
-    "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
-    "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
-    "https://images.pexels.com/photos/774910/pexels-photo-774910.jpeg",
-    "https://images.pexels.com/photos/2505101/pexels-photo-2505101.jpeg",
-    "https://images.pexels.com/photos/265987/pexels-photo-265987.jpeg",
-    "https://images.pexels.com/photos/266004/pexels-photo-266004.jpeg",
-    "https://images.pexels.com/photos/2869315/pexels-photo-2869315.jpeg",
-    "https://images.pexels.com/photos/1735742/pexels-photo-1735742.jpeg",
-    "https://images.pexels.com/photos/421884/pexels-photo-421884.jpeg",
-    "https://images.pexels.com/photos/37664/pexels-photo-37664.jpeg",
-    "https://images.pexels.com/photos/101537/baby-boy-hat-covered-101537.jpeg",
-    "https://images.pexels.com/photos/803277/pexels-photo-803277.jpeg",
-    "https://images.pexels.com/photos/1470677/pexels-photo-1470677.jpeg",
-    "https://images.pexels.com/photos/62272/pexels-photo-62272.jpeg",
-    "https://images.pexels.com/photos/421884/pexels-photo-421884.jpeg",
-    "https://images.pexels.com/photos/3845492/pexels-photo-3845492.jpeg",
-    "https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg",
-    "https://images.pexels.com/photos/1724173/pexels-photo-1724173.jpeg",
-  ];*/
-
-  //const images = photosData.map((url) => ({ source: { uri: url } }));
+  console.log("photos", photosData);
   const show = (index) => {
     setSelectedIndex(index);
     setVisible(true);
@@ -76,9 +36,10 @@ export default function FolderScreen() {
   const hide = () => setVisible(false);
 
   const photos = photosData?.map((data, i) => {
+    console.log("data", data);
     return (
       <Pressable key={i} className="items-center w-1/4" onPress={() => show(i)}>
-        <Image source={{ uri: data }} className="w-full aspect-square" />
+        <Image source={{ uri: data }} style={{ width: 100, height: 100 }} />
       </Pressable>
     );
   });
@@ -86,9 +47,8 @@ export default function FolderScreen() {
   return (
     <View className="flex-1">
       {user === "Pro" && (
-        <View className="flex-1 pt-16 bg-back items-center justify-center">
+        <View className="flex-1 pt-16 bg-back ">
           <ProFolder />
-          <Text className="text-2xl">Page en cours de création</Text>
         </View>
       )}
       {user === "Parents" && (

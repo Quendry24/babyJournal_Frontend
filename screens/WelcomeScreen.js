@@ -5,9 +5,9 @@ import { setUserType } from "../reducers/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WelcomeScreen({ navigation }) {
+  // AsyncStorage.clear();
   const dispatch = useDispatch();
 
-  //AsyncStorage.clear();
   return (
     <View className="flex-1 pt-16 px-8 bg-back">
       <Text className=" text-3xl text-center font-bold mb-16">

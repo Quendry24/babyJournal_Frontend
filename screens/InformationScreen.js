@@ -5,51 +5,62 @@ import { useEffect, useState } from "react";
 import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType, infos } from "../reducers/user";
+import { setUserType, userId, infos, idFamille } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
+import { DatePickerInput } from "react-native-paper-dates";
 
 export default function InformationScreen({ navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value.type);
 
+  const user = useSelector((state) => state.user.value.type);
+  const userId = useSelector((state) => state.user.value.userId);
+  const idFamille = useSelector((state) => state.user.value.idFamille);
+
+  const [famille, setFamille] = useState("");
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [role, setRole] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [address, setAddress] = useState("");
+  const [adresse, setAdresse] = useState("");
   const [contact, setContact] = useState("");
   const [pajemploi, setPajemploi] = useState("");
   const [agrement, setAgrement] = useState("");
+  const [date, setDate] = useState(null);
 
   const handleSaveInfos = () => {
     console.log("type user :", user);
-    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/${user}/updateInfos`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    console.log(userId);
+
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/${user}/updateInfos/${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          famille,
+          nom,
+          prenom,
+          role,
+          date: birthday,
+          adresse,
+          contact,
+          pajemploi,
+          agrement,
+        }),
       },
-      body: JSON.stringify({
-        nom,
-        prenom,
-        role,
-        birthday,
-        address,
-        contact,
-        pajemploi,
-        agrement,
-      }),
-    })
+    )
       .then((response) => response.json())
       .then((dataUser) => {
         console.log(dataUser);
-        dispatch(setUserType("user"));
         dispatch(
           infos({
+            famille: idFamille,
             nom,
             prenom,
             role,
-            birthday,
-            address,
+            birthday: date,
+            adresse,
             contact,
             pajemploi,
             agrement,
@@ -59,8 +70,8 @@ export default function InformationScreen({ navigation }) {
         setNom("");
         setPrenom("");
         setRole("");
-        setBirthday("");
-        setAddress("");
+        setDate("");
+        setAdresse("");
         setContact("");
         setPajemploi("");
         setAgrement("");
@@ -107,17 +118,32 @@ export default function InformationScreen({ navigation }) {
               value={role}
               onChangeText={setRole}
             />
-            <Input
-              className="jaune"
-              title="Date de naissance"
-              value={birthday}
-              onChangeText={setBirthday}
-            />
+            {/* <View
+              className="mx-10"
+              style={{
+                justifyContent: "center",
+                flex: 1,
+                alignItems: "center",
+              }}
+            >
+              <DatePickerInput
+                style={{
+                  backgroundColor: "transparent",
+                  borderWidth: 1,
+                  marginBottom: 16,
+                }}
+                locale="fr"
+                label="Date de naissance"
+                value={date}
+                onChange={setDate}
+                inputMode="start"
+              />
+            </View> */}
             <Input
               className="jaune"
               title="Adresse"
-              value={address}
-              onChangeText={setAddress}
+              value={adresse}
+              onChangeText={setAdresse}
             />
             <Input
               className="jaune"
@@ -179,8 +205,14 @@ export default function InformationScreen({ navigation }) {
             <Input
               className="ter"
               title="Adresse"
-              value={address}
-              onChangeText={setAddress}
+              value={adresse}
+              onChangeText={setAdresse}
+            />
+            <Input
+              className="jaune"
+              title="N° pajemploi"
+              value={pajemploi}
+              onChangeText={setPajemploi}
             />
             <Input
               className="ter"

@@ -37,6 +37,7 @@ export default function ProCalendar() {
   const idNounou = useSelector((state) => state.user.value.userId); // a mettre dans le store a la connexion
   const allChild = useSelector((state) => state.user.value.all);
   const dispatch = useDispatch();
+
   const options = {
     weekday: "long",
     year: "numeric",
@@ -184,7 +185,7 @@ export default function ProCalendar() {
       <ScrollView
         contentContainerStyle={{
           position: "relative",
-          paddingBottom: 16,
+          paddingBottom: 166,
           marginBottom: 144,
           paddingTop: 16,
           backgroundColor: "white",

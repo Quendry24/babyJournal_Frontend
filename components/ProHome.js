@@ -1,15 +1,31 @@
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
-import { Send, Baby } from "lucide-react-native";
+import {
+  Image,
+  Keyboard,
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { Send, Baby, ImageIcon } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllChilds, getTodayChilds } from "../reducers/user";
 import * as Location from "expo-location";
+import Button from "./Button";
+import Input from "./Input";
 
 export default function ProHome({ child, childId, setChildName, setChildId }) {
   const idNounou = useSelector((state) => state.user.value.userId);
   const childs = useSelector((state) => state.user.value.all);
   const todayChilds = useSelector((state) => state.user.value.today);
   const dispatch = useDispatch();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [activite, setActivite] = useState("");
+  const [commentaire, setCommentaire] = useState(null);
+  const [ok, setOk] = useState(false);
+  const [sorry, setSorry] = useState(false);
   const date = new Date();
   const [currentPosition, setCurrentPosition] = useState(null);
   const [meteo, setMeteo] = useState(null);
@@ -35,6 +51,18 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
           .then((res) => res.json())
           .then((data) => {
             data && setMeteo(data);
+          });
+      } else {
+        //si pas de localisation, Paris
+        const latitude = "48.8566";
+        const longitude = "2.3522";
+
+        fetch(
+          `${process.env.EXPO_PUBLIC_URL_BACKEND}/meteo?lat=${latitude}&lon=${longitude}`,
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            setMeteo(data);
           });
       }
     })();
@@ -84,6 +112,44 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
       <Text className="text-sm">{data.arrival || "7h00"}</Text>
     </Pressable>
   ));
+
+  const activiteCommune = async () => {
+    const ids = [];
+    todayChilds.map((child, i) => {
+      ids.push(child.idBabyJournal);
+    });
+
+    try {
+      console.log("ids", ids);
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_URL_BACKEND}/nounou/commonActivity`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ids,
+            nom: activite,
+            commentaire,
+          }),
+        },
+      );
+      const data = await response.json();
+      console.log("commun", data);
+      if (data.result) {
+        console.log("activité ajoutée");
+        setOk(true);
+        setActivite("");
+        setCommentaire("");
+
+        setTimeout(() => {
+          setOk(false);
+          setModalVisible(false);
+        }, 1500);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View className="flex-1 items-center">
@@ -137,30 +203,83 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
         </View>
       </View>
       <View className="border-b-2 w-full border-jaune my-4"></View>
-      <View className=" items-center justify-center gap-4 pt-10">
-        <Pressable className="bg-ter py-4 px-6 rounded-2xl w-2/3">
-          <Text
-            className="text-xl text-white"
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.5}
-            ellipsizeMode="tail"
-          >
-            Ajouter activité commune
+      <View className=" items-center justify-center gap-10 pt-10">
+        <View className="w-2/3 h-16">
+          <Button
+            title="Ajouter activité commune"
+            variant="ter"
+            textSize="xl"
+            onPress={() => setModalVisible(true)}
+          />
+        </View>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+            <View className="flex-1 items-center justify-center">
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View className="items_center justify-center gap-2 p-4 aspect-square w-5/6 bg-white rounded-3xl border-4 border-jaune elevation-3">
+                  <View className="gap-2">
+                    <Input
+                      title="Activité :"
+                      value={activite}
+                      onChangeText={setActivite}
+                      fond="sans"
+                    />
+                  </View>
+                  <View className="flex-1 h-15">
+                    <Input
+                      fond="sans"
+                      title="Commentaires"
+                      nbLignes={5}
+                      value={commentaire}
+                      onChangeText={(value) => setCommentaire(value)}
+                    />
+                  </View>
+                  {ok && (
+                    <Text className="text-green-700 text-center mb-2">
+                      Activité ajoutée
+                    </Text>
+                  )}
+                  <View className="relative w-full">
+                    <ImageIcon size={40} />
+                    <View className=" absolute bottom self-center w-1/2">
+                      <Button
+                        title="Enregistrer"
+                        textSize="xl"
+                        variant="ter"
+                        onPress={() => activiteCommune()}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+        <View className="w-2/3 h-16">
+          <Button
+            title="Envoyer message commun"
+            variant="ter"
+            textSize="xl"
+            onPress={() => {
+              setSorry(true);
+              setTimeout(() => setSorry(false), 3000);
+            }}
+          />
+        </View>
+        {sorry && (
+          <Text className="text-xl text-center">
+            Fonctionnalité en cours, prévu dans le V2
           </Text>
-        </Pressable>
-        <Pressable className="bg-ter py-4 px-6 rounded-2xl w-2/3">
-          <Text
-            className="text-xl text-white"
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.5}
-            ellipsizeMode="tail"
-          >
-            Envoyer message commun
-          </Text>
-        </Pressable>
-        <Send color="gray" size={40} />
+        )}
       </View>
     </View>
   );

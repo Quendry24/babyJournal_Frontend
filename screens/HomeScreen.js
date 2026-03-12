@@ -5,7 +5,7 @@ import ProHome from "../components/ProHome";
 import ParentsHome from "../components/ParentsHome";
 import ChildJournee from "../components/ChildJournee";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserId, idfamille } from "../reducers/user";
+import { addUserId, setIdFamille } from "../reducers/user";
 
 export default function HomeScreen() {
   const [child, setChild] = useState("");
@@ -17,18 +17,18 @@ export default function HomeScreen() {
     setChild(name);
   };
 
-  const idNounou = "1234"; // viendra de la connexion
+  const idNounou = "123456"; // viendra de la connexion
   const idFamille = "123";
 
   useEffect(() => {
     console.log("ça marche !");
     //fetch pour idNounou ou idparents => idparent => idFamille =>idfamille =>Enfants
     dispatch(addUserId(idNounou));
-    dispatch(idfamille(idFamille));
+    dispatch(setIdFamille(idFamille));
   }, []);
 
   return (
-    <View className="flex-1  p-4 pt-16 bg-back">
+    <View className="flex-1 p-4 pt-16 bg-back">
       {user === "Pro" && (
         <View className="flex-1 gap-4">
           {child === "" && (
