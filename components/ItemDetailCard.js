@@ -24,11 +24,11 @@ export default function ItemDetailCard({ activityTypes, journee = [] }) {
           {IconComponent && <IconComponent size={45} />}
         </View>
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
           {journee.map((data, i) => (
             <View className="my-5" key={i}>
               <Text className="text-3xl">
-                {data.nom || data.heure || `Item ${i + 1}`}
+                {data.nom || data.heure || `Sieste ${i + 1}`}
               </Text>
 
               <View
