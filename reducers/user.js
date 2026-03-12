@@ -14,6 +14,7 @@ const initialState = {
     login: null,
     logout: null,
     famille: null,
+    idFamille,
     isConnected: false,
   },
 };
@@ -25,6 +26,11 @@ export const UserSlice = createSlice({
     setUserType: (state, action) => {
       state.value.type = action.payload;
     },
+
+    userId: (state, action) => {
+      state.value.type = action.payload;
+    },
+
     login: (state, action) => {
       state.value.login = action.payload;
     },
@@ -34,7 +40,7 @@ export const UserSlice = createSlice({
     },
 
     infos: (state, action) => {
-      state.value = action.payload;
+      state.value.infos = action.payload;
     },
     famille: (state, action) => {
       state.value.famille = action.payload;
@@ -62,7 +68,7 @@ export const UserSlice = createSlice({
       state.value.today = action.payload;
     },
 
-    famille: (state, action) => {
+    idFamille: (state, action) => {
       state.value.idFamille = action.payload;
     },
     // login: (state, action) => {
@@ -81,6 +87,8 @@ export const {
   login,
   logout,
   infos,
+  idFamille,
   famille,
+  userId,
 } = UserSlice.actions;
 export default UserSlice.reducer;

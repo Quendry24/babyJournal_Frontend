@@ -10,13 +10,28 @@ import { setUserType, login, logout } from "../reducers/user";
 
 export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value.type);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorAuth, setErrorAuth] = useState(false);
+
+  const user = useSelector((state) => state.user.value.type);
+  const userId = useSelector((state) => state.user.value.userId);
+  const idFamille = useSelector((state) => state.user.value.idFamille);
+
   console.log("type user :", user);
 
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const handleConnection = () => {
+    if (!EMAIL_REGEX.test(email)) {
+      setErrorAuth(true);
+      return;
+    }
+    setErrorAuth(false);
+
+    console.log("fetch type:", typeof fetch);
     console.log("handleConnection déclenché");
 
     fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/${user}/signIn`, {
@@ -27,34 +42,26 @@ export default function SignInScreen({ navigation }) {
       body: JSON.stringify({
         email: email,
         password: password,
-        idFamille: idFamille,
       }),
     })
       .then((response) => response.json())
       .then((dataUser) => {
+        console.log(dataUser);
         console.log("réponse backend :", dataUser);
+        console.log("type user :", user);
 
-        if (dataUser.result) {
-          dispatch(setUserType("user"));
-          navigation.navigate("Tabnavigator");
-          setEmail("");
-          setPassword("");
-        } else {
-          dispatch(
-            login({
-              email: user.email,
-              idFamille: user.idFamille,
-              token: dataUser.token,
-            }),
-          );
-
-          setEmail("");
-          setPassword("");
-        }
-      })
-      .catch((error) => {
-        console.log("Erreur connexion :", error);
+        -dispatch(
+          login({
+            userId: dataUser.idParent,
+            email: email,
+          }),
+        );
+        navigation.navigate("TabNavigator");
+        setEmail("");
       });
+    // .catch((error) => {
+    //   console.log("Erreur connexion :", error);
+    // });
   };
 
   const Logout = () => {
