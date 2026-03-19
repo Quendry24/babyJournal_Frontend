@@ -19,8 +19,8 @@ import {
 import { useState } from "react";
 import Button from "./Button";
 
-export default function ProFolder() {
-  const allChilds = useSelector((state) => state.user.value.all);
+export default function ParentsFolder() {
+  const allChilds = useSelector((state) => state.user.value.famille);
 
   const [photos, setPhotos] = useState([]);
   const [enfant, setEnfant] = useState("");

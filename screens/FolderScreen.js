@@ -9,34 +9,48 @@ import {
   Dimensions,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { ChevronLeft, Ellipsis, Trash2 } from "lucide-react-native";
 import { removePhoto } from "../reducers/user";
 import ProFolder from "../components/ProFolder";
+import ParentsFolder from "../components/ParentsFolder";
 
 export default function FolderScreen() {
   const user = useSelector((state) => state.user.value.type);
+  const famille = useSelector((state) => state.user.value.famille);
 
   const [visible, setVisible] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const dispatch = useDispatch();
 
-  //const user = useSelector((state) => state.user.value);
   console.log("User type:", user);
   const { width } = Dimensions.get("window");
   const photosData = useSelector((state) => state.user?.value?.photos);
 
-  console.log("photos", photosData);
+  useEffect(() => {
+    famille?.forEach((e) => {
+      fetch(
+        `${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/photos/${e.idBabyJournal}`,
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.result) {
+            dispatch(addPhoto(data.photos));
+          }
+        });
+    });
+  }, []);
+
   const show = (index) => {
     setSelectedIndex(index);
     setVisible(true);
   };
+
   const hide = () => setVisible(false);
 
   const photos = photosData?.map((data, i) => {
-    console.log("data", data);
     return (
       <Pressable key={i} className="items-center w-1/4" onPress={() => show(i)}>
         <Image source={{ uri: data }} style={{ width: 100, height: 100 }} />
@@ -53,7 +67,8 @@ export default function FolderScreen() {
       )}
       {user === "parents" && (
         <View className="flex-1 pt-16 bg-back">
-          <Text className="pt-4 pb-2 text-center text-black text-4xl font-bold">
+          <ParentsFolder />
+          {/* <Text className="pt-4 pb-2 text-center text-black text-4xl font-bold">
             Documents
           </Text>
 
@@ -138,7 +153,7 @@ export default function FolderScreen() {
                 />
               </View>
             </View>
-          </Modal>
+          </Modal> */}
         </View>
       )}
     </View>

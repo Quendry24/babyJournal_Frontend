@@ -11,9 +11,7 @@ const initialState = {
     idFamille: null,
     infos: {},
     login: null,
-    logout: null,
     famille: null,
-    idFamille,
     isConnected: false,
     nounouId: null,
   },
@@ -29,10 +27,8 @@ export const UserSlice = createSlice({
     login: (state, action) => {
       state.value.login = action.payload;
     },
-    logout: (state) => {
-      state.value.type = null;
-      state.value.userId = null;
-      state.value.login = null;
+    logout: () => {
+      return initialState;
     },
     infos: (state, action) => {
       state.value.infos = action.payload;

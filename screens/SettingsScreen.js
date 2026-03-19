@@ -97,6 +97,9 @@ export default function SettingsScreen({ navigation }) {
           )}
           {add && (
             <>
+              <Pressable className="self-start">
+                <ButtonRetour onPress={() => setAdd(false)} variant="ter" />
+              </Pressable>
               <AddChild add={add} setAdd={setAdd} />
             </>
           )}

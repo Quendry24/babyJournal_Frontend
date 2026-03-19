@@ -17,6 +17,7 @@ export default function WelcomeScreen({ navigation }) {
       user && navigation.navigate("TabNavigator");
     }
   }, []);
+  console.log(useSelector((state) => state.user.value));
 
   return (
     <View className="flex-1 pt-16 p-4 bg-back">

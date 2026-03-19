@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddChild from "./AddChild";
 import ButtonRetour from "./ButtonRetour";
 import Input from "./Input";
-import { famille } from "../reducers/user";
+import { famille, setIdFamille } from "../reducers/user";
 import { getWeekDays } from "../utils/getWeekDays";
 
 export default function ParentsHome({ onSelectChild }) {
@@ -27,6 +27,8 @@ export default function ParentsHome({ onSelectChild }) {
   const [child, setChild] = useState([]);
   const [add, setAdd] = useState(false);
   const idFamille = useSelector((state) => state.user.value.idFamille);
+  const idParent = useSelector((state) => state.user.value.userId);
+  console.log(idParent, "idparent");
   const nounouId = child?.[0]?.["Nounou"];
   console.log("idnounou", nounouId);
 
@@ -40,7 +42,29 @@ export default function ParentsHome({ onSelectChild }) {
   const [infoEnfant, setInfoEnfant] = useState(null);
   const [newChild, setNewChild] = useState(null);
   const dispatch = useDispatch();
-  console.log(idFamille);
+  console.log(idFamille, "idfam");
+
+  useEffect(() => {
+    fetch(`${process.env.EXPO_PUBLIC_URL_BACKEND}/parents/famille/${idParent}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          console.log(data);
+          dispatch(setIdFamille(data.idfamille));
+          fetch(
+            `${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/famille/${data.idFamille}`,
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              // console.log(data);
+              setChild(data.enfants);
+              dispatch(famille(data.enfants));
+            })
+            .catch((error) => console.log(error));
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   useEffect(() => {
     console.log("IDDDDDDDD", idFamille);
@@ -56,7 +80,6 @@ export default function ParentsHome({ onSelectChild }) {
   }, [idFamille]);
 
   // ajouter les jours de garde sur la childCard
-  console.log(child);
   useEffect(() => {
     const { monday } = getWeekDays();
     if (!nounouId) return;
