@@ -1,18 +1,10 @@
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import Input from "../components/Input";
-import ChildCard from "../components/ChildCard";
-import { useEffect, useState } from "react";
-import ItemDetailcard from "../components/ItemDetailCard";
+import { useState } from "react";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserType,
-  login,
-  setIdFamille,
-  idFamille,
-  addUserId,
-} from "../reducers/user";
+import { setUserType, login, setIdFamille, addUserId } from "../reducers/user";
 
 export default function CreateFamilyScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -21,10 +13,8 @@ export default function CreateFamilyScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [nom, setNom] = useState("");
   const [errorEmail, setErrorEmail] = useState(false);
-  // const [userId, setUserId] = useState("");
 
   const user = useSelector((state) => state.user.value.type);
-  const userId = useSelector((state) => state.user.value.userId);
 
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

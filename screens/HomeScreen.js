@@ -15,6 +15,7 @@ export default function HomeScreen() {
   const userId = useSelector((state) => state.user.value.userId);
   const dispatch = useDispatch();
   console.log("type: ", user, "id: ", userId);
+
   const setChildName = (name) => {
     setChild(name);
   };
@@ -30,6 +31,7 @@ export default function HomeScreen() {
               setChildId={setChildId}
             />
           )}
+
           {child !== "" && (
             <ProChild
               childName={child}
@@ -39,6 +41,7 @@ export default function HomeScreen() {
           )}
         </View>
       )}
+
       {user === "parents" && (
         <View className="flex-1 ">
           {selectedChild ? (

@@ -29,6 +29,7 @@ export default function ProHome({ child, childId, setChildName, setChildId }) {
   const date = new Date();
   const [currentPosition, setCurrentPosition] = useState(null);
   const [meteo, setMeteo] = useState(null);
+
   const options = {
     weekday: "long",
     year: "numeric",

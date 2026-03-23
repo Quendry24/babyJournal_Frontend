@@ -1,9 +1,7 @@
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import Input from "../components/Input";
-import ChildCard from "../components/ChildCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
 import { addUserId, login, setUserType } from "../reducers/user";

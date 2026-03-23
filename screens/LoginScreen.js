@@ -24,8 +24,8 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <>
+      //************** PORTAIL PARENT **************
       {user === "parents" && (
-        //************** PORTAIL PARENT **************
         <View className="flex-1 pt-16 px-8 bg-back">
           <View className="flex-row  justify-between">
             <ButtonRetour
@@ -47,6 +47,7 @@ export default function LoginScreen({ navigation }) {
           <Text className=" text-xl h-96 font-bold text-center">
             {config.title}
           </Text>
+
           <View className="w-80 h-16 self-center mt-8 ">
             <Button
               title="Inscription"
@@ -54,7 +55,6 @@ export default function LoginScreen({ navigation }) {
               textSize="lg"
               onPress={() => {
                 dispatch(setUserType);
-
                 navigation.navigate("SignUp");
               }}
             />
@@ -73,7 +73,6 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
       )}
-
       {/* ************** PORTAIL ASSISTANTE MATERNELLE ************** */}
       {user === "nounou" && (
         <View className="flex-1 pt-16 px-8 bg-back">

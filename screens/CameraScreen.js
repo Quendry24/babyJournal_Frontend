@@ -21,22 +21,23 @@ export default function CameraScreen({ navigation }) {
   const isFocused = useIsFocused();
   const [facing, setFacing] = useState("back");
   const dispatch = useDispatch();
+
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState(false);
-  const todayChilds = useSelector((state) => state.user.value.today);
+  const allChilds = useSelector((state) => state.user.value.all);
   const famille = useSelector((state) => state.user.value.famille);
   const [photoUrl, setPhotoUrl] = useState("");
-  console.log("tc", todayChilds, "f", famille);
+  console.log("tc", allChilds, "f", famille);
   const [choixPossible, setChoixPossible] = useState(false);
   const [enfants, setEnfants] = useState([]);
-  console.log(todayChilds);
+
   useEffect(() => {
     const enfantsPossible = [
       ...(famille || []).map((e) => ({
         prenom: e.Prenom,
         idBabyJournal: e.idBabyJournal,
       })),
-      ...(todayChilds || []).map((e) => ({
+      ...(allChilds || []).map((e) => ({
         prenom: e.Prenom,
         idBabyJournal: e.idBabyJournal,
       })),
@@ -45,6 +46,7 @@ export default function CameraScreen({ navigation }) {
   }, []);
 
   console.log(enfants);
+
   useEffect(() => {
     (async () => {
       const result = await Camera.requestCameraPermissionsAsync();
@@ -82,9 +84,8 @@ export default function CameraScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          setChoixPossible(true);
-
           console.log("Photo ajoutée :", photo.uri, data.url, data.result);
+          setChoixPossible(true);
           setPhotoUrl(data.url);
           dispatch(addPhoto(data.url));
         }

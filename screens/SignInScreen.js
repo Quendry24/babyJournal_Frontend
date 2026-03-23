@@ -1,12 +1,10 @@
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import Input from "../components/Input";
-import ChildCard from "../components/ChildCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ItemDetailcard from "../components/ItemDetailCard";
 import Button from "../components/Button";
 import ButtonRetour from "../components/ButtonRetour";
-import { setUserType, login, logout, addUserId } from "../reducers/user";
+import { login, addUserId } from "../reducers/user";
 
 export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();

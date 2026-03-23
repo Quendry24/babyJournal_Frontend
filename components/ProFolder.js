@@ -56,6 +56,25 @@ export default function ProFolder() {
     setMode("zoom");
   };
 
+  const deletePhoto = () => {
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/photo/${photos?.[selectedIndex]?._id}`,
+      {
+        method: "DELETE",
+      },
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          const updatedPhotos = photos.filter(
+            (e) => e !== photos[selectedIndex],
+          );
+          setPhotos(updatedPhotos);
+          hide();
+        }
+      });
+  };
+
   const cards = allChilds?.map((data, i) => (
     <View
       key={i}
@@ -172,6 +191,7 @@ export default function ProFolder() {
               <ScrollView
                 horizontal
                 pagingEnabled
+                contentOffset={{ x: selectedIndex * width, y: 0 }}
                 showsHorizontalScrollIndicator={false}
                 onMomentumScrollEnd={(event) => {
                   const index = Math.round(
@@ -215,9 +235,7 @@ export default function ProFolder() {
                   title={<Trash2 color="white" />}
                   textSize="xl"
                   onPress={() => {
-                    const photo = photos[selectedIndex];
-                    console.log("delete photo:", photo);
-                    hide();
+                    deletePhoto();
                   }}
                 />
               </View>

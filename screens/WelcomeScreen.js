@@ -14,9 +14,10 @@ export default function WelcomeScreen({ navigation }) {
 
   useEffect(() => {
     if (user && login?.userId) {
-      user && navigation.navigate("TabNavigator");
+      navigation.navigate("TabNavigator");
     }
   }, []);
+
   console.log(useSelector((state) => state.user.value));
 
   return (

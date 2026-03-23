@@ -7,7 +7,7 @@ import {
   Image,
   Dimensions,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Baby,
   Images,
@@ -18,6 +18,7 @@ import {
 } from "lucide-react-native";
 import { useState } from "react";
 import Button from "./Button";
+import { removePhoto } from "../reducers/user";
 
 export default function ParentsFolder() {
   const allChilds = useSelector((state) => state.user.value.famille);
@@ -27,7 +28,7 @@ export default function ParentsFolder() {
   const [modalVisible, setModalVisible] = useState(false);
   const [mode, setMode] = useState("grille");
   const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const dispatch = useDispatch();
   const { width } = Dimensions.get("window");
 
   const hide = () => {
@@ -54,6 +55,25 @@ export default function ParentsFolder() {
   const openPicture = (index) => {
     setSelectedIndex(index);
     setMode("zoom");
+  };
+
+  const deletePhoto = () => {
+    fetch(
+      `${process.env.EXPO_PUBLIC_URL_BACKEND}/enfants/photo/${photos?.[selectedIndex]?._id}`,
+      {
+        method: "DELETE",
+      },
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          const updatedPhotos = photos.filter(
+            (e) => e !== photos[selectedIndex],
+          );
+          setPhotos(updatedPhotos);
+          hide();
+        }
+      });
   };
 
   const cards = allChilds?.map((data, i) => (
@@ -172,6 +192,7 @@ export default function ParentsFolder() {
               <ScrollView
                 horizontal
                 pagingEnabled
+                contentOffset={{ x: selectedIndex * width, y: 0 }}
                 showsHorizontalScrollIndicator={false}
                 onMomentumScrollEnd={(event) => {
                   const index = Math.round(
@@ -215,9 +236,7 @@ export default function ParentsFolder() {
                   title={<Trash2 color="white" />}
                   textSize="xl"
                   onPress={() => {
-                    const photo = photos[selectedIndex];
-                    console.log("delete photo:", photo);
-                    hide();
+                    deletePhoto();
                   }}
                 />
               </View>

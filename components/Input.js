@@ -49,7 +49,14 @@ export default function Input({
           style={{ width: "100%" }}
         ></TextInput>
         {isPassword && (
-          <Pressable onPress={() => setHide(!hide)}>
+          <Pressable
+            onPress={() => setHide(!hide)}
+            style={{
+              position: "absolute",
+              right: 16,
+              top: 12,
+            }}
+          >
             {hide ? (
               <FontAwesome name="eye" size={16} color="jaune" />
             ) : (
